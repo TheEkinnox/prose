@@ -1,0 +1,439 @@
+(* = Prose Grammar = *)
+
+(* - Lexical specification - *)
+
+identifier = letter, { letter | digit | "_" } ;
+
+letter = "a".."z" | "A".."Z" ;
+
+digit = "0".."9" ;
+
+keyword = null_keyword
+    | boolean_keyword
+    | built_in_type
+    | sizeof_keyword
+    | "fn" | "scope" | "defer" | "make" | "return" | "end"
+    | "if" | "else"
+    | "switch" | "case" | "fallthrough" | "default"
+    | "for" | "in" | "break" | "continue"
+    | "while" | "repeat" | "until"
+    | "const" | "type" | "enum" | "alias" | "move"
+    ;
+
+null_keyword = "null" ;
+
+sizeof_keyword = "sizeof" ;
+
+boolean_keyword = true_keyword | false_keyword ;
+
+true_keyword = "true" ;
+
+false_keyword = "false" ;
+
+built_in_type = integer_type
+    | "f32" | "f64"
+    | "bool"
+    | "rune"
+    | "string"
+    | "void"
+    ;
+
+integer_type = "i8" | "i16" | "i32" | "i64" | "iptr"
+    | "u8" | "u16" | "u32" | "u64" | "uptr" | "byte"
+    ;
+
+operator = "+" | "-" | "*" | "/" | "%" | "++" | "--" | ".."
+    | "!" | "==" | "!=" | ">" | ">=" | "<" | "<=" | "&&" | "||"
+    | "~" | "&" | "|" | "^" | "<<" | ">>"
+    | "=" | "+=" | "-=" | "*=" | "/=" | "%="
+    | "&=" | "|=" | "^=" | "<<=" | ">>="
+    | "@" | "move"
+    ;
+
+literal = integer_literal
+    | floating_point_literal
+    | boolean_keyword
+    | rune_literal
+    | string_literal
+    | null_keyword
+    ;
+
+integer_literal = digit, { digit | "'", digit } ;
+
+floating_point_literal = integer_literal, ".", [ integer_literal ]
+    | ".", integer_literal
+    ;
+
+rune_literal = "'", rune_character, "'" ;
+
+rune_character = unicode_code_point | escape_sequence ;
+
+unicode_code_point = ? unicode_character ? ;
+
+escape_character = "\" ;
+
+escape_sequence = escape_character,
+    "\" | '"' | "'" | "n" | "r" | "t"
+    | octal_number | hexadecimal_escape | unicode_escape
+    ;
+
+octal_number = octal_digit, { octal_digit } ;
+
+octal_digit = "0".."7" ;
+
+hexadecimal_escape = "x", hexadecimal_number ;
+
+hexadecimal_number = hexadecimal_digit, { hexadecimal_digit } ;
+
+hexadecimal_digit = digit | "a".."f" | "A".."F" ;
+
+unicode_escape = "u", "{", hexadecimal_number , "}" ;
+
+string_literal = '"', { string_character }, '"' ;
+
+string_character = unicode_code_point | escape_sequence ;
+
+comment = line_comment | block_comment ;
+
+line_comment = "//", { ? any string ? - NEWLINE } ;
+
+NEWLINE = "\r\n" | "\n" | "\r" ;
+
+block_comment = "/*", { ? any string ? }, "*/" ;
+
+(* - Semantic constraints - *)
+
+(* NOTE: The following grammar terms represent semantic categories rather than syntactic productions. Their validity is determined during semantic analysis. *)
+
+constant_expression = expression ;
+assignable_expression = expression ;
+callable_expression = expression ;
+
+(* - Top_Level grammar - *)
+
+program = { declaration, statement_terminator }, ? EOF ? ;
+
+declaration = variable_declaration
+    | function_declaration
+    | type_declaration
+    | enum_declaration
+    | alias_declaration
+    ;
+
+variable_declaration = [ "const" ], identifier, ( ( [ ":", type ], "=", expression ) | ( ":", type, [ "=", expression ] ) ) ;
+
+function_declaration = "fn", identifier, [ "(", [ parameter_list ], ")" ], [ ":", type ], statement_terminator,
+    block,
+    "end"
+    ;
+
+parameter_list = parameter, { ",", parameter }, [ ",", defaulted_parameter_list ]
+    | defaulted_parameter_list
+    ;
+
+parameter = [ "const" ], identifier, ":", type ;
+
+defaulted_parameter_list = defaulted_parameter, { ",", defaulted_parameter } ;
+
+defaulted_parameter = [ "const" ], identifier, [ ":", type ], "=", expression ;
+
+(* NOTE: The grammar represents explicit statement terminators. As specified by the language, end may implicitly terminate the final statement of a block, and certain unambiguous line breaks may be omitted. These shortcuts are handled by the parser. *)
+
+block = { statement, statement_terminator } ;
+
+statement_terminator = NEWLINE | ";" ;
+
+type_declaration = "type", identifier, statement_terminator,
+    { type_member, statement_terminator },
+    "end"
+    ;
+
+type_member = variable_declaration ;
+
+enum_declaration = "enum", identifier, [ ":", integer_type ], statement_terminator,
+    { enum_member, statement_terminator },
+    "end" ;
+
+enum_member = identifier, [ "=", constant_expression ] ;
+
+alias_declaration = "alias", identifier, "=", type ;
+
+(* - Statements - *)
+
+statement = expression
+    | declaration
+    | if_statement
+    | while_statement
+    | repeat_statement
+    | for_statement
+    | switch_statement
+    | return_statement
+    | break_statement
+    | continue_statement
+    | defer_statement
+    | scope_statement
+    ;
+
+if_statement = "if", expression, statement_terminator,
+    block,
+    {
+        "else", "if", expression, statement_terminator,
+        block
+    },
+    [
+        "else", statement_terminator,
+        block
+    ],
+    "end"
+    ;
+
+while_statement = "while", expression, statement_terminator,
+    block,
+    "end"
+    ;
+
+repeat_statement = "repeat", statement_terminator,
+    block,
+    "until", expression, [ statement_terminator ], "end"
+    ;
+
+for_statement = "for", identifier, [ "&" ], "in", ( expression | range_expression ), statement_terminator,
+    block,
+    "end"
+    ;
+
+switch_statement = "switch", expression, statement_terminator,
+    (
+        ( switch_case, { switch_case }, [ default_case ] )
+        | ( { switch_case }, default_case )
+    ),
+    "end"
+    ;
+
+switch_case = "case", expression, statement_terminator,
+    block,
+    [ fallthrough_statement, statement_terminator ]
+    ;
+
+default_case = "default", statement_terminator,
+    block
+    ;
+
+fallthrough_statement = "fallthrough" ;
+
+return_statement = "return", [ expression ] ;
+
+break_statement = "break" ;
+
+continue_statement = "continue" ;
+
+defer_statement = "defer", call_expression ;
+
+call_expression = callable_expression, call ;
+
+scope_statement = "scope", statement_terminator,
+    block,
+    "end"
+    ;
+
+(* - Types - *)
+
+type = base_type, { type_modifier } ;
+
+base_type = identifier | built_in_type ;
+
+type_modifier = pointer_modifier
+    | reference_modifier
+    | array_modifier
+    | slice_modifier
+    ;
+
+pointer_modifier = "*" ;
+
+reference_modifier = "&" ;
+
+array_modifier = fixed_array_modifier
+    | dynamic_array_modifier
+    ;
+
+fixed_array_modifier = "[", constant_expression ,"]" ;
+
+dynamic_array_modifier = "[", "]" ;
+
+slice_modifier = "[", ":", "]" ;
+
+(* - Expressions - *)
+
+(* NOTES:
+    - Expression precedence and associativity are defined by the language specification and are implemented by the parser rather than fully represented by these productions.
+    - range_expression is only valid in contexts where ranges are permitted, such as for_loops and array literals, which is why they don't appear in the general expression rule.
+*)
+
+expression = postfix_expression | sizeof_expression ;
+
+sizeof_expression = "sizeof", "(", ( type | expression ), ")" ;
+
+postfix_expression = primary_expression, { postfix_operation } ;
+
+primary_expression = literal
+    | array_literal
+    | identifier
+    | parenthesized_expression
+    | construction_expression
+    | make
+    | unary_expression
+    | binary_expression
+    ;
+
+postfix_operation = call
+    | indexing
+    | slicing
+    | member_access
+    | "++"
+    | "--"
+    ;
+
+array_literal = "[", [ array_element, { ",", array_element } ], "]" ;
+
+array_element = expression | range_expression ;
+
+range_expression = expression, "..", expression ;
+
+parenthesized_expression = "(", expression, ")" ;
+
+construction_expression = type, construction_initializer ;
+
+construction_initializer = call ;
+
+make = "make", type, [ construction_initializer ] ;
+
+unary_expression = prefix_increment
+    | prefix_decrement
+    | negative
+    | logical_not
+    | bitwise_not
+    | address_of
+    | move
+    ;
+
+prefix_increment = "++", assignable_expression ;
+
+prefix_decrement = "--", assignable_expression ;
+
+negative = "-", expression ;
+
+logical_not = "!", expression ;
+
+bitwise_not = "~", expression ;
+
+address_of = "@", assignable_expression ;
+
+move = "move", expression ;
+
+binary_expression = assignment
+    | arithmetic
+    | comparison
+    | logical_or
+    | logical_and
+    | bitwise_or
+    | bitwise_xor
+    | bitwise_and
+    | bitwise_lshift
+    | bitwise_rshift
+    ;
+
+assignment = assign
+    | add_assign
+    | subtract_assign
+    | multiply_assign
+    | divide_assign
+    | mod_assign
+    | and_assign
+    | or_assign
+    | xor_assign
+    | lshift_assign
+    | rshift_assign
+     ;
+
+assign = assignable_expression, "=", expression ;
+
+add_assign = assignable_expression, "+=", expression ;
+
+subtract_assign = assignable_expression, "-=", expression ;
+
+multiply_assign = assignable_expression, "*=", expression ;
+
+divide_assign = assignable_expression, "/=", expression ;
+
+mod_assign = assignable_expression, "%=", expression ;
+
+and_assign = assignable_expression, "&=", expression ;
+
+or_assign = assignable_expression, "|=", expression ;
+
+xor_assign = assignable_expression, "^=", expression ;
+
+lshift_assign = assignable_expression, "<<=", expression ;
+
+rshift_assign = assignable_expression, ">>=", expression ;
+
+arithmetic = addition
+    | subtraction
+    | multiplication
+    | division
+    | modulo
+    ;
+
+addition = expression, "+", expression ;
+
+subtraction = expression, "-", expression ;
+
+multiplication = expression, "*", expression ;
+
+division = expression, "/", expression ;
+
+modulo = expression, "%", expression ;
+
+comparison = equality
+    | inequality
+    | less
+    | less_equal
+    | greater
+    | greater_equal
+    ;
+
+equality = expression, "==", expression ;
+
+inequality = expression, "!=", expression ;
+
+less = expression, "<", expression ;
+
+less_equal = expression, "<=", expression ;
+
+greater = expression, ">", expression ;
+
+greater_equal = expression, ">=", expression ;
+
+logical_or = expression, "||", expression ;
+
+logical_and = expression, "&&", expression ;
+
+bitwise_or = expression, "|", expression ;
+
+bitwise_xor = expression, "^", expression ;
+
+bitwise_and = expression, "&", expression ;
+
+bitwise_lshift = expression, "<<", expression ;
+
+bitwise_rshift = expression, ">>", expression ;
+
+call = "(", [ arguments ], ")" ;
+
+arguments = expression, { ",", expression } ;
+
+indexing = "[", expression, "]" ;
+
+slicing = "[", [ expression ], ":", [ expression ], "]" ;
+
+member_access = ".", identifier ;
