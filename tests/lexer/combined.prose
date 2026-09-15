@@ -1,0 +1,27 @@
+type Example
+    value : i32 = 42
+    data : byte[]
+end
+
+fn process(input : byte[], const enabled = true) : i32
+    if !enabled
+        return 0
+    end
+
+    total : i32 = 0
+
+    for i in 0..10
+        total += i * 2
+
+        if total >= 100
+            break
+        end
+    end
+
+    defer cleanup()
+
+    result = input[0]
+    ptr = @result
+
+    return total
+end

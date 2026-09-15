@@ -1,0 +1,53 @@
+a + b
+a - b
+a * b
+a / b
+a % b
+
+a++
+a--
+++a
+--a
+
+a..b
+
+!a
+a == b
+a != b
+a > b
+a >= b
+a < b
+a <= b
+
+a && b
+a || b
+
+~a
+a & b
+a | b
+a ^ b
+a << b
+a >> b
+
+a = b
+a += b
+a -= b
+a *= b
+a /= b
+a %= b
+a &= b
+a |= b
+a ^= b
+a <<= b
+a >>= b
+
+@a
+
+foo()
+foo(a, b)
+foo.bar
+
+a:b
+a;b
+[a]
+[a:b]

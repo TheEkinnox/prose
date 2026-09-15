@@ -1,0 +1,17 @@
+// comment
+
+a = 1 // trailing comment
+
+/* block comment */
+
+a/* middle */=/* another */2
+
+/*
+multiline
+block
+comment
+*/
+
+foo()/*comment*/.bar
+
+a/*x*/+/*y*/b

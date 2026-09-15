@@ -1,0 +1,15 @@
+0..10
+1..2
+42..100
+
+3.14
+3.
+.14
+
+foo.bar
+foo.bar.baz
+
+foo().bar
+array[0].member
+
+1.0..2.0
