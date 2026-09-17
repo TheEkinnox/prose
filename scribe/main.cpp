@@ -2,6 +2,7 @@
 
 #include "utility/cmdline.h"
 #include "utility/file.h"
+#include "utility/profiler.h"
 #include "utility/strings.h"
 
 #include <chrono>
@@ -9,18 +10,22 @@
 
 int main(const int argc, char* argv[])
 {
+    ScopeProfiler profiler("Execution");
+
     CmdLine_Init(argc, argv);
 
     const AnonymousArgs& paths = CmdLine_GetAnonymousList();
-    std::chrono::high_resolution_clock clock;
-    const auto start = clock.now();
     for (const std::string& path : paths)
     {
+        std::string source;
+        std::vector<Token> tokens;
+
         std::cout << "Tokenizing '" << path << "'..." << std::endl;
-        const auto tokenizationStart = clock.now();
-        const std::string source = ReadFile(path);
-        const std::vector<Token> tokens = Tokenize(source);
-        std::cout << "Done in " << std::chrono::duration_cast<std::chrono::microseconds>(clock.now() - tokenizationStart).count() << "us." << std::endl;
+        {
+            ProfileScope("Tokenization");
+            source = ReadFile(path);
+            tokens = Tokenize(source);
+        }
 
 #if defined(DEBUG)
         for (const Token& token : tokens)
@@ -37,8 +42,6 @@ int main(const int argc, char* argv[])
         (void)tokens.empty();
 #endif
     }
-
-    std::cout << "Total time: " << std::chrono::duration_cast<std::chrono::milliseconds>(clock.now() - start).count() << "ms.\n";
 
     return 0;
 }

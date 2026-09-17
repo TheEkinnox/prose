@@ -1,4 +1,9 @@
 #pragma once
+
+#define CAT_(a, b) a##b
+#define CAT(a, b)  CAT_(a, b)
+#define ANON(name) CAT(name, __LINE__)
+
 #define PRAGMA(x) _Pragma(#x)
 #if defined(__clang__)
 #define CLANG_IGNORE_WARNING_PUSH(warning) PRAGMA(clang diagnostic push) \
