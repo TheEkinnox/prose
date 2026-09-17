@@ -5,7 +5,6 @@
 #include "utility/profiler.h"
 #include "utility/strings.h"
 
-#include <chrono>
 #include <iostream>
 
 int main(const int argc, char* argv[])
@@ -15,16 +14,15 @@ int main(const int argc, char* argv[])
     CmdLine_Init(argc, argv);
 
     const AnonymousArgs& paths = CmdLine_GetAnonymousList();
+    std::vector<Token> tokens;
+
     for (const std::string& path : paths)
     {
-        std::string source;
-        std::vector<Token> tokens;
-
         std::cout << "Tokenizing '" << path << "'..." << std::endl;
         {
             ProfileScope("Tokenization");
-            source = ReadFile(path);
-            tokens = Tokenize(source);
+            const std::string source = ReadFile(path);
+            Tokenize(source, tokens);
         }
 
 #if defined(DEBUG)
@@ -38,8 +36,6 @@ int main(const int argc, char* argv[])
         }
 
         std::cout << std::endl;
-#else
-        (void)tokens.empty();
 #endif
     }
 

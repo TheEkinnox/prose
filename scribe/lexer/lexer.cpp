@@ -272,13 +272,17 @@ Token::Token(const TokenType p_type, const std::string_view p_value, const size_
     assert(p_type == TokenType::TOKEN_EOF || !p_value.empty());
 }
 
-std::vector<Token> Tokenize(const std::string_view source)
+bool Tokenize(const std::string_view source, std::vector<Token>& tokensOut)
 {
-    if (source.empty())
-        return {};
+    tokensOut.clear();
 
-    std::vector<Token> tokens;
-    tokens.reserve(source.size() / 4);
+    if (source.empty())
+    {
+        tokensOut.emplace_back(TokenType::TOKEN_EOF, "", 1, 1);
+        return true;
+    }
+
+    tokensOut.reserve(source.size() / 4);
 
     Cursor cursor{ source, 0, 1, 1 };
 
@@ -312,7 +316,7 @@ std::vector<Token> Tokenize(const std::string_view source)
             }
 
             const std::string_view tokenStr = source.substr(tokenStart.pos, cursor.pos - tokenStart.pos);
-            tokens.emplace_back(TokenType::LIT_STRING, tokenStr, tokenStart.line, tokenStart.column);
+            tokensOut.emplace_back(TokenType::LIT_STRING, tokenStr, tokenStart.line, tokenStart.column);
             break;
         }
         case '\'':
@@ -339,7 +343,7 @@ std::vector<Token> Tokenize(const std::string_view source)
             }
 
             const std::string_view tokenStr = source.substr(tokenStart.pos, cursor.pos - tokenStart.pos);
-            tokens.emplace_back(TokenType::LIT_RUNE, tokenStr, tokenStart.line, tokenStart.column);
+            tokensOut.emplace_back(TokenType::LIT_RUNE, tokenStr, tokenStart.line, tokenStart.column);
             break;
         }
         case '/':
@@ -368,7 +372,7 @@ std::vector<Token> Tokenize(const std::string_view source)
             if (tokenStart.pos != cursor.pos - 1)
             {
                 const std::string_view tokenStr = source.substr(tokenStart.pos, cursor.pos - tokenStart.pos);
-                tokens.emplace_back(TokenType::COMMENT, tokenStr, tokenStart.line, tokenStart.column);
+                tokensOut.emplace_back(TokenType::COMMENT, tokenStr, tokenStart.line, tokenStart.column);
             }
             break;
         case '\\':
@@ -377,11 +381,11 @@ std::vector<Token> Tokenize(const std::string_view source)
                 // TODO: Properly log error
                 fprintf(stderr, "(%zu:%zu) Error: Invalid escape sequence. Expected '\\n', Received '%c'\n", cursor.line, cursor.column, cursor.Peek());
                 fflush(stderr);
-                return {};
+                return false;
             }
             break;
         case '\n':
-            tokens.emplace_back(TokenType::NEWLINE, "\n", tokenStart.line, tokenStart.column);
+            tokensOut.emplace_back(TokenType::NEWLINE, "\n", tokenStart.line, tokenStart.column);
             break;
         default:
         {
@@ -415,12 +419,12 @@ std::vector<Token> Tokenize(const std::string_view source)
                 cursor.Consume();
             }
 
-            tokens.push_back(token);
+            tokensOut.push_back(token);
             break;
         }
         }
     }
 
-    tokens.emplace_back(TokenType::TOKEN_EOF, "", cursor.line, cursor.column);
-    return tokens;
+    tokensOut.emplace_back(TokenType::TOKEN_EOF, "", cursor.line, cursor.column);
+    return true;
 }
