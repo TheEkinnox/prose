@@ -15,4 +15,4 @@ struct Token
     Token(TokenType p_type, std::string_view p_value, size_t p_line, size_t p_column);
 };
 
-std::vector<Token> Tokenize(std::string_view source);
+[[nodiscard]] std::vector<Token> Tokenize(std::string_view source);
