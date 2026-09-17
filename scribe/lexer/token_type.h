@@ -1,8 +1,11 @@
 #pragma once
+#include "utility/macros.h"
+
 #include "external/better_enums/enum.h"
 
 #include <cstdint>
 
+CLANG_IGNORE_WARNING_PUSH("-Wglobal-constructors")
 BETTER_ENUM(TokenType, uint8_t,
     UNKNOWN,
     IDENTIFIER,
@@ -65,3 +68,4 @@ BETTER_ENUM(TokenType, uint8_t,
     COMMENT,
     TOKEN_EOF
 );
+CLANG_IGNORE_WARNING_POP

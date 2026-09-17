@@ -29,7 +29,7 @@ struct Cursor
     size_t column = 1;
 
     char Peek() const;
-    char Peek(int offset) const;
+    char Peek(uint32_t offset) const;
     char Consume();
     bool ConsumeIf(char c);
 };
@@ -39,7 +39,7 @@ char Cursor::Peek() const
     return Peek(0);
 }
 
-char Cursor::Peek(const int offset) const
+char Cursor::Peek(const uint32_t offset) const
 {
     return pos + offset < source.size() ? source[pos + offset] : '\0';
 }
@@ -151,7 +151,7 @@ static bool IsStringLiteral(const std::string_view token)
     return token.size() >= 2 && token.front() == '"' && token.back() == '"';
 }
 
-Token::Token(const std::string_view token, const size_t line, const size_t column) : type(TokenType::UNKNOWN), value(token), line(line), column(column)
+Token::Token(const std::string_view p_value, const size_t p_line, const size_t p_column) : type(TokenType::UNKNOWN), value(p_value), line(p_line), column(p_column)
 {
     if (value.empty())
         return;
@@ -266,10 +266,10 @@ Token::Token(const std::string_view token, const size_t line, const size_t colum
         type = TokenType::NEWLINE;
 }
 
-Token::Token(const TokenType type, const std::string_view value, const size_t line, const size_t column) : type(type), value(value), line(line), column(column)
+Token::Token(const TokenType p_type, const std::string_view p_value, const size_t p_line, const size_t p_column) : type(p_type), value(p_value), line(p_line), column(p_column)
 {
-    assert(type != TokenType::UNKNOWN);
-    assert(type == TokenType::TOKEN_EOF || !value.empty());
+    assert(p_type != TokenType::UNKNOWN);
+    assert(p_type == TokenType::TOKEN_EOF || !p_value.empty());
 }
 
 std::vector<Token> Tokenize(const std::string_view source)

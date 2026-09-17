@@ -1,5 +1,7 @@
 #include "cmdline.h"
 
+#include "macros.h"
+
 #include <string>
 #include <unordered_map>
 
@@ -7,19 +9,29 @@
 #include <iostream>
 #endif
 
-static std::string s_emptyString{};
-static std::unordered_map<std::string_view, std::string> s_cmdLine{};
-static std::vector<std::string> s_anonymousArgs{};
+using CmdLineMap = std::unordered_map<std::string_view, std::string>;
 
 constexpr std::string_view CmdLine_Anonymous = "<anon>";
 constexpr std::string_view CmdLine_ModuleName = "<module>";
 
+static CmdLineMap& GetCmdLineMap()
+{
+    NO_DESTROY static CmdLineMap cmdLineMap;
+    return cmdLineMap;
+}
+
+static AnonymousArgs& GetAnonymousArgs()
+{
+    NO_DESTROY static AnonymousArgs anonymousArgs;
+    return anonymousArgs;
+}
+
 #if defined(DEBUG)
-void CmdLine_PrintArgs()
+static void CmdLine_PrintArgs()
 {
     std::cout << "= PARSED ARGS =\n";
 
-    for (const auto& [key, value] : s_cmdLine)
+    for (const auto& [key, value] : GetCmdLineMap())
     {
         if (value.empty())
             std::cout << key << "\n";
@@ -33,21 +45,26 @@ void CmdLine_PrintArgs()
 
 static void CmdLine_SetValue(const std::string_view key, const std::string_view value)
 {
+    CmdLineMap& cmdLineMap = GetCmdLineMap();
+
     if (!key.empty())
-        s_cmdLine[key] = value;
+        cmdLineMap[key] = value;
     else if (!value.empty())
-        s_cmdLine[CmdLine_Anonymous] = value;
+        cmdLineMap[CmdLine_Anonymous] = value;
 }
 
 void CmdLine_Init(const int argc, char* argv[])
 {
-    s_cmdLine.clear();
-    s_cmdLine.reserve(argc);
+    CmdLineMap& cmdLineMap = GetCmdLineMap();
+    AnonymousArgs& anonymousArgs = GetAnonymousArgs();
+
+    cmdLineMap.clear();
+    cmdLineMap.reserve(static_cast<size_t>(argc));
 
     if (argc == 0)
         return;
 
-    s_cmdLine[CmdLine_ModuleName] = argv[0];
+    cmdLineMap[CmdLine_ModuleName] = argv[0];
 
     std::string_view key;
     std::string value;
@@ -70,7 +87,7 @@ void CmdLine_Init(const int argc, char* argv[])
         if (!arg.empty())
         {
             if (key.empty())
-                s_anonymousArgs.emplace_back(arg.begin(), arg.end());
+                anonymousArgs.emplace_back(arg.begin(), arg.end());
 
             if (!value.empty())
                 value += ' ';
@@ -94,26 +111,28 @@ void CmdLine_Init(const int argc, char* argv[])
 #endif
 }
 
-const std::string& CmdLine_GetModuleName()
+std::string_view CmdLine_GetModuleName()
 {
     return CmdLine_GetArg(CmdLine_ModuleName);
 }
 
-const std::string& CmdLine_GetAnonymous()
+std::string_view CmdLine_GetAnonymous()
 {
     return CmdLine_GetArg(CmdLine_Anonymous);
 }
 
-const std::vector<std::string>& CmdLine_GetAnonymousList()
+const AnonymousArgs& CmdLine_GetAnonymousList()
 {
-    return s_anonymousArgs;
+    return GetAnonymousArgs();
 }
 
-const std::string& CmdLine_GetArg(const std::string_view argName)
+std::string_view CmdLine_GetArg(const std::string_view argName)
 {
-    if (s_cmdLine.empty())
-        return s_emptyString;
+    const CmdLineMap& cmdLineMap = GetCmdLineMap();
 
-    const auto it = s_cmdLine.find(argName);
-    return it != s_cmdLine.end() ? it->second : s_emptyString;
+    if (cmdLineMap.empty())
+        return {};
+
+    const auto it = cmdLineMap.find(argName);
+    return it != cmdLineMap.end() ? std::string_view(it->second) : std::string_view();
 }

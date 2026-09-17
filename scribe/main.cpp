@@ -11,7 +11,7 @@ int main(const int argc, char* argv[])
 {
     CmdLine_Init(argc, argv);
 
-    const std::vector<std::string>& paths = CmdLine_GetAnonymousList();
+    const AnonymousArgs& paths = CmdLine_GetAnonymousList();
     std::chrono::high_resolution_clock clock;
     const auto start = clock.now();
     for (const std::string& path : paths)
