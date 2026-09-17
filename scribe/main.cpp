@@ -29,7 +29,7 @@ int main(const int argc, char* argv[])
             ReplaceAll(sanitizedString, "\r", "\\r");
             ReplaceAll(sanitizedString, "\n", "\\n");
             ReplaceAll(sanitizedString, "\t", "\\t");
-            std::cout << token.type._to_string() << '(' << sanitizedString << ")\n";
+            std::cout << token.line << ':' << token.column << '\t' << token.type._to_string() << '(' << sanitizedString << ")\n";
         }
 
         std::cout << std::endl;
