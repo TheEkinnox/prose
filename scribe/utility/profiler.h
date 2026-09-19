@@ -6,7 +6,7 @@
 
 #define ProfileScope(name) ScopeProfiler ANON(profiler)(name)
 
-using Clock = std::chrono::high_resolution_clock;
+using ProfilerClock = std::chrono::high_resolution_clock;
 
 class ScopeProfiler
 {
@@ -16,5 +16,5 @@ public:
 
 private:
     std::string m_name;
-    Clock::time_point m_start;
+    ProfilerClock::time_point m_start;
 };
