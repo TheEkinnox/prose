@@ -66,9 +66,7 @@ floating_point_literal = integer_literal, ".", [ integer_literal ]
 
 rune_literal = "'", rune_character, "'" ;
 
-rune_character = unicode_code_point | escape_sequence ;
-
-unicode_code_point = ? unicode_character ? ;
+rune_character = ? unicode_character ? | escape_sequence ;
 
 escape_character = "\" ;
 
@@ -91,7 +89,7 @@ unicode_escape = "u", "{", hexadecimal_number , "}" ;
 
 string_literal = '"', { string_character }, '"' ;
 
-string_character = unicode_code_point | escape_sequence ;
+string_character = ? unicode_character ? | escape_sequence ;
 
 comment = line_comment | block_comment ;
 
