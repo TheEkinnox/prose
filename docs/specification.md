@@ -574,19 +574,19 @@ Expressions are parsed according to the following precedence rules, from highest
 
 - postfix
 - unary
-- * / %
-- + -
+- `*` `/` `%`
+- `+` `-`
 
-- << >>
-- < <= > >=
-- == !=
+- `<<` `>>`
+- `<` `<=` `>` `>=`
+- `==` `!=`
 
-- &
-- ^
-- |
+- `&`
+- `^`
+- `|`
 
-- &&
-- ||
+- `&&`
+- `||`
 
 - assignment
 
