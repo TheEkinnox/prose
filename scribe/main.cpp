@@ -15,13 +15,14 @@ int main(const int argc, char* argv[])
 
     const AnonymousArgs& paths = CmdLine_GetAnonymousList();
     std::vector<Token> tokens;
+    std::string source;
 
     for (const std::string& path : paths)
     {
         std::cout << "Tokenizing '" << path << "'..." << std::endl;
         {
             ProfileScope("Tokenization");
-            const std::string source = ReadFile(path);
+            source = ReadFile(path);
             Tokenize(source, tokens);
         }
 
