@@ -78,26 +78,10 @@ int main(const int argc, char* argv[])
     const AnonymousArgs& paths = CmdLine_GetAnonymousList();
     std::vector<Token> tokens;
     std::string source;
-    std::vector<Program> programs;
 
     for (const std::string& path : paths)
     {
         Lex(path, source, tokens);
-
-
-        std::cout << "Parsing '" << path << "'..." << std::endl;
-        {
-            ProfileScope("Parsing");
-            Program program;
-
-            if (!ParseProgram(tokens, program))
-            {
-                std::cerr << "Failed to parse '" << path << "'\n";
-                continue;
-            }
-
-            programs.emplace_back(std::move(program));
-        }
     }
 
     return 0;
