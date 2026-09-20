@@ -4,23 +4,6 @@
 #include <cassert>
 #include <cctype>
 
-constexpr std::string_view KEYWORDS[] = {
-    "sizeof",
-    "fn", "scope", "defer", "make", "return", "end",
-    "if", "else",
-    "switch", "case", "fallthrough", "default",
-    "for", "in", "break", "continue",
-    "while", "repeat", "until",
-    "const", "type", "enum", "alias", "move"
-};
-
-constexpr std::string_view BUILT_IN_TYPES[] = {
-    "i8", "i16", "i32", "i64", "iptr",
-    "u8", "u16", "u32", "u64", "uptr", "byte",
-    "f32", "f64",
-    "bool", "rune", "string", "void"
-};
-
 struct Cursor
 {
     std::string_view source;
@@ -82,6 +65,112 @@ bool Cursor::ConsumeIf(const char c)
     }
 
     return false;
+}
+
+static bool GetBuiltInType(const std::string_view token, TokenType& out)
+{
+    out = TokenType::UNKNOWN;
+
+    if (token == "i8")
+        out = TokenType::T_I8;
+    else if (token == "u8")
+        out = TokenType::T_U8;
+    else if (token == "i16")
+        out = TokenType::T_I16;
+    else if (token == "u16")
+        out = TokenType::T_U16;
+    else if (token == "i32")
+        out = TokenType::T_I32;
+    else if (token == "u32")
+        out = TokenType::T_U32;
+    else if (token == "i64")
+        out = TokenType::T_I64;
+    else if (token == "u64")
+        out = TokenType::T_U64;
+    else if (token == "iptr")
+        out = TokenType::T_IPTR;
+    else if (token == "uptr")
+        out = TokenType::T_UPTR;
+    else if (token == "f32")
+        out = TokenType::T_F32;
+    else if (token == "f64")
+        out = TokenType::T_F64;
+    else if (token == "byte")
+        out = TokenType::T_BYTE;
+    else if (token == "bool")
+        out = TokenType::T_BOOL;
+    else if (token == "rune")
+        out = TokenType::T_RUNE;
+    else if (token == "string")
+        out = TokenType::T_STRING;
+    else if (token == "void")
+        out = TokenType::T_VOID;
+
+    return out != TokenType::UNKNOWN;
+}
+
+static bool GetKeyword(const std::string_view token, TokenType& out)
+{
+    if (token == "null")
+        out = TokenType::KW_NULL;
+    else if (token == "true")
+        out = TokenType::KW_TRUE;
+    else if (token == "false")
+        out = TokenType::KW_FALSE;
+    else if (token == "sizeof")
+        out = TokenType::KW_SIZEOF;
+    else if (token == "fn")
+        out = TokenType::KW_FN;
+    else if (token == "scope")
+        out = TokenType::KW_SCOPE;
+    else if (token == "defer")
+        out = TokenType::KW_DEFER;
+    else if (token == "make")
+        out = TokenType::KW_MAKE;
+    else if (token == "return")
+        out = TokenType::KW_RETURN;
+    else if (token == "end")
+        out = TokenType::KW_END;
+    else if (token == "if")
+        out = TokenType::KW_IF;
+    else if (token == "else")
+        out = TokenType::KW_ELSE;
+    else if (token == "switch")
+        out = TokenType::KW_SWITCH;
+    else if (token == "case")
+        out = TokenType::KW_CASE;
+    else if (token == "fallthrough")
+        out = TokenType::KW_FALLTHROUGH;
+    else if (token == "default")
+        out = TokenType::KW_DEFAULT;
+    else if (token == "for")
+        out = TokenType::KW_FOR;
+    else if (token == "in")
+        out = TokenType::KW_IN;
+    else if (token == "break")
+        out = TokenType::KW_BREAK;
+    else if (token == "continue")
+        out = TokenType::KW_CONTINUE;
+    else if (token == "while")
+        out = TokenType::KW_WHILE;
+    else if (token == "repeat")
+        out = TokenType::KW_REPEAT;
+    else if (token == "until")
+        out = TokenType::KW_UNTIL;
+    else if (token == "const")
+        out = TokenType::KW_CONST;
+    else if (token == "type")
+        out = TokenType::KW_TYPE;
+    else if (token == "enum")
+        out = TokenType::KW_ENUM;
+    else if (token == "alias")
+        out = TokenType::KW_ALIAS;
+    else if (token == "move")
+        out = TokenType::KW_MOVE;
+    else
+        out = TokenType::UNKNOWN;
+
+    return out != TokenType::UNKNOWN;
 }
 
 static bool IsIdentifier(const std::string_view token)
@@ -156,17 +245,7 @@ Token::Token(const std::string_view p_value, const size_t p_line, const size_t p
     if (value.empty())
         return;
 
-    if (value == "null")
-        type = TokenType::KW_NULL;
-    else if (value == "true")
-        type = TokenType::KW_TRUE;
-    else if (value == "false")
-        type = TokenType::KW_FALSE;
-    else if (std::ranges::find(BUILT_IN_TYPES, value) != std::end(BUILT_IN_TYPES))
-        type = TokenType::BUILT_IN_TYPE;
-    else if (std::ranges::find(KEYWORDS, value) != std::end(KEYWORDS))
-        type = TokenType::KEYWORD;
-    else if (IsIdentifier(value))
+    if (!GetBuiltInType(value, type) && !GetKeyword(value, type) && IsIdentifier(value))
         type = TokenType::IDENTIFIER;
     else if (IsIntLiteral(value))
         type = TokenType::LIT_INTEGER;
