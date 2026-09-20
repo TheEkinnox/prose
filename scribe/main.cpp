@@ -40,7 +40,8 @@ static void Lex(const std::string& path, std::string& source, std::vector<Token>
         constexpr std::string_view FMT_TOKEN = "{:>4}:{:<4} | {:<16} | {}";
         const std::string header = std::format(FMT_TOKEN, "LINE", "COL", "TYPE", "VALUE");
 
-        std::cout << header << std::endl;
+        if (s_cachedArgs.isVerbose)
+            std::cout << header << std::endl;
 
         std::ofstream outputStream;
         if (s_cachedArgs.exportTokens)
