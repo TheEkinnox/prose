@@ -126,6 +126,11 @@ const AnonymousArgs& CmdLine_GetAnonymousList()
     return GetAnonymousArgs();
 }
 
+bool CmdLine_HasArg(const std::string_view argName)
+{
+    return GetCmdLineMap().contains(argName);
+}
+
 std::string_view CmdLine_GetArg(const std::string_view argName)
 {
     const CmdLineMap& cmdLineMap = GetCmdLineMap();
