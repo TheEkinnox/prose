@@ -447,12 +447,6 @@ bool Tokenize(const std::string_view source, std::vector<Token>& tokensOut)
                     fflush(stdout);
                 }
             }
-
-            if (tokenStart.pos != cursor.pos - 1)
-            {
-                const std::string_view tokenStr = source.substr(tokenStart.pos, cursor.pos - tokenStart.pos);
-                tokensOut.emplace_back(TokenType::COMMENT, tokenStr, tokenStart.line, tokenStart.column);
-            }
             break;
         case '\\':
             if (!cursor.ConsumeIf('\r') && !cursor.ConsumeIf('\n'))
