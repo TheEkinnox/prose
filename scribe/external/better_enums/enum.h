@@ -653,6 +653,8 @@ class BETTER_ENUMS_CLASS_ATTRIBUTE Enum {                                      \
                                                                                \
     enum _enumerated SetUnderlyingType(Underlying) { __VA_ARGS__ };            \
                                                                                \
+    BETTER_ENUMS_DEFAULT_CONSTRUCTOR(Enum)                                     \
+                                                                               \
     BETTER_ENUMS_CONSTEXPR_ Enum(_enumerated value) : _value(value) { }        \
                                                                                \
     BETTER_ENUMS_COPY_CONSTRUCTOR(Enum)                                        \
@@ -717,8 +719,6 @@ class BETTER_ENUMS_CLASS_ATTRIBUTE Enum {                                      \
         _enumerated    _enum;                                                  \
         _integral      _value;                                                 \
     };                                                                         \
-                                                                               \
-    BETTER_ENUMS_DEFAULT_CONSTRUCTOR(Enum)                                     \
                                                                                \
   private:                                                                     \
     explicit BETTER_ENUMS_CONSTEXPR_ Enum(const _integral &value) :            \
@@ -1163,7 +1163,6 @@ operator >>(std::basic_istream<Char, Traits>& stream, Enum &value)             \
 
 #ifndef BETTER_ENUMS_DEFAULT_CONSTRUCTOR
 #   define BETTER_ENUMS_DEFAULT_CONSTRUCTOR(Enum)                              \
-      private:                                                                 \
         Enum() : _value(0) { }
 #endif
 
