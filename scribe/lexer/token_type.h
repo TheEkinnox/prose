@@ -105,3 +105,40 @@ BETTER_ENUM(TokenType, uint8_t,
     TOKEN_EOF
 );
 CLANG_IGNORE_WARNING_POP
+
+inline bool IsBuiltInType(const TokenType type)
+{
+    return std::string_view(type._to_string()).starts_with("T_");
+}
+
+inline bool IsLiteral(const TokenType type)
+{
+    return std::string_view(type._to_string()).starts_with("LIT_")
+        || type == TokenType::KW_NULL || type == TokenType::KW_TRUE || type == TokenType::KW_FALSE;
+}
+
+inline bool IsOperator(const TokenType type)
+{
+    return std::string_view(type._to_string()).starts_with("OP_") || type == TokenType::KW_MOVE;
+}
+
+inline bool IsAssignmentOperator(const TokenType type)
+{
+    return std::string_view(type._to_string()).starts_with("OP_ASSIGN");
+}
+
+inline bool IsUnaryOperator(const TokenType type)
+{
+    return type._enum == TokenType::OP_INC
+        || type._enum == TokenType::OP_DEC
+        || type._enum == TokenType::OP_MINUS
+        || type._enum == TokenType::OP_LOGICAL_NOT
+        || type._enum == TokenType::OP_BITWISE_NOT
+        || type._enum == TokenType::OP_ADDRESS_OF
+        || type._enum == TokenType::KW_MOVE;
+}
+
+inline bool IsTerminator(const TokenType type)
+{
+    return type._enum == TokenType::SEMICOLON || type._enum == TokenType::NEWLINE || type._enum == TokenType::KW_END || type._enum == TokenType::TOKEN_EOF;
+}
