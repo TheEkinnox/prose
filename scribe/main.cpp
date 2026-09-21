@@ -12,14 +12,16 @@
 
 static struct
 {
-    bool isVerbose;
+    bool printTokens;
     bool exportTokens;
     bool exportAST;
 } s_cachedArgs;
 
 static void CacheCommonArgs()
 {
-    s_cachedArgs.isVerbose = CmdLine_HasArg("--verbose") || CmdLine_HasArg("-V");
+    const bool isVerbose = CmdLine_HasArg("--verbose") || CmdLine_HasArg("-V");
+    const bool lexerOutput = CmdLine_HasArg("--lexer-output") || CmdLine_HasArg("-L");
+    s_cachedArgs.printTokens = (isVerbose || lexerOutput) && !CmdLine_HasArg("--no-lexer-output");
     s_cachedArgs.exportTokens = CmdLine_HasArg("--export-tokens") || CmdLine_HasArg("-T");
 }
 
@@ -32,7 +34,7 @@ static void Lex(const std::string& path, std::string& source, std::vector<Token>
         Tokenize(source, tokens);
     }
 
-    if (!s_cachedArgs.isVerbose && !s_cachedArgs.exportTokens)
+    if (!s_cachedArgs.printTokens && !s_cachedArgs.exportTokens)
         return;
 
     {
@@ -40,7 +42,7 @@ static void Lex(const std::string& path, std::string& source, std::vector<Token>
         constexpr std::string_view FMT_TOKEN = "{:>4}:{:<4} | {:<16} | {}";
         const std::string header = std::format(FMT_TOKEN, "LINE", "COL", "TYPE", "VALUE");
 
-        if (s_cachedArgs.isVerbose)
+        if (s_cachedArgs.printTokens)
             std::cout << header << std::endl;
 
         std::ofstream outputStream;
@@ -58,7 +60,7 @@ static void Lex(const std::string& path, std::string& source, std::vector<Token>
             ReplaceAll(sanitizedValue, "\t", "\\t");
 
             const std::string output = std::format(FMT_TOKEN, token.line, token.column, token.type._to_string(), sanitizedValue);
-            if (s_cachedArgs.isVerbose)
+            if (s_cachedArgs.printTokens)
                 std::cout << output << '\n';
 
             if (s_cachedArgs.exportTokens)
