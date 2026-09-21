@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cassert>
 #include <cctype>
+#include <iostream>
 
 struct Cursor
 {
@@ -349,6 +350,11 @@ Token::Token(const TokenType p_type, const std::string_view p_value, const size_
 {
     assert(p_type != TokenType::UNKNOWN);
     assert(p_type == TokenType::TOKEN_EOF || !p_value.empty());
+}
+
+std::ostream& Token::Print(std::ostream& os) const
+{
+    return os << type._to_string() << (value.empty() ? "" : "(" + std::string(value) + ")");
 }
 
 bool Tokenize(const std::string_view source, std::vector<Token>& tokensOut)

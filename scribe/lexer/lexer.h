@@ -14,6 +14,8 @@ struct Token
     Token() = default;
     Token(std::string_view p_value, size_t p_line, size_t p_column);
     Token(TokenType p_type, std::string_view p_value, size_t p_line, size_t p_column);
+
+    std::ostream& Print(std::ostream& os) const;
 };
 
 bool Tokenize(std::string_view source, std::vector<Token>& tokensOut);
