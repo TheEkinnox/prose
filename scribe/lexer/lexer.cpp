@@ -396,7 +396,7 @@ bool Tokenize(const std::string_view source, std::vector<Token>& tokensOut)
 
             const std::string_view tokenStr = source.substr(tokenStart.pos, cursor.pos - tokenStart.pos);
             tokensOut.emplace_back(TokenType::LIT_STRING, tokenStr, tokenStart.line, tokenStart.column);
-            break;
+            continue;
         }
         case '\'':
         {
@@ -423,7 +423,7 @@ bool Tokenize(const std::string_view source, std::vector<Token>& tokensOut)
 
             const std::string_view tokenStr = source.substr(tokenStart.pos, cursor.pos - tokenStart.pos);
             tokensOut.emplace_back(TokenType::LIT_RUNE, tokenStr, tokenStart.line, tokenStart.column);
-            break;
+            continue;
         }
         case '/':
             if (cursor.ConsumeIf('/'))
@@ -432,8 +432,11 @@ bool Tokenize(const std::string_view source, std::vector<Token>& tokensOut)
                 {
                     cursor.Consume();
                 }
+
+                continue;
             }
-            else if (cursor.ConsumeIf('*'))
+
+            if (cursor.ConsumeIf('*'))
             {
                 while (cursor.Peek() != '\0' && !(cursor.Peek() == '*' && cursor.Peek(1) == '/'))
                 {
@@ -446,7 +449,10 @@ bool Tokenize(const std::string_view source, std::vector<Token>& tokensOut)
                     printf("(%zu:%zu) Warning: Unterminated block comment\n", tokenStart.line, tokenStart.column);
                     fflush(stdout);
                 }
+
+                continue;
             }
+
             break;
         case '\\':
             if (!cursor.ConsumeIf('\r') && !cursor.ConsumeIf('\n'))
@@ -456,46 +462,45 @@ bool Tokenize(const std::string_view source, std::vector<Token>& tokensOut)
                 fflush(stderr);
                 return false;
             }
-            break;
+            continue;
         case '\n':
             tokensOut.emplace_back(TokenType::NEWLINE, "\n", tokenStart.line, tokenStart.column);
-            break;
+            continue;
         default:
-        {
-            if (std::isspace(tokenStart.Peek()))
-                continue;
-
-            const std::string_view tokenStr = source.substr(tokenStart.pos, cursor.pos - tokenStart.pos);
-            Token token(tokenStr, tokenStart.line, tokenStart.column);
-            if (token.type == TokenType::UNKNOWN)
-            {
-                // TODO: Properly log warning
-                printf("(%zu:%zu) Warning: Unknown token '%.*s'\n", token.line, token.column, static_cast<int>(tokenStr.size()), tokenStr.data());
-                fflush(stdout);
-                continue;
-            }
-
-            while (cursor.Peek() != '\0')
-            {
-                // Special case for integer literals followed by the range operator
-                // This prevents the lexer from treating "1..2" as the floats "1." and ".2"
-                if (token.type == TokenType::LIT_INTEGER && cursor.Peek() == '.' && cursor.Peek(1) == '.')
-                    break;
-
-                const std::string_view nextTokenStr = source.substr(tokenStart.pos, cursor.pos + 1 - tokenStart.pos);
-                const Token nextToken(nextTokenStr, tokenStart.line, tokenStart.column);
-
-                if (nextToken.type == TokenType::UNKNOWN)
-                    break;
-
-                token = nextToken;
-                cursor.Consume();
-            }
-
-            tokensOut.push_back(token);
             break;
         }
+
+        if (std::isspace(tokenStart.Peek()))
+            continue;
+
+        const std::string_view tokenStr = source.substr(tokenStart.pos, cursor.pos - tokenStart.pos);
+        Token token(tokenStr, tokenStart.line, tokenStart.column);
+        if (token.type == TokenType::UNKNOWN)
+        {
+            // TODO: Properly log warning
+            printf("(%zu:%zu) Warning: Unknown token '%.*s'\n", token.line, token.column, static_cast<int>(tokenStr.size()), tokenStr.data());
+            fflush(stdout);
+            continue;
         }
+
+        while (cursor.Peek() != '\0')
+        {
+            // Special case for integer literals followed by the range operator
+            // This prevents the lexer from treating "1..2" as the floats "1." and ".2"
+            if (token.type == TokenType::LIT_INTEGER && cursor.Peek() == '.' && cursor.Peek(1) == '.')
+                break;
+
+            const std::string_view nextTokenStr = source.substr(tokenStart.pos, cursor.pos + 1 - tokenStart.pos);
+            const Token nextToken(nextTokenStr, tokenStart.line, tokenStart.column);
+
+            if (nextToken.type == TokenType::UNKNOWN)
+                break;
+
+            token = nextToken;
+            cursor.Consume();
+        }
+
+        tokensOut.push_back(token);
     }
 
     tokensOut.emplace_back(TokenType::TOKEN_EOF, "", cursor.line, cursor.column);
