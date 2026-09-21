@@ -1,4 +1,6 @@
 #include "lexer/lexer.h"
+
+#include "parser/declarations.h"
 #include "parser/parser.h"
 
 #include "utility/cmdline.h"
@@ -6,23 +8,52 @@
 #include "utility/profiler.h"
 #include "utility/strings.h"
 
+#include <cassert>
 #include <format>
 #include <fstream>
 #include <iostream>
 
+enum class CompileStep : uint8_t
+{
+    Lexer,
+    Parser,
+    All
+};
+
 static struct
 {
+    CompileStep highestStep;
     bool printTokens;
     bool exportTokens;
+    bool printAST;
     bool exportAST;
 } s_cachedArgs;
 
+static CompileStep GetHighestCompileStep()
+{
+    CompileStep highestStep = CompileStep::All;
+
+    if (CmdLine_HasArg("--lex") || CmdLine_HasArg("-l"))
+        highestStep = CompileStep::Lexer;
+
+    if (CmdLine_HasArg("--parse") || CmdLine_HasArg("-p"))
+        highestStep = CompileStep::Parser;
+
+    return highestStep;
+}
+
 static void CacheCommonArgs()
 {
+    s_cachedArgs.highestStep = GetHighestCompileStep();
+
     const bool isVerbose = CmdLine_HasArg("--verbose") || CmdLine_HasArg("-V");
     const bool lexerOutput = CmdLine_HasArg("--lexer-output") || CmdLine_HasArg("-L");
     s_cachedArgs.printTokens = (isVerbose || lexerOutput) && !CmdLine_HasArg("--no-lexer-output");
     s_cachedArgs.exportTokens = CmdLine_HasArg("--export-tokens") || CmdLine_HasArg("-T");
+
+    const bool parserOutput = CmdLine_HasArg("--parser-output") || CmdLine_HasArg("-P");
+    s_cachedArgs.printAST = (isVerbose || parserOutput) && !CmdLine_HasArg("--no-parser-output");
+    s_cachedArgs.exportAST = CmdLine_HasArg("--export-ast") || CmdLine_HasArg("-A");
 }
 
 static void Lex(const std::string& path, std::string& source, std::vector<Token>& tokens)
@@ -71,6 +102,36 @@ static void Lex(const std::string& path, std::string& source, std::vector<Token>
     std::cout << std::endl;
 }
 
+static bool Parse(const std::string& path, const std::vector<Token>& tokens, Program& out)
+{
+    std::cout << "Parsing '" << path << "'..." << std::endl;
+    {
+        ProfileScope("Parsing");
+        if (!ParseProgram(tokens, out))
+            return false;
+    }
+
+    if (!s_cachedArgs.printAST && !s_cachedArgs.exportAST)
+        return true;
+
+    std::ofstream outputStream;
+    if (s_cachedArgs.exportAST)
+        outputStream.open(path + ".p", std::ios::out | std::ios::trunc);
+
+    {
+        ProfileScope("Printing AST");
+        if (s_cachedArgs.printAST)
+            std::cout << out << std::endl;
+
+        if (s_cachedArgs.exportAST)
+            outputStream << out << std::endl;
+    }
+
+    std::cout << std::endl;
+
+    return true;
+}
+
 int main(const int argc, char* argv[])
 {
     ScopeProfiler profiler("Execution");
@@ -85,6 +146,12 @@ int main(const int argc, char* argv[])
     for (const std::string& path : paths)
     {
         Lex(path, source, tokens);
+
+        if (s_cachedArgs.highestStep < CompileStep::Parser)
+            continue;
+
+        Program program;
+        Parse(path, tokens, program);
     }
 
     return 0;
