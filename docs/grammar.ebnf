@@ -267,7 +267,9 @@ slice_modifier = "[", ":", "]" ;
     - range_expression is only valid in contexts where ranges are permitted, such as for_loops and array literals, which is why they don't appear in the general expression rule.
 *)
 
-expression = postfix_expression | sizeof_expression ;
+expression = postfix_expression | make_expression | sizeof_expression ;
+
+make_expression = "make", type, [ construction_initializer ] ;
 
 sizeof_expression = "sizeof", "(", ( type | expression ), ")" ;
 
@@ -278,7 +280,6 @@ primary_expression = literal
     | identifier
     | parenthesized_expression
     | construction_expression
-    | make
     | unary_expression
     | binary_expression
     ;
@@ -302,8 +303,6 @@ parenthesized_expression = "(", expression, ")" ;
 construction_expression = type, construction_initializer ;
 
 construction_initializer = call ;
-
-make = "make", type, [ construction_initializer ] ;
 
 unary_expression = prefix_increment
     | prefix_decrement
