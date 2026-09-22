@@ -8,7 +8,6 @@
 #include "utility/profiler.h"
 #include "utility/strings.h"
 
-#include <cassert>
 #include <format>
 #include <fstream>
 #include <iostream>
