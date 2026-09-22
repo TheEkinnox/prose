@@ -1,0 +1,18 @@
+integer = 42
+floating = 3.14
+floating_no_left = .5
+floating_no_right = 42.
+
+boolean_true = true
+boolean_false = false
+nothing = null
+
+character = 'a'
+escaped_character = '\n'
+
+text = "hello"
+empty_text = ""
+
+array = [1, 2, 3]
+array_of_arrays = [[1, 2], [3, 4], [5, 6]]
+empty_array = []

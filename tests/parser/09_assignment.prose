@@ -1,0 +1,20 @@
+fn main
+    a = 1
+    a.member = 1
+
+    a += 1
+    a -= 1
+    a *= 2
+    a /= 2
+    a %= 2
+
+    a &= mask
+    a |= mask
+    a ^= mask
+
+    a <<= 2
+    a >>= 2
+
+    a = b = c = 42
+    d : i32 = a += 1
+end

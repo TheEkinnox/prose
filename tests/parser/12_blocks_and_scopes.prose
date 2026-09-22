@@ -1,0 +1,11 @@
+fn main
+    x = 1
+
+    scope
+        y = 2
+
+        scope
+            z = x + y
+        end
+    end
+end

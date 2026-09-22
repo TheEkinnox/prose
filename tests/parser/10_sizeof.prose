@@ -1,0 +1,6 @@
+a = sizeof(i32)
+b = sizeof(byte[4])
+c = sizeof(value)
+d = sizeof(array[0])
+e = sizeof(MyType[6])
+f = sizeof(foo().member)

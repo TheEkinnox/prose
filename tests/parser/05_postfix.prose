@@ -1,0 +1,17 @@
+a = foo()
+b = foo(1, 2, 3)
+
+c = array[0]
+d = array[index + 1]
+
+e = array[1:3]
+f = array[:3]
+g = array[1:]
+h = array[:]
+
+i = object.member
+
+j = foo().member
+k = foo()[0]
+l = foo()[0].member
+m = objects[index].member.foo()

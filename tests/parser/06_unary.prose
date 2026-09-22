@@ -1,0 +1,17 @@
+a = -value
+b = !condition
+c = ~flags
+d = @value
+e = move value
+
+f = ++counter
+g = --counter
+
+h = counter++
+i = counter--
+
+j = -array[0]
+k = !foo().enabled
+l = @array[index]
+m = move objects[index]
+n = ++object.member

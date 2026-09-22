@@ -1,0 +1,5 @@
+x = 42
+y : i32
+z : i32 = 10
+const a = 5
+const b : u8 = 12

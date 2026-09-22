@@ -1,0 +1,13 @@
+a : i32
+b : MyType
+
+ptr : i32*
+ref : i32&
+
+dynamic : byte[]
+fixed : byte[16]
+slice : byte[:]
+
+complex : u8[]*
+other : MyType*[4]
+view : MyType&[:]
