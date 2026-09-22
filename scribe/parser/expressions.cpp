@@ -134,7 +134,14 @@ struct BindingPower
     ValueT left;
     ValueT right;
 
-    BindingPower(const ValueT max) : left(max - .1f), right(max)
+    BindingPower(const ValueT value, const bool isLeftAssociative)
+    {
+        const float precedenceAdjustment = isLeftAssociative ? .1f : -.1f;
+        left = value;
+        right = value + precedenceAdjustment;
+    }
+
+    BindingPower(const ValueT value) : BindingPower(value, true)
     {
     }
 };
@@ -142,7 +149,7 @@ struct BindingPower
 static std::optional<BindingPower> GetInfixBindingPower(const TokenType type)
 {
     if (IsAssignmentOperator(type))
-        return { 1.f };
+        return BindingPower{ 1.f, false };
 
     switch (type)
     {
