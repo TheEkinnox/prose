@@ -10,7 +10,7 @@ else()
             -Wno-unused-macros
             -Wno-reserved-macro-identifier
             -Wno-c++98-compat -Wno-c++98-compat-pedantic
-            -Wno-covered-switch-default
+            -Wno-switch-enum
             -Wno-gnu-zero-variadic-macro-arguments
             -Wno-unsafe-buffer-usage
             -Wno-unknown-pragmas
