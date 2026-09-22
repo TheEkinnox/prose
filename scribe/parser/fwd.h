@@ -1,8 +1,6 @@
 #pragma once
 #include <cstdint>
 
-using ParserDepthT = uint8_t;
-
 struct Token;
 struct Type;
 
@@ -12,3 +10,12 @@ struct Statement;
 struct Declaration;
 struct Expression;
 struct Postfix;
+
+using ParserDepthT = uint8_t;
+
+enum class ParseResult : uint8_t
+{
+    Failure,
+    Success,
+    None
+};

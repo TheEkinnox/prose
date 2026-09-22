@@ -2,6 +2,7 @@
 #include "lexer/lexer.h"
 
 #include "parser/statements.h"
+#include "parser/postfix.h"
 #include "parser/types.h"
 
 #include <memory>
@@ -74,8 +75,8 @@ struct SizeOfExpression : Expression
 
     union
     {
-        std::unique_ptr<Expression> expression = nullptr;
-        Token type;
+        std::unique_ptr<Expression> value = nullptr;
+        Type type;
     };
 
     ~SizeOfExpression() override;
@@ -83,4 +84,6 @@ struct SizeOfExpression : Expression
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };
 
-bool ParseExpression(TokenStream& stream, std::unique_ptr<Expression>& out);
+ParseResult ParseExpression(TokenStream& stream, std::unique_ptr<Expression>& out);
+bool RequireExpression(TokenStream& stream, std::unique_ptr<Expression>& out, bool allowRange);
+bool RequireExpression(TokenStream& stream, std::unique_ptr<Expression>& out);

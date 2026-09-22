@@ -43,14 +43,12 @@ bool ParseProgram(const std::vector<Token>& tokens, Program& out)
 
     while (!stream.Is(TokenType::TOKEN_EOF))
     {
-        if (!stream.Is(TokenType::KW_END) && IsTerminator(stream.Peek().type))
-        {
-            stream.Consume();
+        Token token;
+        if (!stream.Is(TokenType::KW_END) && stream.ConsumeIf(IsTerminator, token))
             continue;
-        }
 
         std::unique_ptr<Declaration> declaration;
-        if (!ParseDeclaration(stream, declaration))
+        if (!RequireDeclaration(stream, declaration))
             return false;
 
         out.declarations.emplace_back(std::move(declaration));

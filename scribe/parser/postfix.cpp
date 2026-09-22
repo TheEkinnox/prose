@@ -90,7 +90,7 @@ bool ParseCallPostfix(TokenStream& stream, std::unique_ptr<Postfix>& out)
     while (token.type != TokenType::RPAREN)
     {
         std::unique_ptr<Expression> argument;
-        if (!ParseExpression(stream, argument))
+        if (!RequireExpression(stream, argument))
             return false;
 
         call.arguments.emplace_back(std::move(argument));
@@ -121,7 +121,7 @@ static bool ParseIndexOrSlicePostfix(TokenStream& stream, std::unique_ptr<Postfi
     token = stream.Peek();
 
     std::unique_ptr<Expression> indexOrFirst;
-    if (token.type != TokenType::COLON && !ParseExpression(stream, indexOrFirst))
+    if (token.type != TokenType::COLON && !RequireExpression(stream, indexOrFirst) )
         return false;
 
     if (stream.ConsumeIf(TokenType::COLON, token))
@@ -129,7 +129,7 @@ static bool ParseIndexOrSlicePostfix(TokenStream& stream, std::unique_ptr<Postfi
         token = stream.Peek();
 
         std::unique_ptr<Expression> last;
-        if (token.type != TokenType::RBRACKET && !ParseExpression(stream, last))
+        if (token.type != TokenType::RBRACKET && !RequireExpression(stream, last) )
             return false;
 
         out = std::make_unique<Slice>(std::move(indexOrFirst), std::move(last));

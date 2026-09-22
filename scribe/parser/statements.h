@@ -1,7 +1,11 @@
 #pragma once
 #include "parser/fwd.h"
+#include "parser/token_stream.h"
 
 #include <iosfwd>
+#include <memory>
+#include <optional>
+#include <vector>
 
 struct Statement
 {
@@ -12,3 +16,39 @@ struct Statement
 
     virtual std::ostream& Print(std::ostream& os, ParserDepthT depth) const = 0;
 };
+
+struct Block
+{
+    std::vector<std::unique_ptr<Statement>> statements;
+
+    std::ostream& Print(std::ostream& os, ParserDepthT depth) const;
+};
+
+struct ConditionalBlock
+{
+    std::unique_ptr<Expression> condition;
+    Block block;
+
+    std::ostream& Print(std::ostream& os, ParserDepthT depth) const;
+};
+
+struct IfStatement : Statement
+{
+    ConditionalBlock mainBranch;
+    std::vector<ConditionalBlock> conditionalBranches;
+    std::optional<Block> defaultBranch;
+
+    std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
+};
+
+struct ScopeStatement : Statement
+{
+    Block block;
+
+    std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
+};
+
+bool ParseBlock(TokenStream& stream, Block& out);
+bool ParseBlock(TokenStream& stream, Block& out, const TokenStream::ConditionFunc& exitCondition);
+ParseResult ParseStatement(TokenStream& stream, std::unique_ptr<Statement>& out);
+bool RequireStatement(TokenStream& stream, std::unique_ptr<Statement>& out);

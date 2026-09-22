@@ -20,9 +20,9 @@ std::ostream& PostfixExpression::Print(std::ostream& os, ParserDepthT depth) con
     return os;
 }
 
-std::ostream& LiteralExpression::Print(std::ostream& os, const ParserDepthT depth) const
+std::ostream& LiteralExpression::Print(std::ostream& os, ParserDepthT depth) const
 {
-    PrintAtDepth(os, depth, token) << '\n';
+    PrintAtDepth(os, depth++, token) << '\n';
     return PostfixExpression::Print(os, depth);
 }
 
@@ -110,14 +110,21 @@ SizeOfExpression::~SizeOfExpression()
     if (isBuiltInType)
         return;
 
-    expression.reset();
+    value.reset();
 }
 
 std::ostream& SizeOfExpression::Print(std::ostream& os, ParserDepthT depth) const
 {
     PrintAtDepth(os, depth++, "SizeOfExpression") << '\n';
-    PrintAtDepth(os, depth, "Expression: ") << '\n';
-    return expression->Print(os, depth + 1);
+
+    if (isBuiltInType)
+    {
+        PrintAtDepth(os, depth, "Type:") << '\n';
+        return type.Print(os, depth + 1);
+    }
+
+    PrintAtDepth(os, depth, "Value:") << '\n';
+    return value->Print(os, depth + 1);
 }
 
 struct BindingPower
@@ -132,13 +139,15 @@ struct BindingPower
     }
 };
 
-static std::optional<BindingPower> GetInfixBindingPower(const Token& token)
+static std::optional<BindingPower> GetInfixBindingPower(const TokenType type)
 {
-    if (IsAssignmentOperator(token.type))
+    if (IsAssignmentOperator(type))
         return { 1.f };
 
-    switch (token.type)
+    switch (type)
     {
+    case TokenType::OP_RANGE:
+        return { -1.f };
     case TokenType::OP_LOGICAL_OR:
         return { 2.f };
     case TokenType::OP_LOGICAL_AND:
@@ -168,7 +177,6 @@ static std::optional<BindingPower> GetInfixBindingPower(const Token& token)
     case TokenType::OP_MOD:
         return { 11.f };
     default:
-        LogError(token, "Expected infix operator");
         return std::nullopt;
     }
 }
@@ -181,7 +189,13 @@ static bool ParseArrayLiteralExpression(TokenStream& stream, std::unique_ptr<Exp
     if (!stream.Expect(TokenType::LBRACKET, token))
         return false;
 
-    ArrayLiteralExpression arrLit;
+    if (stream.ConsumeIf(TokenType::RBRACKET, token))
+    {
+        out = std::make_unique<ArrayLiteralExpression>();
+        return true;
+    }
+
+    ArrayLiteralExpression arrLit{};
     while (!stream.Is(TokenType::RBRACKET))
     {
         if (stream.Is(TokenType::TOKEN_EOF))
@@ -191,23 +205,19 @@ static bool ParseArrayLiteralExpression(TokenStream& stream, std::unique_ptr<Exp
         }
 
         std::unique_ptr<Expression> element;
-        if (!ParseExpression(stream, element))
+        if (!RequireExpression(stream, element, true))
             return false;
 
         arrLit.elements.emplace_back(std::move(element));
 
-        if (stream.Is(TokenType::COMMA))
-        {
-            stream.Consume();
-        }
-        else if (!stream.Is(TokenType::RBRACKET))
-        {
-            LogError(token, "Expected ',' or ']'");
+        const auto isCommaOrRBracket = [](const TokenType type) { return type == TokenType::COMMA || type == TokenType::RBRACKET; };
+        if (!stream.Expect(isCommaOrRBracket, token, "Expected ',' or ']'"))
             return false;
-        }
+
+        if (token.type == TokenType::RBRACKET)
+            break;
     }
 
-    stream.Consume();
     out = std::make_unique<ArrayLiteralExpression>(std::move(arrLit));
     return true;
 }
@@ -217,16 +227,11 @@ static bool ParseUnaryExpression(TokenStream& stream, std::unique_ptr<Expression
     out = nullptr;
     Token token = stream.Peek();
 
-    if (!IsUnaryOperator(token.type))
-    {
-        LogError(token, "Expected unary operator");
+    if (!stream.Expect(IsUnaryOperator, token, "Expected unary operator"))
         return false;
-    }
-
-    stream.Consume();
 
     std::unique_ptr<Expression> operand;
-    if (!ParseExpression(stream, operand))
+    if (!RequireExpression(stream, operand) )
         return false;
 
     out = std::make_unique<UnaryExpression>(token, std::move(operand));
@@ -236,14 +241,14 @@ static bool ParseUnaryExpression(TokenStream& stream, std::unique_ptr<Expression
 static bool ParseParenthesizedExpression(TokenStream& stream, std::unique_ptr<Expression>& out)
 {
     Token token;
-    return stream.Expect(TokenType::LPAREN, token) && ParseExpression(stream, out) && stream.Expect(TokenType::RPAREN, token);
+    return stream.Expect(TokenType::LPAREN, token) && RequireExpression(stream, out) && stream.Expect(TokenType::RPAREN, token);
 }
 
 static bool ParseConstructionExpression(TokenStream& stream, std::unique_ptr<Expression>& out)
 {
     out = nullptr;
 
-    ConstructionExpression construct;
+    ConstructionExpression construct{};
     if (!ParseType(stream, construct.type))
         return false;
 
@@ -254,7 +259,7 @@ static bool ParseConstructionExpression(TokenStream& stream, std::unique_ptr<Exp
         return false;
 
     Call* callPtr = dynamic_cast<Call*>(call.get());
-    if (callPtr != nullptr)
+    if (callPtr)
     {
         construct.arguments = std::move(callPtr->arguments);
     }
@@ -302,29 +307,31 @@ static bool ParseSizeofExpression(TokenStream& stream, std::unique_ptr<Expressio
 
     if (sizeOfExpr->isBuiltInType)
     {
-        stream.Consume();
-        stream.Consume();
+        stream.Consume(); // LParen
+
+        if (!ParseType(stream, sizeOfExpr->type))
+            return false;
 
         if (!stream.Expect(TokenType::RPAREN, token))
             return false;
     }
-    else if (!ParseParenthesizedExpression(stream, sizeOfExpr->expression))
+    else if (!ParseParenthesizedExpression(stream, sizeOfExpr->value))
         return false;
 
     out = std::move(sizeOfExpr);
     return true;
 }
 
-static bool ParseExpression(TokenStream& stream, std::unique_ptr<Expression>& out, const BindingPower::ValueT minBindingPower)
+static bool RequireExpression(TokenStream& stream, std::unique_ptr<Expression>& out, BindingPower::ValueT minBindingPower);
+
+static ParseResult ParseExpression(TokenStream& stream, std::unique_ptr<Expression>& out, const BindingPower::ValueT minBindingPower)
 {
     out = nullptr;
     Token token = stream.Peek();
 
     std::unique_ptr<Expression> lhs;
-    if (IsLiteral(token.type) || token.type == TokenType::IDENTIFIER)
+    if (stream.ConsumeIf(IsLiteral, token) || stream.ConsumeIf(TokenType::IDENTIFIER, token))
     {
-        stream.Consume();
-
         LiteralExpression lit;
         lit.token = token;
         lhs = std::make_unique<LiteralExpression>(std::move(lit));
@@ -332,41 +339,40 @@ static bool ParseExpression(TokenStream& stream, std::unique_ptr<Expression>& ou
     else if (token.type == TokenType::LBRACKET)
     {
         if (!ParseArrayLiteralExpression(stream, lhs))
-            return false;
+            return ParseResult::Failure;
     }
     else if (token.type == TokenType::LPAREN)
     {
         if (!ParseParenthesizedExpression(stream, lhs))
-            return false;
+            return ParseResult::Failure;
     }
     else if (IsOperator(token.type))
     {
         if (!ParseUnaryExpression(stream, lhs))
-            return false;
+            return ParseResult::Failure;
     }
     else if (IsBuiltInType(token.type))
     {
         if (!ParseConstructionExpression(stream, lhs))
-            return false;
+            return ParseResult::Failure;
     }
     else if (token.type == TokenType::KW_MAKE)
     {
         if (!ParseMakeExpression(stream, lhs))
-            return false;
+            return ParseResult::Failure;
     }
     else if (token.type == TokenType::KW_SIZEOF)
     {
         if (!ParseSizeofExpression(stream, lhs))
-            return false;
+            return ParseResult::Failure;
     }
     else
     {
-        LogError(token, "Expected expression");
-        return false;
+        return ParseResult::None;
     }
 
     auto postfixLhs = dynamic_cast<PostfixExpression*>(lhs.get());
-    if (postfixLhs != nullptr)
+    if (postfixLhs)
     {
         std::unique_ptr<Postfix> postfix;
         while (ParsePostfix(stream, postfix))
@@ -379,33 +385,55 @@ static bool ParseExpression(TokenStream& stream, std::unique_ptr<Expression>& ou
         if (!IsOperator(token.type))
             break;
 
-        const std::optional<BindingPower> bp = GetInfixBindingPower(token);
+        const std::optional<BindingPower> bindingPower = GetInfixBindingPower(token.type);
+        if (!bindingPower)
+        {
+            LogError(token, "Expected infix operator");
+            return ParseResult::Failure;
+        }
 
-        if (!bp)
-            return false;
-
-        if (bp->left < minBindingPower)
+        if (bindingPower->left < minBindingPower)
             break;
 
         stream.Consume();
         std::unique_ptr<Expression> rhs;
-        if (!ParseExpression(stream, rhs, bp->right))
-            return false;
+        if (!RequireExpression(stream, rhs, bindingPower->right))
+            return ParseResult::Failure;
 
         lhs = std::make_unique<BinaryExpression>(token, std::move(lhs), std::move(rhs));
     }
 
-    if (lhs == nullptr)
-    {
-        LogError(token, "Expected expression");
-        return false;
-    }
+    if (!lhs)
+        return ParseResult::Failure;
 
     out = std::move(lhs);
-    return true;
+    return ParseResult::Success;
 }
 
-bool ParseExpression(TokenStream& stream, std::unique_ptr<Expression>& out)
+static bool RequireExpression(TokenStream& stream, std::unique_ptr<Expression>& out, const BindingPower::ValueT minBindingPower)
 {
-    return ParseExpression(stream, out, 0.f);
+    const ParseResult result = ParseExpression(stream, out, minBindingPower);
+    if (result == ParseResult::Success)
+        return true;
+
+    if (result == ParseResult::None)
+        LogError(stream.Peek(), "Expected expression");
+
+    return false;
+}
+
+ParseResult ParseExpression(TokenStream& stream, std::unique_ptr<Expression>& out)
+{
+    return ParseExpression(stream, out, 0);
+}
+
+bool RequireExpression(TokenStream& stream, std::unique_ptr<Expression>& out, const bool allowRange)
+{
+    static const BindingPower rangeBindingPower = *GetInfixBindingPower(TokenType::OP_RANGE);
+    return RequireExpression(stream, out, allowRange ? rangeBindingPower.left - .1f : rangeBindingPower.right + .1f);
+}
+
+bool RequireExpression(TokenStream& stream, std::unique_ptr<Expression>& out)
+{
+    return RequireExpression(stream, out, false);
 }

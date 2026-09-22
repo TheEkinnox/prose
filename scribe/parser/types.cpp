@@ -2,7 +2,6 @@
 
 #include "parser/expressions.h"
 #include "parser/parser.h"
-#include "parser/postfix.h"
 #include "parser/token_stream.h"
 
 #include "utility/strings.h"
@@ -30,16 +29,12 @@ std::ostream& Type::Print(std::ostream& os, const ParserDepthT depth) const
 {
     PrintAtDepth(os, depth, "Base: ") << base.value << '\n';
 
-    PrintAtDepth(os, depth, "Modifiers: ");
+    PrintAtDepth(os, depth, "Modifiers:");
     if (modifiers.empty())
-    {
-        os << "None";
-    }
-    else
-    {
-        for (const auto& modifier : modifiers)
-            modifier->Print(os << '\n', depth + 1);
-    }
+        return os << " None";
+
+    for (const auto& modifier : modifiers)
+        modifier->Print(os << '\n', depth + 1);
 
     return os;
 }
@@ -80,7 +75,7 @@ static bool ParseModifier(TokenStream& stream, std::unique_ptr<TypeModifier>& ou
         {
             std::unique_ptr<Expression> arrSize;
 
-            if (!ParseExpression(stream, arrSize) || !stream.Expect(TokenType::RBRACKET, token))
+            if (!RequireExpression(stream, arrSize)  || !stream.Expect(TokenType::RBRACKET, token))
                 return false;
 
             out = std::make_unique<FixedArrayModifier>(std::move(arrSize));
@@ -93,15 +88,10 @@ static bool ParseModifier(TokenStream& stream, std::unique_ptr<TypeModifier>& ou
 bool ParseType(TokenStream& stream, Type& out)
 {
     Type type;
-    Token token = stream.Peek();
 
-    if (!IsBuiltInType(token.type) && token.type != TokenType::IDENTIFIER)
-    {
-        LogError(token, "Expected built-in type or identifier");
+    const auto checkFunc = [](const TokenType t) { return t == TokenType::IDENTIFIER || IsBuiltInType(t); };
+    if (!stream.Expect(checkFunc, type.base, "Expected built-in type or identifier"))
         return false;
-    }
-
-    type.base = stream.Consume();
 
     std::unique_ptr<TypeModifier> modifier;
     while (ParseModifier(stream, modifier))

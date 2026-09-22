@@ -31,6 +31,11 @@ bool TokenStream::Is(const TokenType type) const
     return Peek().type == type;
 }
 
+bool TokenStream::Match(const ConditionFunc& func) const
+{
+    return func(Peek().type);
+}
+
 const Token& TokenStream::Consume()
 {
     const Token& token = Peek();
@@ -52,6 +57,17 @@ bool TokenStream::ConsumeIf(const TokenType type, Token& out)
     return false;
 }
 
+bool TokenStream::ConsumeIf(const ConditionFunc& func, Token& out)
+{
+    if (Match(func))
+    {
+        out = Consume();
+        return true;
+    }
+
+    return false;
+}
+
 bool TokenStream::Expect(const TokenType type, Token& out)
 {
     if (ConsumeIf(type, out))
@@ -60,5 +76,16 @@ bool TokenStream::Expect(const TokenType type, Token& out)
     }
 
     LogError(Peek(), "Expected " + std::string(type._to_string()));
+    return false;
+}
+
+bool TokenStream::Expect(const ConditionFunc& func, Token& out, const std::string_view message)
+{
+    if (ConsumeIf(func, out))
+    {
+        return true;
+    }
+
+    LogError(Peek(), message);
     return false;
 }
