@@ -68,13 +68,14 @@ static bool ParseConditionalBlock(TokenStream& stream, ConditionalBlock& out, co
     if (!stream.Expect(TokenType::KW_IF, token))
         return false;
 
+    const Token ifToken = token;
     if (!RequireExpression(stream, out.condition))
         return false;
 
     if (!stream.Expect(IsTerminator, token, "Expected terminator"))
         return false;
 
-    if (!ParseBlock(stream, out.body, exitCondition))
+    if (!ParseBlock(stream, out.body, ifToken, exitCondition))
         return false;
 
     return true;
@@ -84,12 +85,12 @@ static bool ParseIfStatement(TokenStream& stream, std::unique_ptr<Statement>& ou
 {
     out = nullptr;
 
-    bool parseElseBranch = false;
-    const auto branchExitFunc = [&parseElseBranch](const TokenType t)
+    Token elseToken{};
+    const auto branchExitFunc = [&elseToken, &stream](const TokenType t)
     {
         if (t == TokenType::KW_ELSE)
         {
-            parseElseBranch = true;
+            elseToken = stream.Peek();
             return true;
         }
 
@@ -100,9 +101,10 @@ static bool ParseIfStatement(TokenStream& stream, std::unique_ptr<Statement>& ou
     if (!ParseConditionalBlock(stream, statement.mainBranch, branchExitFunc))
         return false;
 
-    while (parseElseBranch)
+    while (elseToken)
     {
-        parseElseBranch = false;
+        const Token elseStartToken = elseToken;
+        elseToken = {};
 
         if (stream.Is(TokenType::KW_IF))
         {
@@ -121,7 +123,7 @@ static bool ParseIfStatement(TokenStream& stream, std::unique_ptr<Statement>& ou
         else
         {
             Block block{};
-            if (!ParseBlock(stream, block, branchExitFunc))
+            if (!ParseBlock(stream, block, elseStartToken, branchExitFunc))
                 return false;
 
             statement.defaultBranch = std::move(block);
@@ -141,20 +143,20 @@ static bool ParseScopeStatement(TokenStream& stream, std::unique_ptr<Statement>&
         return false;
 
     ScopeStatement statement{};
-    if (!ParseBlock(stream, statement.body))
+    if (!ParseBlock(stream, statement.body, token))
         return false;
 
     out = std::make_unique<ScopeStatement>(std::move(statement));
     return true;
 }
 
-bool ParseBlock(TokenStream& stream, Block& out)
+bool ParseBlock(TokenStream& stream, Block& out, const Token& start)
 {
     const auto isEnd = [](const TokenType t) { return t == TokenType::KW_END; };
-    return ParseBlock(stream, out, isEnd);
+    return ParseBlock(stream, out, start, isEnd);
 }
 
-bool ParseBlock(TokenStream& stream, Block& out, const TokenStream::ConditionFunc& exitCondition)
+bool ParseBlock(TokenStream& stream, Block& out, const Token& start, const TokenStream::ConditionFunc& exitCondition)
 {
     out.statements.clear();
 
@@ -172,7 +174,7 @@ bool ParseBlock(TokenStream& stream, Block& out, const TokenStream::ConditionFun
 
             if (token.type == TokenType::TOKEN_EOF)
             {
-                LogError(stream.Peek(), "Unclosed block");
+                LogError(stream.Peek(), "Unclosed '" + std::string(start.value) + "' block at " + std::to_string(start.line) + ":" + std::to_string(start.column));
                 return false;
             }
 

@@ -128,6 +128,7 @@ static bool ParseFunctionDeclaration(TokenStream& stream, std::unique_ptr<Declar
     if (!stream.Expect(TokenType::KW_FN, token))
         return false;
 
+    const Token fnToken = token;
     FunctionDeclaration function{};
     if (!stream.Expect(TokenType::IDENTIFIER, function.name))
         return false;
@@ -166,7 +167,7 @@ static bool ParseFunctionDeclaration(TokenStream& stream, std::unique_ptr<Declar
 
     if (token.type != TokenType::KW_END)
     {
-        if (!ParseBlock(stream, function.body))
+        if (!ParseBlock(stream, function.body, fnToken))
             return false;
     }
 

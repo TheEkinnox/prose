@@ -48,7 +48,7 @@ struct ScopeStatement : Statement
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };
 
-bool ParseBlock(TokenStream& stream, Block& out);
-bool ParseBlock(TokenStream& stream, Block& out, const TokenStream::ConditionFunc& exitCondition);
+bool ParseBlock(TokenStream& stream, Block& out, const Token& start);
+bool ParseBlock(TokenStream& stream, Block& out, const Token& start, const TokenStream::ConditionFunc& exitCondition);
 ParseResult ParseStatement(TokenStream& stream, std::unique_ptr<Statement>& out);
 bool RequireStatement(TokenStream& stream, std::unique_ptr<Statement>& out);
