@@ -179,7 +179,7 @@ static bool IsIdentifier(const std::string_view token)
     if (token.empty())
         return false;
 
-    if (!std::isalpha(token[0]))
+    if (!std::isalpha(token[0]) && token[0] != '_')
         return false;
 
     return token.size() == 1 || std::ranges::all_of(token.substr(1), [](const char c)
