@@ -12,10 +12,18 @@ void LogError(const Token& token, const std::string_view message)
     // TODO: Properly handle parser errors
     std::cerr << '(' << token.line << ':' << token.column << ") Unexpected ";
 
-    if (token.type == TokenType::TOKEN_EOF)
+    switch (token.type)
+    {
+    case TokenType::TOKEN_EOF:
         std::cerr << "end of file";
-    else
+        break;
+    case TokenType::NEWLINE:
+        std::cerr << "newline";
+        break;
+    default:
         std::cerr << "token '" << token.value << '\'';
+        break;
+    }
 
     if (!message.empty())
         std::cerr << ". " << message;
