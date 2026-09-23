@@ -1,4 +1,6 @@
 #pragma once
+#include "lexer/lexer.h"
+
 #include "parser/fwd.h"
 #include "parser/token_stream.h"
 
@@ -52,6 +54,16 @@ struct WhileStatement : Statement
 struct RepeatStatement : Statement
 {
     std::unique_ptr<Expression> condition;
+    Block body;
+
+    std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
+};
+
+struct ForStatement : Statement
+{
+    Token iterator;
+    bool isRef;
+    std::unique_ptr<Expression> range;
     Block body;
 
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;

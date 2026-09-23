@@ -1,0 +1,17 @@
+fn main
+    for i in 0..10
+        process(i)
+    end
+
+    for value in array
+        process(value)
+    end
+
+    for value& in array
+        value++
+    end
+
+    for i in first + 1..last - 1
+        process(i)
+    end
+end

@@ -73,6 +73,18 @@ std::ostream& RepeatStatement::Print(std::ostream& os, ParserDepthT depth) const
     return body.Print(os, depth + 1);
 }
 
+std::ostream& ForStatement::Print(std::ostream& os, ParserDepthT depth) const
+{
+    PrintAtDepth(os, depth++, "ForStatement") << '\n';
+    PrintAtDepth(os, depth, "Iterator:") << '\n';
+    PrintAtDepth(os, depth + 1, "Name: ") << iterator.value << '\n';
+    PrintAtDepth(os, depth + 1, "Is Ref: ") << (isRef ? "true" : "false") << '\n';
+    PrintAtDepth(os, depth, "Range:") << '\n';
+    range->Print(os, depth + 1) << '\n';
+    PrintAtDepth(os, depth, "Body:") << '\n';
+    return body.Print(os, depth + 1);
+}
+
 std::ostream& ScopeStatement::Print(std::ostream& os, ParserDepthT depth) const
 {
     PrintAtDepth(os, depth++, "ScopeStatement") << '\n';
@@ -197,6 +209,35 @@ static bool ParseRepeatStatement(TokenStream& stream, std::unique_ptr<Statement>
     return true;
 }
 
+static bool ParseForStatement(TokenStream& stream, std::unique_ptr<Statement>& out)
+{
+    out = nullptr;
+
+    Token token;
+    if (!stream.Expect(TokenType::KW_FOR, token))
+        return false;
+
+    const Token forToken = token;
+    ForStatement statement{};
+    if (!stream.Expect(TokenType::IDENTIFIER, statement.iterator))
+        return false;
+
+    if (stream.ConsumeIf(TokenType::OP_BITWISE_AND, token))
+        statement.isRef = true;
+
+    if (!stream.Expect(TokenType::KW_IN, token))
+        return false;
+
+    if (!RequireExpression(stream, statement.range, true))
+        return false;
+
+    if (!ParseBlock(stream, statement.body, forToken))
+        return false;
+
+    out = std::make_unique<ForStatement>(std::move(statement));
+    return true;
+}
+
 static bool ParseScopeStatement(TokenStream& stream, std::unique_ptr<Statement>& out)
 {
     out = nullptr;
@@ -277,6 +318,8 @@ ParseResult ParseStatement(TokenStream& stream, std::unique_ptr<Statement>& out)
         return ParseWhileStatement(stream, out) ? ParseResult::Success : ParseResult::Failure;
     case TokenType::KW_REPEAT:
         return ParseRepeatStatement(stream, out) ? ParseResult::Success : ParseResult::Failure;
+    case TokenType::KW_FOR:
+        return ParseForStatement(stream, out) ? ParseResult::Success : ParseResult::Failure;
     case TokenType::KW_SCOPE:
         return ParseScopeStatement(stream, out) ? ParseResult::Success : ParseResult::Failure;
     default:

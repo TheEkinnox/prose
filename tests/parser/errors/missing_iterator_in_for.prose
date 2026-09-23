@@ -1,0 +1,4 @@
+fn main
+    for in 0..10
+    end
+end
