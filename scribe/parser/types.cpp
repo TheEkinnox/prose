@@ -97,7 +97,7 @@ bool ParseType(TokenStream& stream, Type& out)
     while (ParseModifier(stream, modifier))
         type.modifiers.emplace_back(std::move(modifier));
 
-    if (type.base.type != TokenType::UNKNOWN)
+    if (type.base)
         out = std::move(type);
 
     return true;

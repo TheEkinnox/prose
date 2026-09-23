@@ -352,6 +352,11 @@ Token::Token(const TokenType p_type, const std::string_view p_value, const size_
     assert(p_type == TokenType::TOKEN_EOF || !p_value.empty());
 }
 
+Token::operator bool() const
+{
+    return type != TokenType::UNKNOWN;
+}
+
 std::ostream& Token::Print(std::ostream& os) const
 {
     return os << type._to_string() << (value.empty() ? "" : "(" + std::string(value) + ")");
