@@ -27,7 +27,7 @@ struct Block
 struct ConditionalBlock
 {
     std::unique_ptr<Expression> condition;
-    Block block;
+    Block body;
 
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const;
 };
@@ -43,7 +43,7 @@ struct IfStatement : Statement
 
 struct ScopeStatement : Statement
 {
-    Block block;
+    Block body;
 
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };

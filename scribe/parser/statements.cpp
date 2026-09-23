@@ -25,8 +25,8 @@ std::ostream& ConditionalBlock::Print(std::ostream& os, ParserDepthT depth) cons
 {
     PrintAtDepth(os, depth, "Condition:") << '\n';
     condition->Print(os, depth + 1) << '\n';
-    PrintAtDepth(os, depth, "Block:") << '\n';
-    return block.Print(os, depth + 1);
+    PrintAtDepth(os, depth, "Body:") << '\n';
+    return body.Print(os, depth + 1);
 }
 
 std::ostream& IfStatement::Print(std::ostream& os, ParserDepthT depth) const
@@ -56,13 +56,13 @@ std::ostream& IfStatement::Print(std::ostream& os, ParserDepthT depth) const
 std::ostream& ScopeStatement::Print(std::ostream& os, ParserDepthT depth) const
 {
     PrintAtDepth(os, depth++, "ScopeStatement") << '\n';
-    return block.Print(os, depth);
+    return body.Print(os, depth);
 }
 
 static bool ParseConditionalBlock(TokenStream& stream, ConditionalBlock& out, const TokenStream::ConditionFunc& exitCondition)
 {
     out.condition = nullptr;
-    out.block = Block{};
+    out.body = Block{};
 
     Token token;
     if (!stream.Expect(TokenType::KW_IF, token))
@@ -74,7 +74,7 @@ static bool ParseConditionalBlock(TokenStream& stream, ConditionalBlock& out, co
     if (!stream.Expect(IsTerminator, token, "Expected terminator"))
         return false;
 
-    if (!ParseBlock(stream, out.block, exitCondition))
+    if (!ParseBlock(stream, out.body, exitCondition))
         return false;
 
     return true;
@@ -141,7 +141,7 @@ static bool ParseScopeStatement(TokenStream& stream, std::unique_ptr<Statement>&
         return false;
 
     ScopeStatement statement{};
-    if (!ParseBlock(stream, statement.block))
+    if (!ParseBlock(stream, statement.body))
         return false;
 
     out = std::make_unique<ScopeStatement>(std::move(statement));
