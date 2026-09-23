@@ -1,0 +1,26 @@
+fn main
+    // With body
+    while condition
+        work()
+    end
+
+    repeat
+        work()
+    until finished end
+
+    repeat
+        work()
+    until finished
+    end
+
+    // Empty body
+    while condition
+    end
+
+    repeat
+    until finished end
+
+    repeat
+    until finished
+    end
+end

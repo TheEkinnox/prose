@@ -41,6 +41,22 @@ struct IfStatement : Statement
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };
 
+struct WhileStatement : Statement
+{
+    std::unique_ptr<Expression> condition;
+    Block body;
+
+    std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
+};
+
+struct RepeatStatement : Statement
+{
+    std::unique_ptr<Expression> condition;
+    Block body;
+
+    std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
+};
+
 struct ScopeStatement : Statement
 {
     Block body;

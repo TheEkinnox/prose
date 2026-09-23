@@ -53,6 +53,26 @@ std::ostream& IfStatement::Print(std::ostream& os, ParserDepthT depth) const
     return os << " None";
 }
 
+std::ostream& WhileStatement::Print(std::ostream& os, ParserDepthT depth) const
+{
+    PrintAtDepth(os, depth++, "WhileStatement") << '\n';
+    PrintAtDepth(os, depth, "Condition:") << '\n';
+    condition->Print(os, depth + 1) << '\n';
+
+    PrintAtDepth(os, depth, "Body:") << '\n';
+    return body.Print(os, depth + 1);
+}
+
+std::ostream& RepeatStatement::Print(std::ostream& os, ParserDepthT depth) const
+{
+    PrintAtDepth(os, depth++, "RepeatStatement") << '\n';
+    PrintAtDepth(os, depth, "Condition:") << '\n';
+    condition->Print(os, depth + 1) << '\n';
+
+    PrintAtDepth(os, depth, "Body:") << '\n';
+    return body.Print(os, depth + 1);
+}
+
 std::ostream& ScopeStatement::Print(std::ostream& os, ParserDepthT depth) const
 {
     PrintAtDepth(os, depth++, "ScopeStatement") << '\n';
@@ -134,6 +154,49 @@ static bool ParseIfStatement(TokenStream& stream, std::unique_ptr<Statement>& ou
     return true;
 }
 
+static bool ParseWhileStatement(TokenStream& stream, std::unique_ptr<Statement>& out)
+{
+    out = nullptr;
+
+    Token token;
+    if (!stream.Expect(TokenType::KW_WHILE, token))
+        return false;
+
+    WhileStatement statement{};
+    const Token whileToken = token;
+    if (!RequireExpression(stream, statement.condition))
+        return false;
+
+    if (!ParseBlock(stream, statement.body, whileToken))
+        return false;
+
+    out = std::make_unique<WhileStatement>(std::move(statement));
+    return true;
+}
+
+static bool ParseRepeatStatement(TokenStream& stream, std::unique_ptr<Statement>& out)
+{
+    out = nullptr;
+
+    Token token;
+    if (!stream.Expect(TokenType::KW_REPEAT, token))
+        return false;
+
+    RepeatStatement statement{};
+    const auto isUntil = [](const TokenType t) { return t == TokenType::KW_UNTIL; };
+    if (!ParseBlock(stream, statement.body, token, isUntil))
+        return false;
+
+    if (!RequireExpression(stream, statement.condition))
+        return false;
+
+    if (stream.ConsumeIf(IsTerminator, token) && token.type != TokenType::KW_END && !stream.Expect(TokenType::KW_END, token))
+        return false;
+
+    out = std::make_unique<RepeatStatement>(std::move(statement));
+    return true;
+}
+
 static bool ParseScopeStatement(TokenStream& stream, std::unique_ptr<Statement>& out)
 {
     out = nullptr;
@@ -210,6 +273,10 @@ ParseResult ParseStatement(TokenStream& stream, std::unique_ptr<Statement>& out)
     {
     case TokenType::KW_IF:
         return ParseIfStatement(stream, out) ? ParseResult::Success : ParseResult::Failure;
+    case TokenType::KW_WHILE:
+        return ParseWhileStatement(stream, out) ? ParseResult::Success : ParseResult::Failure;
+    case TokenType::KW_REPEAT:
+        return ParseRepeatStatement(stream, out) ? ParseResult::Success : ParseResult::Failure;
     case TokenType::KW_SCOPE:
         return ParseScopeStatement(stream, out) ? ParseResult::Success : ParseResult::Failure;
     default:
