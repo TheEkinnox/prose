@@ -1,0 +1,17 @@
+fn main : i32
+    while condition
+        if should_skip
+            continue
+        end
+
+        if should_stop
+            break
+        end
+    end
+
+    return 42
+end
+
+fn voidReturn
+    return
+end

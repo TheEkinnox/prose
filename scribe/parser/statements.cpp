@@ -110,6 +110,24 @@ std::ostream& SwitchStatement::Print(std::ostream& os, ParserDepthT depth) const
     return os << " None";
 }
 
+std::ostream& ControlStatement::Print(std::ostream& os, ParserDepthT depth) const
+{
+    return PrintAtDepth(os, depth, type._to_string());
+}
+
+ReturnStatement::ReturnStatement(std::unique_ptr<Expression>&& p_value) : ControlStatement(ControlStatementType::Return), value(std::move(p_value))
+{
+}
+
+std::ostream& ReturnStatement::Print(std::ostream& os, ParserDepthT depth) const
+{
+    ControlStatement::Print(os, depth++);
+    if (value)
+        return value->Print(os << '\n', depth);
+
+    return os << ": None";
+}
+
 std::ostream& ScopeStatement::Print(std::ostream& os, ParserDepthT depth) const
 {
     PrintAtDepth(os, depth++, "ScopeStatement") << '\n';
@@ -345,6 +363,22 @@ static bool ParseSwitchStatement(TokenStream& stream, std::unique_ptr<Statement>
     return true;
 }
 
+static bool ParseReturnStatement(TokenStream& stream, std::unique_ptr<Statement>& out)
+{
+    out = nullptr;
+
+    Token token;
+    if (!stream.Expect(TokenType::KW_RETURN, token))
+        return false;
+
+    std::unique_ptr<Expression> value;
+    if (ParseExpression(stream, value) == ParseResult::Failure)
+        return false;
+
+    out = std::make_unique<ReturnStatement>(std::move(value));
+    return true;
+}
+
 static bool ParseScopeStatement(TokenStream& stream, std::unique_ptr<Statement>& out)
 {
     out = nullptr;
@@ -428,6 +462,16 @@ ParseResult ParseStatement(TokenStream& stream, std::unique_ptr<Statement>& out)
         return ParseForStatement(stream, out) ? ParseResult::Success : ParseResult::Failure;
     case TokenType::KW_SWITCH:
         return ParseSwitchStatement(stream, out) ? ParseResult::Success : ParseResult::Failure;
+    case TokenType::KW_RETURN:
+        return ParseReturnStatement(stream, out) ? ParseResult::Success : ParseResult::Failure;
+    case TokenType::KW_BREAK:
+        stream.Consume();
+        out = std::make_unique<ControlStatement>(ControlStatementType::Break);
+        return ParseResult::Success;
+    case TokenType::KW_CONTINUE:
+        stream.Consume();
+        out = std::make_unique<ControlStatement>(ControlStatementType::Continue);
+        return ParseResult::Success;
     case TokenType::KW_SCOPE:
         return ParseScopeStatement(stream, out) ? ParseResult::Success : ParseResult::Failure;
     default:

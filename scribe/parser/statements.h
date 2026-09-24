@@ -79,6 +79,32 @@ struct SwitchStatement : Statement
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };
 
+CLANG_IGNORE_WARNING_PUSH("-Wglobal-constructors")
+BETTER_ENUM(ControlStatementType, uint8_t,
+    Return,
+    Break,
+    Continue
+)
+CLANG_IGNORE_WARNING_POP
+
+struct ControlStatement : Statement
+{
+    ControlStatementType type;
+
+    explicit ControlStatement(const ControlStatementType p_type) : type(p_type) {}
+
+    std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
+};
+
+struct ReturnStatement : ControlStatement
+{
+    std::unique_ptr<Expression> value;
+
+    explicit ReturnStatement(std::unique_ptr<Expression>&& p_value);
+
+    std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
+};
+
 struct ScopeStatement : Statement
 {
     Block body;
