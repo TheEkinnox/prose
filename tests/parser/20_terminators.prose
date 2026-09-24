@@ -1,0 +1,19 @@
+fn newline
+    a = 1
+    b = 2
+    c = 3
+end
+
+fn semicolon
+    a = 1; b = 2; c = 3
+end
+
+fn mixed
+    a = 1; b = 2
+    c = 3; d = 4
+end
+
+fn end_terminator
+    value = 42 end
+
+fn short_form end

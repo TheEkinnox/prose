@@ -1,0 +1,9 @@
+fn main
+    result = first + \
+        second
+
+    foo( \
+        first, \
+        second \
+    )
+end
