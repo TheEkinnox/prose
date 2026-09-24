@@ -101,7 +101,6 @@ BETTER_ENUM(TokenType, uint8_t,
     COMMA,
     DOT,
     NEWLINE,
-    COMMENT,
     TOKEN_EOF
 );
 CLANG_IGNORE_WARNING_POP
