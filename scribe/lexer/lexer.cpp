@@ -225,39 +225,18 @@ static bool IsFloatLiteral(const std::string_view token)
     return true;
 }
 
-static bool IsRuneLiteral(const std::string_view token)
-{
-    if (token.size() < 3)
-        return false;
-
-    if (token.front() != '\'' || token.back() != '\'')
-        return false;
-
-    // Note: not validating the rune character itself - this will be handled with semantic analysis
-    return token.size() >= 3 && token.front() == '\'' && token.back() == '\'';
-}
-
-static bool IsStringLiteral(const std::string_view token)
-{
-    // Note: not validating the string's content - this will be handled with semantic analysis
-    return token.size() >= 2 && token.front() == '"' && token.back() == '"';
-}
-
-Token::Token(const std::string_view p_value, const size_t p_line, const size_t p_column) : type(TokenType::UNKNOWN), value(p_value), line(p_line), column(p_column)
+static bool MakeToken(Token& out, const std::string_view value, const size_t line, const size_t column)
 {
     if (value.empty())
-        return;
+        return false;
 
+    TokenType type = TokenType::UNKNOWN;
     if (!GetBuiltInType(value, type) && !GetKeyword(value, type) && IsIdentifier(value))
         type = TokenType::IDENTIFIER;
     else if (IsIntLiteral(value))
         type = TokenType::LIT_INTEGER;
     else if (IsFloatLiteral(value))
         type = TokenType::LIT_FLOATING_POINT;
-    else if (IsRuneLiteral(value))
-        type = TokenType::LIT_RUNE;
-    else if (IsStringLiteral(value))
-        type = TokenType::LIT_STRING;
     else if (value == "+")
         type = TokenType::OP_PLUS;
     else if (value == "-")
@@ -344,8 +323,12 @@ Token::Token(const std::string_view p_value, const size_t p_line, const size_t p
         type = TokenType::COMMA;
     else if (value == ".")
         type = TokenType::DOT;
-    else if (value == "\n")
-        type = TokenType::NEWLINE;
+
+    if (type == TokenType::UNKNOWN)
+        return false;
+
+    out = { type, value, line, column };
+    return true;
 }
 
 Token::Token(const TokenType p_type, const std::string_view p_value, const size_t p_line, const size_t p_column) : type(p_type), value(p_value), line(p_line), column(p_column)
@@ -496,8 +479,9 @@ bool Tokenize(const std::string_view source, std::vector<Token>& tokensOut)
             continue;
 
         const std::string_view tokenStr = source.substr(tokenStart.pos, cursor.pos - tokenStart.pos);
-        Token token(tokenStr, tokenStart.line, tokenStart.column);
-        if (token.type == TokenType::UNKNOWN)
+
+        Token token;
+        if (!MakeToken(token, tokenStr, tokenStart.line, tokenStart.column))
         {
             // TODO: Properly log warning
             printf("(%zu:%zu) Warning: Unknown token '%.*s'\n", token.line, token.column, static_cast<int>(tokenStr.size()), tokenStr.data());
@@ -513,12 +497,9 @@ bool Tokenize(const std::string_view source, std::vector<Token>& tokensOut)
                 break;
 
             const std::string_view nextTokenStr = source.substr(tokenStart.pos, cursor.pos + 1 - tokenStart.pos);
-            const Token nextToken(nextTokenStr, tokenStart.line, tokenStart.column);
-
-            if (nextToken.type == TokenType::UNKNOWN)
+            if (!MakeToken(token, nextTokenStr, tokenStart.line, tokenStart.column))
                 break;
 
-            token = nextToken;
             cursor.Consume();
         }
 

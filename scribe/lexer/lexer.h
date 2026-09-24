@@ -12,7 +12,6 @@ struct Token
     size_t column;
 
     Token() = default;
-    Token(std::string_view p_value, size_t p_line, size_t p_column);
     Token(TokenType p_type, std::string_view p_value, size_t p_line, size_t p_column);
 
     operator bool() const;
