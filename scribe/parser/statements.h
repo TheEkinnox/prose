@@ -26,12 +26,12 @@ struct Block
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const;
 };
 
-struct ConditionalBlock
+struct ConditionalBlock : Statement
 {
     std::unique_ptr<Expression> condition;
     Block body;
 
-    std::ostream& Print(std::ostream& os, ParserDepthT depth) const;
+    std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };
 
 struct IfStatement : Statement
@@ -43,19 +43,13 @@ struct IfStatement : Statement
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };
 
-struct WhileStatement : Statement
+struct WhileStatement : ConditionalBlock
 {
-    std::unique_ptr<Expression> condition;
-    Block body;
-
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };
 
-struct RepeatStatement : Statement
+struct RepeatStatement : ConditionalBlock
 {
-    std::unique_ptr<Expression> condition;
-    Block body;
-
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };
 

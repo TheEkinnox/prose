@@ -56,21 +56,13 @@ std::ostream& IfStatement::Print(std::ostream& os, ParserDepthT depth) const
 std::ostream& WhileStatement::Print(std::ostream& os, ParserDepthT depth) const
 {
     PrintAtDepth(os, depth++, "WhileStatement") << '\n';
-    PrintAtDepth(os, depth, "Condition:") << '\n';
-    condition->Print(os, depth + 1) << '\n';
-
-    PrintAtDepth(os, depth, "Body:") << '\n';
-    return body.Print(os, depth + 1);
+    return ConditionalBlock::Print(os, depth);
 }
 
 std::ostream& RepeatStatement::Print(std::ostream& os, ParserDepthT depth) const
 {
     PrintAtDepth(os, depth++, "RepeatStatement") << '\n';
-    PrintAtDepth(os, depth, "Condition:") << '\n';
-    condition->Print(os, depth + 1) << '\n';
-
-    PrintAtDepth(os, depth, "Body:") << '\n';
-    return body.Print(os, depth + 1);
+    return ConditionalBlock::Print(os, depth);
 }
 
 std::ostream& ForStatement::Print(std::ostream& os, ParserDepthT depth) const
@@ -91,23 +83,28 @@ std::ostream& ScopeStatement::Print(std::ostream& os, ParserDepthT depth) const
     return body.Print(os, depth);
 }
 
-static bool ParseConditionalBlock(TokenStream& stream, ConditionalBlock& out, const TokenStream::ConditionFunc& exitCondition)
+static bool IsEnd(const TokenType t)
+{
+    return t == TokenType::KW_END;
+}
+
+static bool ParseConditionalBlock(TokenStream& stream, ConditionalBlock& out, const TokenType type, const TokenStream::ConditionFunc& exitCondition)
 {
     out.condition = nullptr;
     out.body = Block{};
 
     Token token;
-    if (!stream.Expect(TokenType::KW_IF, token))
+    if (!stream.Expect(type, token))
         return false;
 
-    const Token ifToken = token;
+    const Token startToken = token;
     if (!RequireExpression(stream, out.condition))
         return false;
 
     if (!stream.Expect(IsTerminator, token, "Expected terminator"))
         return false;
 
-    if (!ParseBlock(stream, out.body, ifToken, exitCondition))
+    if (!ParseBlock(stream, out.body, startToken, exitCondition))
         return false;
 
     return true;
@@ -130,7 +127,7 @@ static bool ParseIfStatement(TokenStream& stream, std::unique_ptr<Statement>& ou
     };
 
     IfStatement statement{};
-    if (!ParseConditionalBlock(stream, statement.mainBranch, branchExitFunc))
+    if (!ParseConditionalBlock(stream, statement.mainBranch, TokenType::KW_IF, branchExitFunc))
         return false;
 
     while (elseToken)
@@ -147,7 +144,7 @@ static bool ParseIfStatement(TokenStream& stream, std::unique_ptr<Statement>& ou
             }
 
             ConditionalBlock conditionalBranch{};
-            if (!ParseConditionalBlock(stream, conditionalBranch, branchExitFunc))
+            if (!ParseConditionalBlock(stream, conditionalBranch, TokenType::KW_IF, branchExitFunc))
                 return false;
 
             statement.conditionalBranches.emplace_back(std::move(conditionalBranch));
@@ -170,16 +167,8 @@ static bool ParseWhileStatement(TokenStream& stream, std::unique_ptr<Statement>&
 {
     out = nullptr;
 
-    Token token;
-    if (!stream.Expect(TokenType::KW_WHILE, token))
-        return false;
-
     WhileStatement statement{};
-    const Token whileToken = token;
-    if (!RequireExpression(stream, statement.condition))
-        return false;
-
-    if (!ParseBlock(stream, statement.body, whileToken))
+    if (!ParseConditionalBlock(stream, statement, TokenType::KW_WHILE, IsEnd))
         return false;
 
     out = std::make_unique<WhileStatement>(std::move(statement));
@@ -256,8 +245,7 @@ static bool ParseScopeStatement(TokenStream& stream, std::unique_ptr<Statement>&
 
 bool ParseBlock(TokenStream& stream, Block& out, const Token& start)
 {
-    const auto isEnd = [](const TokenType t) { return t == TokenType::KW_END; };
-    return ParseBlock(stream, out, start, isEnd);
+    return ParseBlock(stream, out, start, IsEnd);
 }
 
 bool ParseBlock(TokenStream& stream, Block& out, const Token& start, const TokenStream::ConditionFunc& exitCondition)
