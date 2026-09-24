@@ -1,0 +1,32 @@
+fn main
+    // Full
+    switch value
+        case 1
+            func1()
+        case 2
+            func2()
+        default
+            funcDefault()
+    end
+
+    // Case-only
+    switch value
+        case 1
+            func1()
+        case 2
+            func2()
+    end
+
+    // Default-only
+    switch value
+        default
+            funcDefault()
+    end
+
+    // Empty blocks
+    switch value
+        case 1
+        case 2
+        default
+    end
+end

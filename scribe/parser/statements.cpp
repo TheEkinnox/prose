@@ -10,6 +10,8 @@
 #include "parser/token_stream.h"
 #include "utility/strings.h"
 
+#include <cassert>
+
 std::ostream& Block::Print(std::ostream& os, const ParserDepthT depth) const
 {
     if (statements.empty())
@@ -77,6 +79,29 @@ std::ostream& ForStatement::Print(std::ostream& os, ParserDepthT depth) const
     return body.Print(os, depth + 1);
 }
 
+std::ostream& SwitchStatement::Print(std::ostream& os, ParserDepthT depth) const
+{
+    PrintAtDepth(os, depth++, "SwitchStatement") << '\n';
+    PrintAtDepth(os, depth, "Expression:") << '\n';
+    expression->Print(os, depth + 1) << '\n';
+    PrintAtDepth(os, depth, "Cases:");
+    if (!cases.empty())
+    {
+        for (const auto& branch : cases)
+            branch.Print(os << '\n', depth + 1);
+    }
+    else
+    {
+        os << " None";
+    }
+
+    PrintAtDepth(os << '\n', depth, "Default:");
+    if (defaultBranch)
+        return defaultBranch->Print(os << '\n', depth + 1);
+
+    return os << " None";
+}
+
 std::ostream& ScopeStatement::Print(std::ostream& os, ParserDepthT depth) const
 {
     PrintAtDepth(os, depth++, "ScopeStatement") << '\n';
@@ -88,6 +113,22 @@ static bool IsEnd(const TokenType t)
     return t == TokenType::KW_END;
 }
 
+static bool ParseConditionalBlock(TokenStream& stream, ConditionalBlock& out, const Token& startToken, const TokenStream::ConditionFunc& exitCondition)
+{
+    assert(startToken);
+    if (!RequireExpression(stream, out.condition))
+        return false;
+
+    Token token;
+    if (!stream.Expect(IsTerminator, token, "Expected terminator"))
+        return false;
+
+    if (!ParseBlock(stream, out.body, startToken, exitCondition))
+        return false;
+
+    return true;
+}
+
 static bool ParseConditionalBlock(TokenStream& stream, ConditionalBlock& out, const TokenType type, const TokenStream::ConditionFunc& exitCondition)
 {
     out.condition = nullptr;
@@ -97,17 +138,7 @@ static bool ParseConditionalBlock(TokenStream& stream, ConditionalBlock& out, co
     if (!stream.Expect(type, token))
         return false;
 
-    const Token startToken = token;
-    if (!RequireExpression(stream, out.condition))
-        return false;
-
-    if (!stream.Expect(IsTerminator, token, "Expected terminator"))
-        return false;
-
-    if (!ParseBlock(stream, out.body, startToken, exitCondition))
-        return false;
-
-    return true;
+    return ParseConditionalBlock(stream, out, token, exitCondition);
 }
 
 static bool ParseIfStatement(TokenStream& stream, std::unique_ptr<Statement>& out)
@@ -227,6 +258,70 @@ static bool ParseForStatement(TokenStream& stream, std::unique_ptr<Statement>& o
     return true;
 }
 
+static bool ParseSwitchStatement(TokenStream& stream, std::unique_ptr<Statement>& out)
+{
+    out = nullptr;
+
+    Token token;
+    if (!stream.Expect(TokenType::KW_SWITCH, token))
+        return false;
+
+    SwitchStatement statement{};
+    if (!RequireExpression(stream, statement.expression) || !stream.Expect(IsTerminator, token, "Expected terminator"))
+        return false;
+
+    if (token.type == TokenType::KW_END)
+    {
+        LogError(token, "Expected case or default");
+        return false;
+    }
+
+    const auto caseExitFunc = [&token, &stream](const TokenType t)
+    {
+        token = stream.Peek();
+        return t == TokenType::KW_CASE || t == TokenType::KW_DEFAULT || t == TokenType::KW_END;
+    };
+
+    const bool hasCases = stream.ConsumeIf(TokenType::KW_CASE, token);
+    while (token.type == TokenType::KW_CASE)
+    {
+        ConditionalBlock conditionalBlock;
+        if (!ParseConditionalBlock(stream, conditionalBlock, token, caseExitFunc))
+            return false;
+
+        statement.cases.emplace_back(std::move(conditionalBlock));
+    }
+
+    if (!hasCases)
+    {
+        token = stream.Peek(); // Necessary for proper error reporting
+        stream.ConsumeIf(TokenType::KW_DEFAULT, token);
+    }
+
+    if (token.type == TokenType::KW_DEFAULT)
+    {
+        Block block{};
+        if (!ParseBlock(stream, block, token, caseExitFunc))
+            return false;
+
+        if (token.type != TokenType::KW_END)
+        {
+            LogError(token, "Expected KW_END");
+            return false;
+        }
+
+        statement.defaultBranch = std::move(block);
+    }
+    else if (!hasCases)
+    {
+        LogError(token, "Expected case or default");
+        return false;
+    }
+
+    out = std::make_unique<SwitchStatement>(std::move(statement));
+    return true;
+}
+
 static bool ParseScopeStatement(TokenStream& stream, std::unique_ptr<Statement>& out)
 {
     out = nullptr;
@@ -308,6 +403,8 @@ ParseResult ParseStatement(TokenStream& stream, std::unique_ptr<Statement>& out)
         return ParseRepeatStatement(stream, out) ? ParseResult::Success : ParseResult::Failure;
     case TokenType::KW_FOR:
         return ParseForStatement(stream, out) ? ParseResult::Success : ParseResult::Failure;
+    case TokenType::KW_SWITCH:
+        return ParseSwitchStatement(stream, out) ? ParseResult::Success : ParseResult::Failure;
     case TokenType::KW_SCOPE:
         return ParseScopeStatement(stream, out) ? ParseResult::Success : ParseResult::Failure;
     default:

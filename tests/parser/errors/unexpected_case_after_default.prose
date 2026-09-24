@@ -1,0 +1,8 @@
+fn main
+    switch 1
+        default
+            foo()
+        case 1
+            bar()
+    end
+end

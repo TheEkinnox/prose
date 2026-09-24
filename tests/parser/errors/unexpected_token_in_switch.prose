@@ -1,0 +1,6 @@
+fn main
+    switch value
+        not_a_case
+        default
+    end
+end

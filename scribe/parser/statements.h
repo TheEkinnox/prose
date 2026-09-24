@@ -63,6 +63,15 @@ struct ForStatement : Statement
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };
 
+struct SwitchStatement : Statement
+{
+    std::unique_ptr<Expression> expression;
+    std::vector<ConditionalBlock> cases;
+    std::optional<Block> defaultBranch;
+
+    std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
+};
+
 struct ScopeStatement : Statement
 {
     Block body;
