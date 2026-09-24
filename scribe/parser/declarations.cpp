@@ -135,14 +135,30 @@ static bool ParseFunctionDeclaration(TokenStream& stream, std::unique_ptr<Declar
 
     if (stream.ConsumeIf(TokenType::LPAREN, token))
     {
+        bool isFirst = true;
+        bool hasDefault = false;
         while (!stream.Is(TokenType::RPAREN))
         {
+            if (!isFirst) // Prevents silently accepting parameter lists starting with a comma
+                stream.ConsumeIf(TokenType::COMMA, token);
+
             std::unique_ptr<Declaration> parameter;
             if (!RequireVariableDeclaration(stream, parameter))
                 return false;
 
             auto& parameterDecl = dynamic_cast<VariableDeclaration&>(*parameter);
+            if (parameterDecl.initializer)
+            {
+                hasDefault = true;
+            }
+            else if (hasDefault)
+            {
+                LogError(parameterDecl.name, "Defaulted parameters must be last");
+                return false;
+            }
+
             function.parameters.emplace_back(std::move(parameterDecl));
+            isFirst = false;
         }
 
         if (!stream.Expect(TokenType::RPAREN, token))

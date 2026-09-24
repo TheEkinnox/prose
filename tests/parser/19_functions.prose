@@ -1,0 +1,31 @@
+fn empty
+end
+
+fn explicit_empty()
+end
+
+fn returns_void() : void
+    return
+end
+
+fn one(a : i32)
+end
+
+fn many(a : i32, b : u8, const c : bool)
+end
+
+fn result(a : i32, b : i32) : i32
+    return a + b
+end
+
+fn defaults(a : i32, b : i32 = 10)
+end
+
+fn inferred_default(a : i32, enabled = true)
+end
+
+fn several_defaults(a : i32, b = 2, c = 3)
+end
+
+fn dependent(x : u8, y = x + 1)
+end
