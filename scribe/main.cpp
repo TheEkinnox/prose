@@ -84,12 +84,7 @@ static void Lex(const std::string& path, std::string& source, std::vector<Token>
 
         for (const Token& token : tokens)
         {
-            std::string sanitizedValue(token.value.begin(), token.value.end());
-            ReplaceAll(sanitizedValue, "\r", "\\r");
-            ReplaceAll(sanitizedValue, "\n", "\\n");
-            ReplaceAll(sanitizedValue, "\t", "\\t");
-
-            const std::string output = std::format(FMT_TOKEN, token.line, token.column, token.type._to_string(), sanitizedValue);
+            const std::string output = std::format(FMT_TOKEN, token.line, token.column, token.type._to_string(), token.GetValueString());
             if (s_cachedArgs.printTokens)
                 std::cout << output << '\n';
 

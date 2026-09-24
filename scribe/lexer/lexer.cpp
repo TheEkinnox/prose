@@ -1,5 +1,7 @@
 #include "lexer.h"
 
+#include "utility/strings.h"
+
 #include <algorithm>
 #include <cassert>
 #include <cctype>
@@ -357,9 +359,18 @@ Token::operator bool() const
     return type != TokenType::UNKNOWN;
 }
 
+std::string Token::GetValueString() const
+{
+    std::string sanitizedValue(value.begin(), value.end());
+    ReplaceAll(sanitizedValue, "\r", "\\r");
+    ReplaceAll(sanitizedValue, "\n", "\\n");
+    ReplaceAll(sanitizedValue, "\t", "\\t");
+    return sanitizedValue;
+}
+
 std::ostream& Token::Print(std::ostream& os) const
 {
-    return os << type._to_string() << (value.empty() ? "" : "(" + std::string(value) + ")");
+    return os << type._to_string() << (value.empty() ? "" : "(" + GetValueString() + ")");
 }
 
 bool Tokenize(const std::string_view source, std::vector<Token>& tokensOut)
