@@ -63,11 +63,18 @@ struct ForStatement : Statement
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };
 
+struct SwitchCase : ConditionalBlock
+{
+    bool isFallthrough;
+
+    std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
+};
+
 struct SwitchStatement : Statement
 {
     std::unique_ptr<Expression> expression;
-    std::vector<ConditionalBlock> cases;
-    std::optional<Block> defaultBranch;
+    std::vector<SwitchCase> cases;
+    std::optional<Block> fallback;
 
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };

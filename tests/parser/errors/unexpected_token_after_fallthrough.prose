@@ -1,0 +1,9 @@
+fn main
+    switch 1
+        case 1
+            fallthrough
+            func()
+        case 2
+            break
+    end
+end

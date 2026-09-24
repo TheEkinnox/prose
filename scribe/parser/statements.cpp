@@ -79,25 +79,33 @@ std::ostream& ForStatement::Print(std::ostream& os, ParserDepthT depth) const
     return body.Print(os, depth + 1);
 }
 
+std::ostream& SwitchCase::Print(std::ostream& os, ParserDepthT depth) const
+{
+    PrintAtDepth(os, depth, "Is Fallthrough: ") << (isFallthrough ? "true" : "false") << '\n';
+    return ConditionalBlock::Print(os, depth);
+}
+
 std::ostream& SwitchStatement::Print(std::ostream& os, ParserDepthT depth) const
 {
     PrintAtDepth(os, depth++, "SwitchStatement") << '\n';
     PrintAtDepth(os, depth, "Expression:") << '\n';
     expression->Print(os, depth + 1) << '\n';
-    PrintAtDepth(os, depth, "Cases:");
     if (!cases.empty())
     {
-        for (const auto& branch : cases)
-            branch.Print(os << '\n', depth + 1);
+        for (size_t i = 0; i < cases.size(); ++i)
+        {
+            PrintAtDepth(os, depth, "Case " + std::to_string(i) + ":") << '\n';
+            cases[i].Print(os, depth + 1) << '\n';
+        }
     }
     else
     {
-        os << " None";
+        PrintAtDepth(os, depth, "Cases: None") << '\n';
     }
 
-    PrintAtDepth(os << '\n', depth, "Default:");
-    if (defaultBranch)
-        return defaultBranch->Print(os << '\n', depth + 1);
+    PrintAtDepth(os, depth, "Default:");
+    if (fallback)
+        return fallback->Print(os << '\n', depth + 1);
 
     return os << " None";
 }
@@ -276,20 +284,40 @@ static bool ParseSwitchStatement(TokenStream& stream, std::unique_ptr<Statement>
         return false;
     }
 
-    const auto caseExitFunc = [&token, &stream](const TokenType t)
+    const auto isCaseDefaultOrEnd = [](const TokenType t)
+    {
+        return t == TokenType::KW_CASE || t == TokenType::KW_DEFAULT || t == TokenType::KW_END;
+    };
+
+    const auto caseExitFunc = [&isCaseDefaultOrEnd, &token, &stream](const TokenType t)
     {
         token = stream.Peek();
-        return t == TokenType::KW_CASE || t == TokenType::KW_DEFAULT || t == TokenType::KW_END;
+        return isCaseDefaultOrEnd(t) || t == TokenType::KW_FALLTHROUGH;
     };
 
     const bool hasCases = stream.ConsumeIf(TokenType::KW_CASE, token);
     while (token.type == TokenType::KW_CASE)
     {
-        ConditionalBlock conditionalBlock;
-        if (!ParseConditionalBlock(stream, conditionalBlock, token, caseExitFunc))
+        SwitchCase switchCase{};
+        if (!ParseConditionalBlock(stream, switchCase, token, caseExitFunc))
             return false;
 
-        statement.cases.emplace_back(std::move(conditionalBlock));
+        switchCase.isFallthrough = token.type == TokenType::KW_FALLTHROUGH;
+
+        if (switchCase.isFallthrough)
+        {
+            const Token fallthroughToken = token;
+            if (!stream.Expect(TokenType::TERMINATOR, token) || !stream.Expect(isCaseDefaultOrEnd, token, "Expected case, default or end"))
+                return false;
+
+            if (token.type == TokenType::KW_END)
+            {
+                LogError(fallthroughToken, "Invalid in last case");
+                return false;
+            }
+        }
+
+        statement.cases.emplace_back(std::move(switchCase));
     }
 
     if (!hasCases)
@@ -306,16 +334,11 @@ static bool ParseSwitchStatement(TokenStream& stream, std::unique_ptr<Statement>
 
         if (token.type != TokenType::KW_END)
         {
-            LogError(token, "Expected KW_END");
+            LogError(token, "Expected default case end");
             return false;
         }
 
-        statement.defaultBranch = std::move(block);
-    }
-    else if (!hasCases)
-    {
-        LogError(token, "Expected case or default");
-        return false;
+        statement.fallback = std::move(block);
     }
 
     out = std::make_unique<SwitchStatement>(std::move(statement));

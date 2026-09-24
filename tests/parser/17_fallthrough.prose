@@ -1,0 +1,14 @@
+fn main
+    switch value
+        case 1
+            prepare()
+            fallthrough
+        case 2
+            execute()
+        case 3
+            cleanup()
+            fallthrough
+        default
+            fallback()
+    end
+end

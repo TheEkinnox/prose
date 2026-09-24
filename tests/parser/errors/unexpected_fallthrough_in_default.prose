@@ -1,0 +1,7 @@
+fn main
+    switch value
+        case 1
+        default
+            fallthrough
+    end
+end
