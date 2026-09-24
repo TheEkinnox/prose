@@ -97,10 +97,9 @@ BETTER_ENUM(TokenType, uint8_t,
     LBRACKET,
     RBRACKET,
     COLON,
-    SEMICOLON,
     COMMA,
     DOT,
-    NEWLINE,
+    TERMINATOR,
     TOKEN_EOF
 );
 CLANG_IGNORE_WARNING_POP
@@ -139,5 +138,5 @@ inline bool IsUnaryOperator(const TokenType type)
 
 inline bool IsTerminator(const TokenType type)
 {
-    return type._enum == TokenType::SEMICOLON || type._enum == TokenType::NEWLINE || type._enum == TokenType::KW_END || type._enum == TokenType::TOKEN_EOF;
+    return type._enum == TokenType::TERMINATOR || type._enum == TokenType::KW_END || type._enum == TokenType::TOKEN_EOF;
 }

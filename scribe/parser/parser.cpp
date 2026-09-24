@@ -17,8 +17,8 @@ void LogError(const Token& token, const std::string_view message)
     case TokenType::TOKEN_EOF:
         std::cerr << "end of file";
         break;
-    case TokenType::NEWLINE:
-        std::cerr << "newline";
+    case TokenType::TERMINATOR:
+        std::cerr << "terminator '" << token.GetValueString() << '\'';
         break;
     default:
         std::cerr << "token '" << token.value << '\'';
@@ -52,7 +52,7 @@ bool ParseProgram(const std::vector<Token>& tokens, Program& out)
     while (!stream.Is(TokenType::TOKEN_EOF))
     {
         Token token;
-        if (!stream.Is(TokenType::KW_END) && stream.ConsumeIf(IsTerminator, token))
+        if (stream.ConsumeIf(TokenType::TERMINATOR, token))
             continue;
 
         std::unique_ptr<Declaration> declaration;

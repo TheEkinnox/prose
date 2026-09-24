@@ -317,8 +317,6 @@ static bool MakeToken(Token& out, const std::string_view value, const size_t lin
         type = TokenType::RBRACKET;
     else if (value == ":")
         type = TokenType::COLON;
-    else if (value == ";")
-        type = TokenType::SEMICOLON;
     else if (value == ",")
         type = TokenType::COMMA;
     else if (value == ".")
@@ -354,6 +352,15 @@ std::string Token::GetValueString() const
 std::ostream& Token::Print(std::ostream& os) const
 {
     return os << type._to_string() << (value.empty() ? "" : "(" + GetValueString() + ")");
+}
+
+static void PushTerminator(std::vector<Token>& tokensOut, const Cursor& cursor)
+{
+    if (tokensOut.empty() || tokensOut.back().type == TokenType::TERMINATOR)
+        return;
+
+    const std::string_view terminatorStr = cursor.Peek() == '\r' ? "\n" : cursor.source.substr(cursor.pos, 1);
+    tokensOut.emplace_back(TokenType::TERMINATOR, terminatorStr, cursor.line, cursor.column);
 }
 
 bool Tokenize(const std::string_view source, std::vector<Token>& tokensOut)
@@ -469,7 +476,8 @@ bool Tokenize(const std::string_view source, std::vector<Token>& tokensOut)
             }
             continue;
         case '\n':
-            tokensOut.emplace_back(TokenType::NEWLINE, "\n", tokenStart.line, tokenStart.column);
+        case ';':
+            PushTerminator(tokensOut, tokenStart);
             continue;
         default:
             break;

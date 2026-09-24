@@ -99,6 +99,8 @@ NEWLINE = "\r\n" | "\n" | "\r" ;
 
 block_comment = "/*", { ? any string ? }, "*/" ;
 
+TERMINATOR = NEWLINE | ";" ;
+
 (* - Semantic constraints - *)
 
 (* NOTE: The following grammar terms represent semantic categories rather than syntactic productions. Their validity is determined during semantic analysis. *)
@@ -109,7 +111,7 @@ callable_expression = expression ;
 
 (* - Top_Level grammar - *)
 
-program = { declaration, statement_terminator }, ? EOF ? ;
+program = { declaration, TERMINATOR }, ? EOF ? ;
 
 declaration = variable_declaration
     | function_declaration
@@ -120,7 +122,7 @@ declaration = variable_declaration
 
 variable_declaration = [ "const" ], identifier, ( ( [ ":", type ], "=", expression ) | ( ":", type, [ "=", expression ] ) ) ;
 
-function_declaration = "fn", identifier, [ "(", [ parameter_list ], ")" ], [ ":", type ], statement_terminator,
+function_declaration = "fn", identifier, [ "(", [ parameter_list ], ")" ], [ ":", type ], TERMINATOR,
     block,
     "end"
     ;
@@ -137,19 +139,17 @@ defaulted_parameter = [ "const" ], identifier, [ ":", type ], "=", expression ;
 
 (* NOTE: The grammar represents explicit statement terminators. As specified by the language, end may implicitly terminate the final statement of a block, and certain unambiguous line breaks may be omitted. These shortcuts are handled by the parser. *)
 
-block = { statement, statement_terminator } ;
+block = { statement, TERMINATOR } ;
 
-statement_terminator = NEWLINE | ";" ;
-
-type_declaration = "type", identifier, statement_terminator,
-    { type_member, statement_terminator },
+type_declaration = "type", identifier, TERMINATOR,
+    { type_member, TERMINATOR },
     "end"
     ;
 
 type_member = variable_declaration ;
 
-enum_declaration = "enum", identifier, [ ":", integer_type ], statement_terminator,
-    { enum_member, statement_terminator },
+enum_declaration = "enum", identifier, [ ":", integer_type ], TERMINATOR,
+    { enum_member, TERMINATOR },
     "end" ;
 
 enum_member = identifier, [ "=", constant_expression ] ;
@@ -172,35 +172,35 @@ statement = expression
     | scope_statement
     ;
 
-if_statement = "if", expression, statement_terminator,
+if_statement = "if", expression, TERMINATOR,
     block,
     {
-        "else", "if", expression, statement_terminator,
+        "else", "if", expression, TERMINATOR,
         block
     },
     [
-        "else", statement_terminator,
+        "else", TERMINATOR,
         block
     ],
     "end"
     ;
 
-while_statement = "while", expression, statement_terminator,
+while_statement = "while", expression, TERMINATOR,
     block,
     "end"
     ;
 
-repeat_statement = "repeat", statement_terminator,
+repeat_statement = "repeat", TERMINATOR,
     block,
-    "until", expression, [ statement_terminator ], "end"
+    "until", expression, [ TERMINATOR ], "end"
     ;
 
-for_statement = "for", identifier, [ "&" ], "in", ( expression | range_expression ), statement_terminator,
+for_statement = "for", identifier, [ "&" ], "in", ( expression | range_expression ), TERMINATOR,
     block,
     "end"
     ;
 
-switch_statement = "switch", expression, statement_terminator,
+switch_statement = "switch", expression, TERMINATOR,
     (
         ( switch_case, { switch_case }, [ default_case ] )
         | ( { switch_case }, default_case )
@@ -208,12 +208,12 @@ switch_statement = "switch", expression, statement_terminator,
     "end"
     ;
 
-switch_case = "case", expression, statement_terminator,
+switch_case = "case", expression, TERMINATOR,
     block,
-    [ fallthrough_statement, statement_terminator ]
+    [ fallthrough_statement, TERMINATOR ]
     ;
 
-default_case = "default", statement_terminator,
+default_case = "default", TERMINATOR,
     block
     ;
 
@@ -229,7 +229,7 @@ defer_statement = "defer", call_expression ;
 
 call_expression = callable_expression, call ;
 
-scope_statement = "scope", statement_terminator,
+scope_statement = "scope", TERMINATOR,
     block,
     "end"
     ;
