@@ -103,6 +103,14 @@ std::ostream& EnumDeclaration::Print(std::ostream& os, ParserDepthT depth) const
     return os;
 }
 
+std::ostream& AliasDeclaration::Print(std::ostream& os, ParserDepthT depth) const
+{
+    PrintAtDepth(os, depth++, "AliasDeclaration") << '\n';
+    PrintAtDepth(os, depth, "Name: ") << name.value << '\n';
+    PrintAtDepth(os, depth, "Type:\n");
+    return type.Print(os, depth + 1);
+}
+
 static ParseResult ParseVariableDeclaration(TokenStream& stream, std::unique_ptr<Declaration>& out)
 {
     VariableDeclaration variable{};
@@ -327,6 +335,28 @@ static bool ParseEnumDeclaration(TokenStream& stream, std::unique_ptr<Declaratio
     return true;
 }
 
+static bool ParseAliasDeclaration(TokenStream& stream, std::unique_ptr<Declaration>& out)
+{
+    out = nullptr;
+
+    Token token;
+    if (!stream.Expect(TokenType::KW_ALIAS, token))
+        return false;
+
+    AliasDeclaration alias{};
+    if (!stream.Expect(TokenType::IDENTIFIER, alias.name))
+        return false;
+
+    if (!stream.Expect(TokenType::OP_ASSIGN, token))
+        return false;
+
+    if (!ParseType(stream, alias.type))
+        return false;
+
+    out = std::make_unique<AliasDeclaration>(std::move(alias));
+    return true;
+}
+
 ParseResult ParseDeclaration(TokenStream& stream, std::unique_ptr<Declaration>& out)
 {
     switch (stream.Peek().type)
@@ -340,6 +370,8 @@ ParseResult ParseDeclaration(TokenStream& stream, std::unique_ptr<Declaration>& 
         return ParseTypeDeclaration(stream, out) ? ParseResult::Success : ParseResult::Failure;
     case TokenType::KW_ENUM:
         return ParseEnumDeclaration(stream, out) ? ParseResult::Success : ParseResult::Failure;
+    case TokenType::KW_ALIAS:
+        return ParseAliasDeclaration(stream, out) ? ParseResult::Success : ParseResult::Failure;
     default:
         return ParseResult::None;
     }

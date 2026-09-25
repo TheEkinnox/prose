@@ -55,5 +55,12 @@ struct EnumDeclaration : Declaration
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };
 
+struct AliasDeclaration : Declaration
+{
+    Type type;
+
+    std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
+};
+
 ParseResult ParseDeclaration(TokenStream& stream, std::unique_ptr<Declaration>& out);
 bool RequireDeclaration(TokenStream& stream, std::unique_ptr<Declaration>& out);

@@ -1,0 +1,6 @@
+alias Index = uptr
+alias BytePointer = byte*
+alias ByteArray = byte[]
+alias Matrix = i32[4][4]
+alias View = byte[:]
+alias ObjectPointer = MyType*
