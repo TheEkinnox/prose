@@ -105,6 +105,13 @@ struct ReturnStatement : ControlStatement
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };
 
+struct DeferStatement : Statement
+{
+    std::unique_ptr<PostfixExpression> call;
+
+    std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
+};
+
 struct ScopeStatement : Statement
 {
     Block body;

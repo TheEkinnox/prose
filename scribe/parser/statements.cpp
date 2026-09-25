@@ -1,16 +1,17 @@
 #include "statements.h"
 
-#include <utility>
-
-#include "declarations.h"
 #include "lexer/token_type.h"
 
+#include "parser/declarations.h"
 #include "parser/expressions.h"
 #include "parser/parser.h"
 #include "parser/token_stream.h"
+
 #include "utility/strings.h"
+#include "utility/memory.h"
 
 #include <cassert>
+#include <utility>
 
 std::ostream& Block::Print(std::ostream& os, const ParserDepthT depth) const
 {
@@ -126,6 +127,12 @@ std::ostream& ReturnStatement::Print(std::ostream& os, ParserDepthT depth) const
         return value->Print(os << '\n', depth);
 
     return os << ": None";
+}
+
+std::ostream& DeferStatement::Print(std::ostream& os, ParserDepthT depth) const
+{
+    PrintAtDepth(os, depth++, "DeferStatement") << '\n';
+    return call->Print(os, depth);
 }
 
 std::ostream& ScopeStatement::Print(std::ostream& os, ParserDepthT depth) const
@@ -379,6 +386,30 @@ static bool ParseReturnStatement(TokenStream& stream, std::unique_ptr<Statement>
     return true;
 }
 
+static bool ParseDeferStatement(TokenStream& stream, std::unique_ptr<Statement>& out)
+{
+    out = nullptr;
+
+    Token token;
+    if (!stream.Expect(TokenType::KW_DEFER, token))
+        return false;
+
+    std::unique_ptr<Expression> call;
+    if (!RequireExpression(stream, call))
+        return false;
+
+    DeferStatement statement{};
+    statement.call = dynamic_pointer_cast<PostfixExpression>(std::move(call));
+    if (!statement.call || statement.call->postfix.empty() || statement.call->postfix.back()->type != PostfixType::Call)
+    {
+        LogError(stream.Peek(), "Expected call expression");
+        return false;
+    }
+
+    out = std::make_unique<DeferStatement>(std::move(statement));
+    return true;
+}
+
 static bool ParseScopeStatement(TokenStream& stream, std::unique_ptr<Statement>& out)
 {
     out = nullptr;
@@ -472,6 +503,8 @@ ParseResult ParseStatement(TokenStream& stream, std::unique_ptr<Statement>& out)
         stream.Consume();
         out = std::make_unique<ControlStatement>(ControlStatementType::Continue);
         return ParseResult::Success;
+    case TokenType::KW_DEFER:
+        return ParseDeferStatement(stream, out) ? ParseResult::Success : ParseResult::Failure;
     case TokenType::KW_SCOPE:
         return ParseScopeStatement(stream, out) ? ParseResult::Success : ParseResult::Failure;
     default:

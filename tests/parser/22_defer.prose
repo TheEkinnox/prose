@@ -1,0 +1,5 @@
+fn main
+    defer cleanup()
+    defer log("finished")
+    defer object.shutdown()
+end
