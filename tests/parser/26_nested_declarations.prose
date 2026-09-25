@@ -1,0 +1,18 @@
+fn outer
+    x = 1
+
+    alias LocalInt = i32
+
+    type LocalType
+        value : LocalInt
+    end
+
+    enum LocalEnum
+        A
+        B
+    end
+
+    fn inner
+        y = 2
+    end
+end

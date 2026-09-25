@@ -1,0 +1,67 @@
+alias Index = uptr
+
+enum State : u8
+    Idle
+    Running
+    Stopped
+end
+
+type Counter
+    value : i32 = 0
+    state : State = State.Idle
+end
+
+fn increment(counter : Counter&, amount : i32 = 1)
+    counter.value += amount
+end
+
+fn process(values : i32[]) : i32
+    total : i32 = 0
+
+    defer cleanup()
+
+    for value& in values
+        if value < 0
+            continue
+        else if value == 0
+            value = 1
+        else
+            value++
+        end
+
+        total += value
+
+        if total >= 100
+            break
+        end
+    end
+
+    switch total
+        case 0
+            log("empty")
+            fallthrough
+
+        case 1
+            log("small")
+
+        default
+            log("large")
+    end
+
+    return total
+end
+
+fn main
+    values : i32[] = [1, 2, 3, 4]
+
+    result = process(values)
+
+    scope
+        copy = result
+        ptr = @copy
+
+        while copy > 0
+            copy--
+        end
+    end
+end

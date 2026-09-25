@@ -1,0 +1,8 @@
+fn main
+    a = objects[index + 1].child.getValue()
+    b = -objects[i].values[j] * 2
+    c = !foo().state.enabled
+    d = @objects[i].member
+    e = move objects[index]
+    f = foo(bar(1), baz(2)).items[3].value
+end
