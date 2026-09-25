@@ -55,17 +55,17 @@ static void CacheCommonArgs()
     s_cachedArgs.exportAST = CmdLine_HasArg("--export-ast") || CmdLine_HasArg("-A");
 }
 
-static void Lex(const std::string& path, std::string& source, std::vector<Token>& tokens)
+static bool Lex(const std::string& path, std::string& source, std::vector<Token>& tokens)
 {
     std::cout << "Tokenizing '" << path << "'..." << std::endl;
     {
         ProfileScope("Tokenization");
-        source = ReadFile(path);
-        Tokenize(source, tokens);
+        if (!ReadFile(path, source) || !Tokenize(source, tokens))
+            return false;
     }
 
     if (!s_cachedArgs.printTokens && !s_cachedArgs.exportTokens)
-        return;
+        return true;
 
     {
         ProfileScope("Printing tokens");
@@ -94,6 +94,7 @@ static void Lex(const std::string& path, std::string& source, std::vector<Token>
     }
 
     std::cout << std::endl;
+    return true;
 }
 
 static bool Parse(const std::string& path, const std::vector<Token>& tokens, Program& out)
@@ -122,7 +123,6 @@ static bool Parse(const std::string& path, const std::vector<Token>& tokens, Pro
     }
 
     std::cout << std::endl;
-
     return true;
 }
 
@@ -137,16 +137,23 @@ int main(const int argc, char* argv[])
     std::vector<Token> tokens;
     std::string source;
 
+    bool hasErrors = false;
+
     for (const std::string& path : paths)
     {
-        Lex(path, source, tokens);
+        if (!Lex(path, source, tokens))
+        {
+            hasErrors = true;
+            continue;
+        }
 
         if (s_cachedArgs.highestStep < CompileStep::Parser)
             continue;
 
         Program program;
-        Parse(path, tokens, program);
+        if (!Parse(path, tokens, program))
+            hasErrors = true;
     }
 
-    return 0;
+    return hasErrors ? -1 : 0;
 }

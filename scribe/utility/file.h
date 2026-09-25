@@ -1,4 +1,4 @@
 #pragma once
 #include <string>
 
-std::string ReadFile(const std::string& sourcePath);
+bool ReadFile(const std::string& sourcePath, std::string& out);
