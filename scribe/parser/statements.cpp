@@ -95,7 +95,7 @@ std::ostream& SwitchStatement::Print(std::ostream& os, ParserDepthT depth) const
     {
         for (size_t i = 0; i < cases.size(); ++i)
         {
-            PrintAtDepth(os, depth, "Case " + std::to_string(i) + ":") << '\n';
+            PrintAtDepth(os, depth, "Case ") << i << '\n';
             cases[i].Print(os, depth + 1) << '\n';
         }
     }
