@@ -1,0 +1,4 @@
+type T
+    fn noop
+    end
+end

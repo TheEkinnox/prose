@@ -1,0 +1,17 @@
+type Empty
+end
+
+type ExplicitTypes
+    x : i32
+    y : i32[]
+end
+
+type ImplicitTypes
+    x = 0
+    y = [ 0, 1, 2 ]
+end
+
+type ConstMembers
+    const x = 0
+    const y : i32 = 0
+end

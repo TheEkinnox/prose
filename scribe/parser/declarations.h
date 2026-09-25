@@ -32,5 +32,12 @@ struct FunctionDeclaration : Declaration
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };
 
+struct TypeDeclaration : Declaration
+{
+    std::vector<VariableDeclaration> members;
+
+    std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
+};
+
 ParseResult ParseDeclaration(TokenStream& stream, std::unique_ptr<Declaration>& out);
 bool RequireDeclaration(TokenStream& stream, std::unique_ptr<Declaration>& out);

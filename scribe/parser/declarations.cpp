@@ -56,6 +56,24 @@ std::ostream& FunctionDeclaration::Print(std::ostream& os, ParserDepthT depth) c
     return body.Print(os, depth + 1);
 }
 
+std::ostream& TypeDeclaration::Print(std::ostream& os, ParserDepthT depth) const
+{
+    PrintAtDepth(os, depth++, "TypeDeclaration") << '\n';
+    PrintAtDepth(os, depth, "Name: '") << name.value << "'\n";
+    PrintAtDepth(os, depth, "Members:");
+    if (!members.empty())
+    {
+        for (const auto& member : members)
+            member.Print(os << '\n', depth + 1);
+    }
+    else
+    {
+        os << " None";
+    }
+
+    return os;
+}
+
 static ParseResult ParseVariableDeclaration(TokenStream& stream, std::unique_ptr<Declaration>& out)
 {
     VariableDeclaration variable{};
@@ -191,6 +209,38 @@ static bool ParseFunctionDeclaration(TokenStream& stream, std::unique_ptr<Declar
     return true;
 }
 
+static bool ParseTypeDeclaration(TokenStream& stream, std::unique_ptr<Declaration>& out)
+{
+    out = nullptr;
+
+    Token token;
+    if (!stream.Expect(TokenType::KW_TYPE, token))
+        return false;
+
+    TypeDeclaration type{};
+    if (!stream.Expect(TokenType::IDENTIFIER, type.name) || !stream.Expect(IsTerminator, token, "Expected terminator"))
+        return false;
+
+    if (token.type == TokenType::TOKEN_EOF)
+    {
+        LogError(token, "Expected type member or end");
+        return false;
+    }
+
+    while (token.type != TokenType::KW_END && !stream.ConsumeIf(TokenType::KW_END, token))
+    {
+        std::unique_ptr<Declaration> member;
+        if (!RequireVariableDeclaration(stream, member))
+            return false;
+
+        stream.ConsumeIf(IsTerminator, token);
+        type.members.emplace_back(std::move(dynamic_cast<VariableDeclaration&>(*member)));
+    }
+
+    out = std::make_unique<TypeDeclaration>(std::move(type));
+    return true;
+}
+
 ParseResult ParseDeclaration(TokenStream& stream, std::unique_ptr<Declaration>& out)
 {
     switch (stream.Peek().type)
@@ -200,6 +250,8 @@ ParseResult ParseDeclaration(TokenStream& stream, std::unique_ptr<Declaration>& 
         return ParseVariableDeclaration(stream, out);
     case TokenType::KW_FN:
         return ParseFunctionDeclaration(stream, out) ? ParseResult::Success : ParseResult::Failure;
+    case TokenType::KW_TYPE:
+        return ParseTypeDeclaration(stream, out) ? ParseResult::Success : ParseResult::Failure;
     default:
         return ParseResult::None;
     }
