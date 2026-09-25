@@ -204,6 +204,7 @@ The full variable declaration syntax is `<var_name> [: <type>] [= <value>]`. How
 
 Notes:
 - A variable declaration must specify a type, an initializer, or both
+- If a typed variable is declared without an initializer, it is implicitly initialized with the type's default value
 - If the left-hand identifier of an assignment does not exist in the current scope, the assignment is treated as an inferred variable declaration
 
 Ex:
