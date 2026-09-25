@@ -188,6 +188,8 @@ static std::optional<BindingPower> GetInfixBindingPower(const TokenType type)
     }
 }
 
+static bool RequireExpression(TokenStream& stream, std::unique_ptr<Expression>& out, BindingPower::ValueT minBindingPower);
+
 static bool ParseArrayLiteralExpression(TokenStream& stream, std::unique_ptr<Expression>& out)
 {
     out = nullptr;
@@ -238,7 +240,7 @@ static bool ParseUnaryExpression(TokenStream& stream, std::unique_ptr<Expression
         return false;
 
     std::unique_ptr<Expression> operand;
-    if (!RequireExpression(stream, operand) )
+    if (!RequireExpression(stream, operand, FLT_MAX) )
         return false;
 
     out = std::make_unique<UnaryExpression>(token, std::move(operand));
