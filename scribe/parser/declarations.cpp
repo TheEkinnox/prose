@@ -74,6 +74,35 @@ std::ostream& TypeDeclaration::Print(std::ostream& os, ParserDepthT depth) const
     return os;
 }
 
+std::ostream& EnumElement::Print(std::ostream& os, const ParserDepthT depth) const
+{
+    PrintAtDepth(os, depth, "Name: ") << name.value << '\n';
+    PrintAtDepth(os, depth, "Initializer:");
+    if (initializer)
+        return initializer->Print(os << '\n', depth + 1);
+
+    return os << " None";
+}
+
+std::ostream& EnumDeclaration::Print(std::ostream& os, ParserDepthT depth) const
+{
+    PrintAtDepth(os, depth++, "EnumDeclaration") << '\n';
+    PrintAtDepth(os, depth, "Name: ") << name.value << '\n';
+    PrintAtDepth(os, depth, "Type:");
+    if (type)
+        type->Print(os << '\n', depth + 1);
+    else
+        os << " None";
+
+    for (size_t i = 0; i < elements.size(); ++i)
+    {
+        PrintAtDepth(os << '\n', depth, "Element ") << i << '\n';
+        elements[i].Print(os, depth + 1);
+    }
+
+    return os;
+}
+
 static ParseResult ParseVariableDeclaration(TokenStream& stream, std::unique_ptr<Declaration>& out)
 {
     VariableDeclaration variable{};
@@ -241,6 +270,63 @@ static bool ParseTypeDeclaration(TokenStream& stream, std::unique_ptr<Declaratio
     return true;
 }
 
+static bool ParseEnumDeclaration(TokenStream& stream, std::unique_ptr<Declaration>& out)
+{
+    out = nullptr;
+
+    Token token;
+    if (!stream.Expect(TokenType::KW_ENUM, token))
+        return false;
+
+    EnumDeclaration declaration{};
+    if (!stream.Expect(TokenType::IDENTIFIER, declaration.name))
+        return false;
+
+    if (stream.ConsumeIf(TokenType::COLON, token))
+    {
+        Type type{};
+        if (!ParseType(stream, type))
+            return false;
+
+        declaration.type = std::move(type);
+    }
+
+    if (!stream.Expect(TokenType::TERMINATOR, token))
+        return false;
+
+    while (!stream.ConsumeIf(TokenType::KW_END, token))
+    {
+        EnumElement element;
+        if (!stream.Expect(TokenType::IDENTIFIER, element.name))
+            return false;
+
+        if (stream.ConsumeIf(TokenType::OP_ASSIGN, token))
+        {
+            if (!RequireExpression(stream, element.initializer))
+                return false;
+        }
+        else if (!IsTerminator(stream.Peek().type))
+        {
+            LogError(stream.Peek(), "Expected assignment or terminator");
+            return false;
+        }
+
+        if (!stream.Expect(TokenType::TERMINATOR, token))
+            return false;
+
+        declaration.elements.emplace_back(std::move(element));
+    }
+
+    if (declaration.elements.empty())
+    {
+        LogError(token, "Enum declaration must not be empty");
+        return false;
+    }
+
+    out = std::make_unique<EnumDeclaration>(std::move(declaration));
+    return true;
+}
+
 ParseResult ParseDeclaration(TokenStream& stream, std::unique_ptr<Declaration>& out)
 {
     switch (stream.Peek().type)
@@ -252,6 +338,8 @@ ParseResult ParseDeclaration(TokenStream& stream, std::unique_ptr<Declaration>& 
         return ParseFunctionDeclaration(stream, out) ? ParseResult::Success : ParseResult::Failure;
     case TokenType::KW_TYPE:
         return ParseTypeDeclaration(stream, out) ? ParseResult::Success : ParseResult::Failure;
+    case TokenType::KW_ENUM:
+        return ParseEnumDeclaration(stream, out) ? ParseResult::Success : ParseResult::Failure;
     default:
         return ParseResult::None;
     }

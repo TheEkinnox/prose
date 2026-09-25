@@ -1,0 +1,30 @@
+enum ImplicitTypeAndValues
+    A
+    B
+    C
+end
+
+enum ExplicitType : u8
+    A
+    B
+    C
+end
+
+enum ExplicitValues
+    A = 64
+    B = 128
+    C = 256
+end
+
+enum ExplicitTypeAndValues : u64
+    A = 8
+    B = 16
+    C = 32
+end
+
+enum Mixed
+    A = 1
+    B
+    C = 10
+    D
+end

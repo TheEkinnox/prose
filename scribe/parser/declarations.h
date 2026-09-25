@@ -39,5 +39,21 @@ struct TypeDeclaration : Declaration
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };
 
+struct EnumElement
+{
+    Token name;
+    std::unique_ptr<Expression> initializer;
+
+    std::ostream& Print(std::ostream& os, ParserDepthT depth) const;
+};
+
+struct EnumDeclaration : Declaration
+{
+    std::optional<Type> type;
+    std::vector<EnumElement> elements;
+
+    std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
+};
+
 ParseResult ParseDeclaration(TokenStream& stream, std::unique_ptr<Declaration>& out);
 bool RequireDeclaration(TokenStream& stream, std::unique_ptr<Declaration>& out);
