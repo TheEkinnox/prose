@@ -1,0 +1,19 @@
+LINE:COL  | TYPE             | VALUE
+   3:1    | IDENTIFIER       | a
+   3:3    | OP_ASSIGN        | =
+   3:5    | LIT_INTEGER      | 1
+   3:26   | TERMINATOR       | \n
+   7:1    | IDENTIFIER       | a
+   7:14   | OP_ASSIGN        | =
+   7:28   | LIT_INTEGER      | 2
+   7:29   | TERMINATOR       | \n
+  15:1    | IDENTIFIER       | foo
+  15:4    | LPAREN           | (
+  15:5    | RPAREN           | )
+  15:17   | DOT              | .
+  15:18   | IDENTIFIER       | bar
+  15:21   | TERMINATOR       | \n
+  17:1    | IDENTIFIER       | a
+  17:7    | OP_PLUS          | +
+  17:13   | IDENTIFIER       | b
+  17:14   | TOKEN_EOF        | 

@@ -18,6 +18,30 @@ else()
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG -D_DEBUG")
 endif()
 
+################
+# Dependencies #
+################
+set(CMAKE_FOLDER deps)
+add_subdirectory(deps)
+set(CMAKE_FOLDER ${BASE_FOLDER})
+
+#########
+# Tests #
+#########
+option(BUILD_TESTING "" OFF)
+if (${BUILD_TESTING})
+    enable_testing()
+
+    # set target
+    set(TARGET_NAME Tests)
+    set(TESTS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/tests)
+
+    file(GLOB_RECURSE TEST_FILES ${TESTS_DIR}/*)
+    source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${TEST_FILES})
+
+    add_library(${TARGET_NAME} INTERFACE ${TEST_FILES})
+endif()
+
 ############
 # Examples #
 ############

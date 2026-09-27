@@ -1,3 +1,4 @@
+#ifndef BUILD_TESTING
 #include "lexer/lexer.h"
 
 #include "parser/declarations.h"
@@ -157,3 +158,4 @@ int main(const int argc, char* argv[])
 
     return hasErrors ? -1 : 0;
 }
+#endif

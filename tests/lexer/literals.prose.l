@@ -1,0 +1,71 @@
+LINE:COL  | TYPE             | VALUE
+   1:1    | LIT_INTEGER      | 0
+   1:2    | TERMINATOR       | \n
+   2:1    | LIT_INTEGER      | 1
+   2:2    | TERMINATOR       | \n
+   3:1    | LIT_INTEGER      | 42
+   3:3    | TERMINATOR       | \n
+   4:1    | LIT_INTEGER      | 255
+   4:4    | TERMINATOR       | \n
+   5:1    | LIT_INTEGER      | 1'000
+   5:6    | TERMINATOR       | \n
+   6:1    | LIT_INTEGER      | 12'345'678
+   6:11   | TERMINATOR       | \n
+   8:1    | LIT_FLOATING_POINT | 0.0
+   8:4    | TERMINATOR       | \n
+   9:1    | LIT_FLOATING_POINT | 3.14
+   9:5    | TERMINATOR       | \n
+  10:1    | LIT_FLOATING_POINT | 42.
+  10:4    | TERMINATOR       | \n
+  11:1    | LIT_FLOATING_POINT | .5
+  11:3    | TERMINATOR       | \n
+  12:1    | LIT_FLOATING_POINT | .0001
+  12:6    | TERMINATOR       | \n
+  13:1    | LIT_FLOATING_POINT | 1'000.25
+  13:9    | TERMINATOR       | \n
+  15:1    | LIT_RUNE         | 'a'
+  15:4    | TERMINATOR       | \n
+  16:1    | LIT_RUNE         | 'Z'
+  16:4    | TERMINATOR       | \n
+  17:1    | LIT_RUNE         | '0'
+  17:4    | TERMINATOR       | \n
+  18:1    | LIT_RUNE         | '\n'
+  18:5    | TERMINATOR       | \n
+  19:1    | LIT_RUNE         | '\r'
+  19:5    | TERMINATOR       | \n
+  20:1    | LIT_RUNE         | '\t'
+  20:5    | TERMINATOR       | \n
+  21:1    | LIT_RUNE         | '\\'
+  21:5    | TERMINATOR       | \n
+  22:1    | LIT_RUNE         | '\''
+  22:5    | TERMINATOR       | \n
+  23:1    | LIT_RUNE         | '\"'
+  23:5    | TERMINATOR       | \n
+  24:1    | LIT_RUNE         | '\101'
+  24:7    | TERMINATOR       | \n
+  25:1    | LIT_RUNE         | '\x41'
+  25:7    | TERMINATOR       | \n
+  26:1    | LIT_RUNE         | '\u{41}'
+  26:9    | TERMINATOR       | \n
+  28:1    | LIT_STRING       | ""
+  28:3    | TERMINATOR       | \n
+  29:1    | LIT_STRING       | "hello"
+  29:8    | TERMINATOR       | \n
+  30:1    | LIT_STRING       | "hello world"
+  30:14   | TERMINATOR       | \n
+  31:1    | LIT_STRING       | "line\nbreak"
+  31:14   | TERMINATOR       | \n
+  32:1    | LIT_STRING       | "tab\tvalue"
+  32:13   | TERMINATOR       | \n
+  33:1    | LIT_STRING       | "quote: \"hello\""
+  33:19   | TERMINATOR       | \n
+  34:1    | LIT_STRING       | "apostrophe: '"
+  34:16   | TERMINATOR       | \n
+  35:1    | LIT_STRING       | "backslash: \\"
+  35:16   | TERMINATOR       | \n
+  36:1    | LIT_STRING       | "\x48\x69"
+  36:11   | TERMINATOR       | \n
+  37:1    | LIT_STRING       | "\u{48}\u{69}"
+  37:15   | TERMINATOR       | \n
+  39:1    | LIT_STRING       | "multiline\r\nstring"
+  40:8    | TOKEN_EOF        | 

@@ -44,3 +44,19 @@ target_compile_definitions(${TARGET_NAME} PRIVATE BETTER_ENUMS_MACRO_FILE="extra
 if (CMAKE_GENERATOR MATCHES "Visual Studio")
     set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${TARGET_NAME})
 endif()
+
+if (${BUILD_TESTING})
+    # Setup executable
+    set(TEST_TARGET_NAME ${TARGET_NAME}Test)
+    add_executable(${TEST_TARGET_NAME} ${HEADER_FILES} ${SOURCE_FILES})
+    target_include_directories(${TEST_TARGET_NAME} PRIVATE ${TARGET_INCLUDE_DIR})
+    target_link_libraries(${TEST_TARGET_NAME} PRIVATE GTest::gtest_main)
+    target_compile_definitions(${TEST_TARGET_NAME} PRIVATE BUILD_TESTING BETTER_ENUMS_MACRO_FILE="extra.h")
+
+    add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E create_symlink ${TESTS_DIR} $<TARGET_FILE_DIR:${TEST_TARGET_NAME}>/tests
+    )
+
+    include(GoogleTest)
+    gtest_discover_tests(${TEST_TARGET_NAME})
+endif()
