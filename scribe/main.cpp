@@ -80,7 +80,7 @@ static bool Lex(const std::string& path, std::string& source, std::vector<Token>
         if (s_cachedArgs.exportTokens)
         {
             outputStream.open(path + ".l", std::ios::out | std::ios::trunc);
-            outputStream << header << std::endl;
+            outputStream << header << std::flush;
         }
 
         for (const Token& token : tokens)
@@ -90,7 +90,7 @@ static bool Lex(const std::string& path, std::string& source, std::vector<Token>
                 std::cout << output << '\n';
 
             if (s_cachedArgs.exportTokens)
-                outputStream << output << '\n';
+                outputStream << '\n' << output;
         }
     }
 
@@ -120,7 +120,7 @@ static bool Parse(const std::string& path, const std::vector<Token>& tokens, Pro
             std::cout << out << std::endl;
 
         if (s_cachedArgs.exportAST)
-            outputStream << out << std::endl;
+            outputStream << out << std::flush;
     }
 
     std::cout << std::endl;
