@@ -16,7 +16,7 @@ struct Token
 
     operator bool() const;
 
-    std::string GetValueString() const;
+    [[nodiscard]] std::string GetValueString() const;
     std::ostream& Print(std::ostream& os) const;
 };
 
