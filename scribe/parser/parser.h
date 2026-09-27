@@ -1,5 +1,5 @@
 #pragma once
-#include "parser/fwd.h"
+#include "parser/declarations.h"
 
 #include <memory>
 #include <string_view>

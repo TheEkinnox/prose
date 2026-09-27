@@ -1,7 +1,6 @@
 #ifndef BUILD_TESTING
 #include "lexer/lexer.h"
 
-#include "parser/declarations.h"
 #include "parser/parser.h"
 
 #include "utility/cmdline.h"
