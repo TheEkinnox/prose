@@ -1055,6 +1055,8 @@ If a representation cast would produce an object with an invalid alignment, the 
 
 ### Representation casts
 
+A representation cast reinterprets the underlying element storage using a different element type.
+
 A representation cast does not perform a value conversion or modify the represented byte sequence. It interprets that byte sequence according to the target type.
 
 A representation cast may change the size of the elements in a storage region as long as the entire target fits within the storage region represented by the source, subject to the specialized rules below.
