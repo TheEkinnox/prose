@@ -1,16 +1,16 @@
 #include "file.h"
 
+#include <filesystem>
 #include <fstream>
-#include <sstream>
+#include <iostream>
 
-bool ReadFile(const std::string& sourcePath, std::string& out)
+bool ReadFile(const std::filesystem::path& sourcePath, std::string& out)
 {
     const std::ifstream fs(sourcePath, std::ios::in | std::ios::binary);
     if (!fs.is_open())
     {
         // TODO: Properly handle file open error
-        fprintf(stderr, "Failed to open file '%s'\n", sourcePath.c_str());
-        fflush(stderr);
+        std::cerr << "Failed to open file '" << sourcePath << "'" << std::endl;
         return false;
     }
 
@@ -20,8 +20,7 @@ bool ReadFile(const std::string& sourcePath, std::string& out)
     if (fs.bad())
     {
         // TODO: Properly handle file read error
-        fprintf(stderr, "Failed to read file '%s'\n", sourcePath.c_str());
-        fflush(stderr);
+        std::cerr << "Failed to read file '" << sourcePath << "'" << std::endl;
         return false;
     }
 
