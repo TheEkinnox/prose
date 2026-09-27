@@ -1,0 +1,2 @@
+Program
+|  No declarations
