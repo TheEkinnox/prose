@@ -1,10 +1,14 @@
 #include "postfix.h"
 
-#include "parser/parser.h"
 #include "parser/expressions.h"
+#include "parser/parser.h"
 #include "parser/token_stream.h"
 
 #include "utility/strings.h"
+
+NO_WARNINGS_PUSH
+#include <magic_enum/magic_enum.hpp>
+NO_WARNINGS_POP
 
 Postfix::Postfix(const PostfixType p_type) : type(p_type)
 {
@@ -12,7 +16,7 @@ Postfix::Postfix(const PostfixType p_type) : type(p_type)
 
 std::ostream& Postfix::Print(std::ostream& os, const ParserDepthT depth) const
 {
-    return PrintAtDepth(os, depth, type._to_string());
+    return PrintAtDepth(os, depth, magic_enum::enum_name(type));
 }
 
 Call::Call() : Postfix(PostfixType::Call)
@@ -121,7 +125,7 @@ static bool ParseIndexOrSlicePostfix(TokenStream& stream, std::unique_ptr<Postfi
     token = stream.Peek();
 
     std::unique_ptr<Expression> indexOrFirst;
-    if (token.type != TokenType::COLON && !RequireExpression(stream, indexOrFirst) )
+    if (token.type != TokenType::COLON && !RequireExpression(stream, indexOrFirst))
         return false;
 
     if (stream.ConsumeIf(TokenType::COLON, token))
@@ -129,7 +133,7 @@ static bool ParseIndexOrSlicePostfix(TokenStream& stream, std::unique_ptr<Postfi
         token = stream.Peek();
 
         std::unique_ptr<Expression> last;
-        if (token.type != TokenType::RBRACKET && !RequireExpression(stream, last) )
+        if (token.type != TokenType::RBRACKET && !RequireExpression(stream, last))
             return false;
 
         out = std::make_unique<Slice>(std::move(indexOrFirst), std::move(last));

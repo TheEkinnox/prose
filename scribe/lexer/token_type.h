@@ -1,12 +1,14 @@
 #pragma once
 #include "utility/macros.h"
 
-#include "external/better_enums/enum.h"
+NO_WARNINGS_PUSH
+#include "magic_enum/magic_enum.hpp"
+NO_WARNINGS_POP
 
 #include <cstdint>
 
-CLANG_IGNORE_WARNING_PUSH("-Wglobal-constructors")
-BETTER_ENUM(TokenType, uint8_t,
+enum class TokenType : uint8_t
+{
     UNKNOWN,
     IDENTIFIER,
 
@@ -101,42 +103,41 @@ BETTER_ENUM(TokenType, uint8_t,
     DOT,
     TERMINATOR,
     TOKEN_EOF
-);
-CLANG_IGNORE_WARNING_POP
+};
 
 inline bool IsBuiltInType(const TokenType type)
 {
-    return std::string_view(type._to_string()).starts_with("T_");
+    return magic_enum::enum_name(type).starts_with("T_");
 }
 
 inline bool IsLiteral(const TokenType type)
 {
-    return std::string_view(type._to_string()).starts_with("LIT_")
+    return magic_enum::enum_name(type).starts_with("LIT_")
         || type == TokenType::KW_NULL || type == TokenType::KW_TRUE || type == TokenType::KW_FALSE;
 }
 
 inline bool IsOperator(const TokenType type)
 {
-    return std::string_view(type._to_string()).starts_with("OP_") || type == TokenType::KW_MOVE;
+    return magic_enum::enum_name(type).starts_with("OP_") || type == TokenType::KW_MOVE;
 }
 
 inline bool IsAssignmentOperator(const TokenType type)
 {
-    return std::string_view(type._to_string()).starts_with("OP_ASSIGN");
+    return magic_enum::enum_name(type).starts_with("OP_ASSIGN");
 }
 
 inline bool IsUnaryOperator(const TokenType type)
 {
-    return type._enum == TokenType::OP_INC
-        || type._enum == TokenType::OP_DEC
-        || type._enum == TokenType::OP_MINUS
-        || type._enum == TokenType::OP_LOGICAL_NOT
-        || type._enum == TokenType::OP_BITWISE_NOT
-        || type._enum == TokenType::OP_ADDRESS_OF
-        || type._enum == TokenType::KW_MOVE;
+    return type == TokenType::OP_INC
+        || type == TokenType::OP_DEC
+        || type == TokenType::OP_MINUS
+        || type == TokenType::OP_LOGICAL_NOT
+        || type == TokenType::OP_BITWISE_NOT
+        || type == TokenType::OP_ADDRESS_OF
+        || type == TokenType::KW_MOVE;
 }
 
 inline bool IsTerminator(const TokenType type)
 {
-    return type._enum == TokenType::TERMINATOR || type._enum == TokenType::KW_END || type._enum == TokenType::TOKEN_EOF;
+    return type == TokenType::TERMINATOR || type == TokenType::KW_END || type == TokenType::TOKEN_EOF;
 }

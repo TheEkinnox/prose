@@ -5,6 +5,10 @@
 
 #include <cassert>
 
+NO_WARNINGS_PUSH
+#include <magic_enum/magic_enum.hpp>
+NO_WARNINGS_POP
+
 TokenStream::TokenStream(const std::vector<Token>& tokens) : m_tokens{ tokens }, m_index{ 0 }
 {
     assert(!tokens.empty());
@@ -75,7 +79,7 @@ bool TokenStream::Expect(const TokenType type, Token& out)
         return true;
     }
 
-    LogError(Peek(), "Expected " + std::string(type._to_string()));
+    LogError(Peek(), "Expected " + std::string(magic_enum::enum_name(type)));
     return false;
 }
 

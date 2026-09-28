@@ -12,6 +12,10 @@
 #include <fstream>
 #include <iostream>
 
+NO_WARNINGS_PUSH
+#include <magic_enum/magic_enum.hpp>
+NO_WARNINGS_POP
+
 enum class CompileStep : uint8_t
 {
     Lexer,
@@ -84,7 +88,7 @@ static bool Lex(const std::string& path, std::string& source, std::vector<Token>
 
         for (const Token& token : tokens)
         {
-            const std::string output = std::format(FMT_TOKEN, token.line, token.column, token.type._to_string(), token.GetValueString());
+            const std::string output = std::format(FMT_TOKEN, token.line, token.column, magic_enum::enum_name(token.type), token.GetValueString());
             if (s_cachedArgs.printTokens)
                 std::cout << output << '\n';
 

@@ -8,6 +8,7 @@
 
 NO_WARNINGS_PUSH
 #include <gtest/gtest.h>
+#include <magic_enum/magic_enum.hpp>
 NO_WARNINGS_POP
 
 namespace
@@ -84,8 +85,7 @@ namespace
                 return false;
 
             subStr = tokensStr.substr(offset, separatorPos - offset);
-            auto type = TokenType::_from_string_nothrow(Trim(subStr));
-
+            const auto type = magic_enum::enum_cast<TokenType>(Trim(subStr));
             if (!type)
                 return false;
 

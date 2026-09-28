@@ -13,6 +13,10 @@
 #include <cassert>
 #include <utility>
 
+NO_WARNINGS_PUSH
+#include <magic_enum/magic_enum.hpp>
+NO_WARNINGS_POP
+
 std::ostream& Block::Print(std::ostream& os, const ParserDepthT depth) const
 {
     if (statements.empty())
@@ -111,9 +115,9 @@ std::ostream& SwitchStatement::Print(std::ostream& os, ParserDepthT depth) const
     return os << " None";
 }
 
-std::ostream& ControlStatement::Print(std::ostream& os, ParserDepthT depth) const
+std::ostream& ControlStatement::Print(std::ostream& os, const ParserDepthT depth) const
 {
-    return PrintAtDepth(os, depth, type._to_string());
+    return PrintAtDepth(os, depth, magic_enum::enum_name(type));
 }
 
 ReturnStatement::ReturnStatement(std::unique_ptr<Expression>&& p_value) : ControlStatement(ControlStatementType::Return), value(std::move(p_value))

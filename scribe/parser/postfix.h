@@ -2,23 +2,18 @@
 #include "lexer/lexer.h"
 #include "parser/fwd.h"
 
-#include "utility/macros.h"
-
-#include "external/better_enums/enum.h"
-
 #include <memory>
 #include <vector>
 
-CLANG_IGNORE_WARNING_PUSH("-Wglobal-constructors")
-BETTER_ENUM(PostfixType, uint8_t,
+enum class PostfixType : uint8_t
+{
     Call,
     Index,
     Slice,
     MemberAccess,
     Increment,
     Decrement
-)
-CLANG_IGNORE_WARNING_POP
+};
 
 struct Postfix
 {

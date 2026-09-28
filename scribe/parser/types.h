@@ -3,23 +3,18 @@
 
 #include "parser/fwd.h"
 
-#include "utility/macros.h"
-
-#include "external/better_enums/enum.h"
-
 #include <cstdint>
 #include <memory>
 #include <vector>
 
-CLANG_IGNORE_WARNING_PUSH("-Wglobal-constructors")
-BETTER_ENUM(ModifierType, uint8_t,
+enum class ModifierType : uint8_t
+{
     Pointer,
     Reference,
     FixedArray,
     DynamicArray,
     Slice
-);
-CLANG_IGNORE_WARNING_POP
+};
 
 struct TypeModifier
 {

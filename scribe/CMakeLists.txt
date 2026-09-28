@@ -39,7 +39,7 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${HEADER_FILES} ${SOURCE_FIL
 # Setup executable
 add_executable(${TARGET_NAME} ${HEADER_FILES} ${SOURCE_FILES})
 target_include_directories(${TARGET_NAME} PRIVATE ${TARGET_INCLUDE_DIR})
-target_compile_definitions(${TARGET_NAME} PRIVATE BETTER_ENUMS_MACRO_FILE="extra.h")
+target_link_libraries(${TARGET_NAME} PRIVATE magic_enum::magic_enum)
 
 if (CMAKE_GENERATOR MATCHES "Visual Studio")
     set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${TARGET_NAME})
@@ -50,8 +50,8 @@ if (${BUILD_TESTING})
     set(TEST_TARGET_NAME ${TARGET_NAME}Test)
     add_executable(${TEST_TARGET_NAME} ${HEADER_FILES} ${SOURCE_FILES})
     target_include_directories(${TEST_TARGET_NAME} PRIVATE ${TARGET_INCLUDE_DIR})
-    target_link_libraries(${TEST_TARGET_NAME} PRIVATE GTest::gtest_main)
-    target_compile_definitions(${TEST_TARGET_NAME} PRIVATE BUILD_TESTING BETTER_ENUMS_MACRO_FILE="extra.h")
+    target_link_libraries(${TEST_TARGET_NAME} PRIVATE magic_enum::magic_enum GTest::gtest_main)
+    target_compile_definitions(${TEST_TARGET_NAME} PRIVATE BUILD_TESTING)
 
     add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E create_symlink ${TESTS_DIR} $<TARGET_FILE_DIR:${TEST_TARGET_NAME}>/tests

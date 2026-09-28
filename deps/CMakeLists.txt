@@ -1,5 +1,24 @@
 include(FetchContent)
 
+#############
+# MagicEnum #
+#############
+FetchContent_Declare(
+        magic_enum
+        GIT_REPOSITORY https://github.com/Neargye/magic_enum
+        GIT_TAG v0.9.8
+        GIT_SHALLOW 1
+)
+
+set(MAGIC_ENUM_OPT_BUILD_EXAMPLES off)
+set(MAGIC_ENUM_OPT_BUILD_TESTS off)
+set(MAGIC_ENUM_OPT_INSTALL off)
+set(MAGIC_ENUM_USE_MODULES off)
+set(MAGIC_ENUM_MODULE_IMPORT_STD off)
+set(MAGIC_ENUM_MODULE_WITH_FMT off)
+set(MAGIC_ENUM_OPT_INSTALL_PACKAGE_XML off)
+FetchContent_MakeAvailable(magic_enum)
+
 #########
 # GTEST #
 #########

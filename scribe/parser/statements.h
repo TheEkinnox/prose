@@ -79,13 +79,12 @@ struct SwitchStatement : Statement
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };
 
-CLANG_IGNORE_WARNING_PUSH("-Wglobal-constructors")
-BETTER_ENUM(ControlStatementType, uint8_t,
+enum class ControlStatementType : uint8_t
+{
     Return,
     Break,
     Continue
-)
-CLANG_IGNORE_WARNING_POP
+};
 
 struct ControlStatement : Statement
 {

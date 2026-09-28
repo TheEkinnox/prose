@@ -7,6 +7,10 @@
 #include <cctype>
 #include <iostream>
 
+NO_WARNINGS_PUSH
+#include <magic_enum/magic_enum.hpp>
+NO_WARNINGS_POP
+
 struct Cursor
 {
     std::string_view source;
@@ -351,7 +355,7 @@ std::string Token::GetValueString() const
 
 std::ostream& Token::Print(std::ostream& os) const
 {
-    return os << type._to_string() << (value.empty() ? "" : "(" + GetValueString() + ")");
+    return os << magic_enum::enum_name(type) << (value.empty() ? "" : "(" + GetValueString() + ")");
 }
 
 static void PushTerminator(std::vector<Token>& tokensOut, const Cursor& cursor)

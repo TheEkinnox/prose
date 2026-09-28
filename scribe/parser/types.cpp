@@ -6,13 +6,17 @@
 
 #include "utility/strings.h"
 
+NO_WARNINGS_PUSH
+#include <magic_enum/magic_enum.hpp>
+NO_WARNINGS_POP
+
 TypeModifier::TypeModifier(const ModifierType p_type) : type(p_type)
 {
 }
 
 std::ostream& TypeModifier::Print(std::ostream& os, const ParserDepthT depth) const
 {
-    return PrintAtDepth(os, depth, type._to_string());
+    return PrintAtDepth(os, depth, magic_enum::enum_name(type));
 }
 
 FixedArrayModifier::FixedArrayModifier(std::unique_ptr<Expression>&& p_size) : TypeModifier(ModifierType::FixedArray), size(std::move(p_size))

@@ -6,6 +6,10 @@
 
 #include "utility/strings.h"
 
+NO_WARNINGS_PUSH
+#include <magic_enum/magic_enum.hpp>
+NO_WARNINGS_POP
+
 #include <optional>
 
 std::ostream& PostfixExpression::Print(std::ostream& os, ParserDepthT depth) const
@@ -73,7 +77,7 @@ UnaryExpression::UnaryExpression(const Token p_op, std::unique_ptr<Expression>&&
 std::ostream& UnaryExpression::Print(std::ostream& os, ParserDepthT depth) const
 {
     PrintAtDepth(os, depth++, "UnaryExpression") << '\n';
-    PrintAtDepth(os, depth, "Operator: ") << op.type._to_string() << '\n';
+    PrintAtDepth(os, depth, "Operator: ") << magic_enum::enum_name(op.type) << '\n';
     PrintAtDepth(os, depth, "Operand: ") << '\n';
     operand->Print(os, depth + 1) << '\n';
     return PostfixExpression::Print(os, depth);
@@ -87,7 +91,7 @@ BinaryExpression::BinaryExpression(Token p_op, std::unique_ptr<Expression>&& p_l
 std::ostream& BinaryExpression::Print(std::ostream& os, ParserDepthT depth) const
 {
     PrintAtDepth(os, depth++, "BinaryExpression") << '\n';
-    PrintAtDepth(os, depth, "Operator: ") << op.type._to_string() << '\n';
+    PrintAtDepth(os, depth, "Operator: ") << magic_enum::enum_name(op.type) << '\n';
     PrintAtDepth(os, depth, "Left: ") << '\n';
     left->Print(os, depth + 1) << '\n';
     PrintAtDepth(os, depth, "Right: ") << '\n';
