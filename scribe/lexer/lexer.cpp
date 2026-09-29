@@ -44,10 +44,8 @@ char Cursor::Consume()
 
     if (current == '\r')
     {
-        if (source[pos] == '\n')
-        {
+        if (Peek() == '\n')
             ++pos;
-        }
 
         ++line;
         column = 1;
