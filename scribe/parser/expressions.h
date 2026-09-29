@@ -73,7 +73,6 @@ struct MakeExpression : Expression
 struct SizeOfExpression : Expression
 {
     std::variant<Type, std::unique_ptr<Expression>> type;
-    bool isBuiltInType;
 
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };

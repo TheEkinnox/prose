@@ -113,10 +113,10 @@ std::ostream& SizeOfExpression::Print(std::ostream& os, ParserDepthT depth) cons
 {
     PrintAtDepth(os, depth++, "SizeOfExpression") << '\n';
 
-    if (isBuiltInType)
+    if (const Type* typePtr = std::get_if<Type>(&type))
     {
         PrintAtDepth(os, depth, "Type:") << '\n';
-        return std::get<Type>(type).Print(os, depth + 1);
+        return typePtr->Print(os, depth + 1);
     }
 
     PrintAtDepth(os, depth, "Value:") << '\n';
@@ -309,9 +309,7 @@ static bool ParseSizeofExpression(TokenStream& stream, std::unique_ptr<Expressio
     token = stream.Peek();
 
     SizeOfExpression sizeOfExpr{};
-    sizeOfExpr.isBuiltInType = token.type == TokenType::LPAREN && IsBuiltInType(stream.PeekNext().type);
-
-    if (sizeOfExpr.isBuiltInType)
+    if (token.type == TokenType::LPAREN && IsBuiltInType(stream.PeekNext().type))
     {
         stream.Consume(); // LParen
 
