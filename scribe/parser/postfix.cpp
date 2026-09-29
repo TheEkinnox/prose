@@ -91,24 +91,19 @@ bool ParseCallPostfix(TokenStream& stream, std::unique_ptr<Postfix>& out)
     Call call;
     token = stream.Peek();
 
+    bool isFirst = true;
     while (token.type != TokenType::RPAREN)
     {
+        if (!isFirst && !stream.Expect(TokenType::COMMA, token))
+            return false;
+
         std::unique_ptr<Expression> argument;
         if (!RequireExpression(stream, argument))
             return false;
 
         call.arguments.emplace_back(std::move(argument));
         token = stream.Peek();
-
-        if (stream.ConsumeIf(TokenType::COMMA, token))
-        {
-            token = stream.Peek();
-            if (token.type == TokenType::RPAREN)
-            {
-                LogError(token, "Expected expression");
-                return false;
-            }
-        }
+        isFirst = false;
     }
 
     out = std::make_unique<Call>(std::move(call));
