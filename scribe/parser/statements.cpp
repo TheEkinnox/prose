@@ -309,14 +309,8 @@ static bool ParseSwitchStatement(TokenStream& stream, std::unique_ptr<Statement>
         return false;
 
     SwitchStatement statement{};
-    if (!RequireExpression(stream, statement.expression) || !stream.ExpectSeparator(token))
+    if (!RequireExpression(stream, statement.expression) || !stream.Expect(TokenType::TERMINATOR, token))
         return false;
-
-    if (token.type == TokenType::KW_END)
-    {
-        LogError(token, "Expected case or default");
-        return false;
-    }
 
     const auto isCaseDefaultOrEnd = [](const TokenType t)
     {
@@ -357,7 +351,11 @@ static bool ParseSwitchStatement(TokenStream& stream, std::unique_ptr<Statement>
     if (!hasCases)
     {
         token = stream.Peek(); // Necessary for proper error reporting
-        stream.ConsumeIf(TokenType::KW_DEFAULT, token);
+        if (!stream.ConsumeIf(TokenType::KW_DEFAULT, token))
+        {
+            LogError(token, "Expected 'case' or 'default'");
+            return false;
+        }
     }
 
     if (token.type == TokenType::KW_DEFAULT)
