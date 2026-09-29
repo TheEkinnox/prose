@@ -404,8 +404,7 @@ bool Tokenize(const std::string_view source, std::vector<Token>& tokensOut)
             if (!cursor.ConsumeIf('"'))
             {
                 // TODO: Properly log warning
-                printf("(%zu:%zu) Warning: Unterminated string literal\n", tokenStart.line, tokenStart.column);
-                fflush(stdout);
+                std::cout << '(' << tokenStart.line << ':' << tokenStart.column << ") Warning: Unterminated string literal" << std::endl;
             }
 
             const std::string_view tokenStr = source.substr(tokenStart.pos, cursor.pos - tokenStart.pos);
@@ -431,8 +430,7 @@ bool Tokenize(const std::string_view source, std::vector<Token>& tokensOut)
             if (!cursor.ConsumeIf('\''))
             {
                 // TODO: Properly log warning
-                printf("(%zu:%zu) Warning: Unterminated rune literal\n", tokenStart.line, tokenStart.column);
-                fflush(stdout);
+                std::cout << '(' << tokenStart.line << ':' << tokenStart.column << ") Warning: Unterminated rune literal" << std::endl;
             }
 
             const std::string_view tokenStr = source.substr(tokenStart.pos, cursor.pos - tokenStart.pos);
@@ -460,8 +458,7 @@ bool Tokenize(const std::string_view source, std::vector<Token>& tokensOut)
                 if (!cursor.ConsumeIf('*') || !cursor.ConsumeIf('/'))
                 {
                     // TODO: Properly log warning
-                    printf("(%zu:%zu) Warning: Unterminated block comment\n", tokenStart.line, tokenStart.column);
-                    fflush(stdout);
+                    std::cout << '(' << tokenStart.line << ':' << tokenStart.column << ") Warning: Unterminated block comment" << std::endl;
                 }
 
                 continue;
@@ -472,8 +469,7 @@ bool Tokenize(const std::string_view source, std::vector<Token>& tokensOut)
             if (!cursor.ConsumeIf('\r') && !cursor.ConsumeIf('\n'))
             {
                 // TODO: Properly log error
-                fprintf(stderr, "(%zu:%zu) Error: Invalid escape sequence. Expected '\\n', Received '%c'\n", cursor.line, cursor.column, cursor.Peek());
-                fflush(stderr);
+                std::cerr << '(' << cursor.line << ':' << cursor.column << ") Error: Invalid escape sequence. Expected '\\n', Received '" << cursor.Peek() << '\'' << std::endl;
                 return false;
             }
             continue;
@@ -494,8 +490,7 @@ bool Tokenize(const std::string_view source, std::vector<Token>& tokensOut)
         if (!MakeToken(token, tokenStr, tokenStart.line, tokenStart.column))
         {
             // TODO: Properly log warning
-            printf("(%zu:%zu) Warning: Unknown token '%.*s'\n", token.line, token.column, static_cast<int>(tokenStr.size()), tokenStr.data());
-            fflush(stdout);
+            std::cout << '(' << token.line << ':' << token.column << ") Warning: Unknown token '" << tokenStr << '\'' << std::endl;
             continue;
         }
 
