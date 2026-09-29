@@ -490,7 +490,7 @@ bool Tokenize(const std::string_view source, std::vector<Token>& tokensOut)
         if (!MakeToken(token, tokenStr, tokenStart.line, tokenStart.column))
         {
             // TODO: Properly log warning
-            std::cout << '(' << token.line << ':' << token.column << ") Warning: Unknown token '" << tokenStr << '\'' << std::endl;
+            std::cout << '(' << tokenStart.line << ':' << tokenStart.column << ") Warning: Unknown token '" << tokenStr << '\'' << std::endl;
             continue;
         }
 
