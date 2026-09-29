@@ -59,6 +59,9 @@ bool ParseProgram(const std::vector<Token>& tokens, Program& out)
         if (!RequireDeclaration(stream, declaration))
             return false;
 
+        if (!stream.ExpectTerminatorOrEOF(token))
+            return false;
+
         out.declarations.emplace_back(std::move(declaration));
     }
 

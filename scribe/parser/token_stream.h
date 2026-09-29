@@ -24,6 +24,9 @@ public:
     [[nodiscard]] bool Expect(TokenType type, Token& out);
     [[nodiscard]] bool Expect(const ConditionFunc& func, Token& out, std::string_view message);
 
+    [[nodiscard]] bool ExpectSeparator(Token& out);
+    [[nodiscard]] bool ExpectTerminatorOrEOF(Token& out);
+
 private:
     const std::vector<Token>& m_tokens;
     size_t m_index;

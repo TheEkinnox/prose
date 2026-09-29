@@ -137,7 +137,12 @@ inline bool IsUnaryOperator(const TokenType type)
         || type == TokenType::KW_MOVE;
 }
 
-inline bool IsTerminator(const TokenType type)
+inline bool IsTerminatorOrEOF(const TokenType type)
 {
-    return type == TokenType::TERMINATOR || type == TokenType::KW_END || type == TokenType::TOKEN_EOF;
+    return type == TokenType::TERMINATOR || type == TokenType::TOKEN_EOF;
+}
+
+inline bool IsSeparator(const TokenType type)
+{
+    return IsTerminatorOrEOF(type) || type == TokenType::KW_END;
 }

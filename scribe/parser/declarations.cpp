@@ -233,7 +233,7 @@ static bool ParseFunctionDeclaration(TokenStream& stream, std::unique_ptr<Declar
         function.type = std::nullopt;
     }
 
-    if (!stream.Expect(IsTerminator, token, "Expected terminator"))
+    if (!stream.ExpectSeparator(token))
         return false;
 
     if (token.type != TokenType::KW_END)
@@ -255,7 +255,7 @@ static bool ParseTypeDeclaration(TokenStream& stream, std::unique_ptr<Declaratio
         return false;
 
     TypeDeclaration type{};
-    if (!stream.Expect(TokenType::IDENTIFIER, type.name) || !stream.Expect(IsTerminator, token, "Expected terminator"))
+    if (!stream.Expect(TokenType::IDENTIFIER, type.name) || !stream.ExpectSeparator(token))
         return false;
 
     if (token.type == TokenType::TOKEN_EOF)
@@ -270,7 +270,7 @@ static bool ParseTypeDeclaration(TokenStream& stream, std::unique_ptr<Declaratio
         if (!RequireVariableDeclaration(stream, member))
             return false;
 
-        stream.ConsumeIf(IsTerminator, token);
+        stream.ConsumeIf(IsSeparator, token);
         type.members.emplace_back(std::move(dynamic_cast<VariableDeclaration&>(*member)));
     }
 
@@ -313,9 +313,9 @@ static bool ParseEnumDeclaration(TokenStream& stream, std::unique_ptr<Declaratio
             if (!RequireExpression(stream, element.initializer))
                 return false;
         }
-        else if (!IsTerminator(stream.Peek().type))
+        else if (!IsSeparator(stream.Peek().type))
         {
-            LogError(stream.Peek(), "Expected assignment or terminator");
+            LogError(stream.Peek(), "Expected assignment or separator");
             return false;
         }
 

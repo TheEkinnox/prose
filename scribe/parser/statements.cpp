@@ -157,7 +157,7 @@ static bool ParseConditionalBlock(TokenStream& stream, ConditionalBlock& out, co
         return false;
 
     Token token;
-    if (!stream.Expect(IsTerminator, token, "Expected terminator"))
+    if (!stream.ExpectSeparator(token))
         return false;
 
     if (!ParseBlock(stream, out.body, startToken, exitCondition))
@@ -259,7 +259,7 @@ static bool ParseRepeatStatement(TokenStream& stream, std::unique_ptr<Statement>
     if (!RequireExpression(stream, statement.condition))
         return false;
 
-    if (stream.ConsumeIf(IsTerminator, token) && token.type != TokenType::KW_END && !stream.Expect(TokenType::KW_END, token))
+    if (stream.ConsumeIf(IsSeparator, token) && token.type != TokenType::KW_END && !stream.Expect(TokenType::KW_END, token))
         return false;
 
     out = std::make_unique<RepeatStatement>(std::move(statement));
@@ -304,7 +304,7 @@ static bool ParseSwitchStatement(TokenStream& stream, std::unique_ptr<Statement>
         return false;
 
     SwitchStatement statement{};
-    if (!RequireExpression(stream, statement.expression) || !stream.Expect(IsTerminator, token, "Expected terminator"))
+    if (!RequireExpression(stream, statement.expression) || !stream.ExpectSeparator(token))
         return false;
 
     if (token.type == TokenType::KW_END)
@@ -443,7 +443,7 @@ bool ParseBlock(TokenStream& stream, Block& out, const Token& start, const Token
     bool consumedExit = false;
     while (!stream.Match(exitCondition))
     {
-        if (stream.ConsumeIf(IsTerminator, token))
+        if (stream.ConsumeIf(IsSeparator, token))
         {
             if (exitCondition(token.type))
             {
@@ -464,7 +464,7 @@ bool ParseBlock(TokenStream& stream, Block& out, const Token& start, const Token
         if (!RequireStatement(stream, statement))
             return false;
 
-        if (!stream.Expect(IsTerminator, token, "Expected terminator"))
+        if (!stream.ExpectSeparator(token))
             return false;
 
         out.statements.emplace_back(std::move(statement));

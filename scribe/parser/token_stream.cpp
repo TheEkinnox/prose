@@ -93,3 +93,13 @@ bool TokenStream::Expect(const ConditionFunc& func, Token& out, const std::strin
     LogError(Peek(), message);
     return false;
 }
+
+bool TokenStream::ExpectSeparator(Token& out)
+{
+    return Expect(IsSeparator, out, "Expected separator");
+}
+
+bool TokenStream::ExpectTerminatorOrEOF(Token& out)
+{
+    return Expect(IsTerminatorOrEOF, out, "Expected terminator or EOF");
+}
