@@ -6,6 +6,7 @@
 #include "parser/types.h"
 
 #include <memory>
+#include <variant>
 
 struct Expression : Statement
 {
@@ -71,15 +72,8 @@ struct MakeExpression : Expression
 
 struct SizeOfExpression : Expression
 {
+    std::variant<Type, std::unique_ptr<Expression>> type;
     bool isBuiltInType;
-
-    union
-    {
-        std::unique_ptr<Expression> value = nullptr;
-        Type type;
-    };
-
-    ~SizeOfExpression() override;
 
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };

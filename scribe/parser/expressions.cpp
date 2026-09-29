@@ -109,14 +109,6 @@ std::ostream& MakeExpression::Print(std::ostream& os, ParserDepthT depth) const
     return PrintConstructionExpression_Internal(construction, os, depth);
 }
 
-SizeOfExpression::~SizeOfExpression()
-{
-    if (isBuiltInType)
-        return;
-
-    value.reset();
-}
-
 std::ostream& SizeOfExpression::Print(std::ostream& os, ParserDepthT depth) const
 {
     PrintAtDepth(os, depth++, "SizeOfExpression") << '\n';
@@ -124,11 +116,11 @@ std::ostream& SizeOfExpression::Print(std::ostream& os, ParserDepthT depth) cons
     if (isBuiltInType)
     {
         PrintAtDepth(os, depth, "Type:") << '\n';
-        return type.Print(os, depth + 1);
+        return std::get<Type>(type).Print(os, depth + 1);
     }
 
     PrintAtDepth(os, depth, "Value:") << '\n';
-    return value->Print(os, depth + 1);
+    return std::get<std::unique_ptr<Expression>>(type)->Print(os, depth + 1);
 }
 
 struct BindingPower
@@ -313,25 +305,35 @@ static bool ParseSizeofExpression(TokenStream& stream, std::unique_ptr<Expressio
     if (!stream.Expect(TokenType::KW_SIZEOF, token))
         return false;
 
-    auto sizeOfExpr = std::make_unique<SizeOfExpression>();
 
     token = stream.Peek();
-    sizeOfExpr->isBuiltInType = token.type == TokenType::LPAREN && IsBuiltInType(stream.PeekNext().type);
 
-    if (sizeOfExpr->isBuiltInType)
+    SizeOfExpression sizeOfExpr{};
+    sizeOfExpr.isBuiltInType = token.type == TokenType::LPAREN && IsBuiltInType(stream.PeekNext().type);
+
+    if (sizeOfExpr.isBuiltInType)
     {
         stream.Consume(); // LParen
 
-        if (!ParseType(stream, sizeOfExpr->type))
+        Type type;
+        if (!ParseType(stream, type))
             return false;
 
         if (!stream.Expect(TokenType::RPAREN, token))
             return false;
-    }
-    else if (!ParseParenthesizedExpression(stream, sizeOfExpr->value))
-        return false;
 
-    out = std::move(sizeOfExpr);
+        sizeOfExpr.type = std::move(type);
+    }
+    else
+    {
+        std::unique_ptr<Expression> expr;
+        if (!ParseParenthesizedExpression(stream, expr))
+            return false;
+
+        sizeOfExpr.type = std::move(expr);
+    }
+
+    out = std::make_unique<SizeOfExpression>(std::move(sizeOfExpr));
     return true;
 }
 
