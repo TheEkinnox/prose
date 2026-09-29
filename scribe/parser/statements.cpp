@@ -251,6 +251,7 @@ static bool ParseRepeatStatement(TokenStream& stream, std::unique_ptr<Statement>
     if (!stream.Expect(TokenType::KW_REPEAT, token))
         return false;
 
+    const Token repeatToken = token;
     RepeatStatement statement{};
     const auto isUntil = [](const TokenType t) { return t == TokenType::KW_UNTIL; };
     if (!ParseBlock(stream, statement.body, token, isUntil))
@@ -259,8 +260,12 @@ static bool ParseRepeatStatement(TokenStream& stream, std::unique_ptr<Statement>
     if (!RequireExpression(stream, statement.condition))
         return false;
 
-    if (stream.ConsumeIf(IsSeparator, token) && token.type != TokenType::KW_END && !stream.Expect(TokenType::KW_END, token))
+    const bool consumedSeparator = stream.ConsumeIf(IsSeparator, token);
+    if (((consumedSeparator && token.type != TokenType::KW_END) || !consumedSeparator) && !stream.ConsumeIf(TokenType::KW_END, token))
+    {
+        LogError(stream.Peek(), "Unclosed 'repeat' block at " + std::to_string(repeatToken.line) + ":" + std::to_string(repeatToken.column));
         return false;
+    }
 
     out = std::make_unique<RepeatStatement>(std::move(statement));
     return true;

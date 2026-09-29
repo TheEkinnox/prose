@@ -69,6 +69,7 @@ namespace
         tests.emplace_back("UnclosedFor", "for i in 0..10", RequireStatementShouldFail);
         tests.emplace_back("UnclosedIf", "if true", RequireStatementShouldFail);
         tests.emplace_back("UnclosedRepeat", "repeat\nuntil condition", RequireStatementShouldFail);
+        tests.emplace_back("UnclosedRepeatWithFollowingToken", "repeat\nuntil condition return", RequireStatementShouldFail);
         tests.emplace_back("UnclosedScope", "scope", RequireStatementShouldFail);
         tests.emplace_back("UnclosedSwitch", "switch value\ndefault", RequireStatementShouldFail);
         tests.emplace_back("UnclosedWhile", "while true", RequireStatementShouldFail);
