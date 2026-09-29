@@ -270,7 +270,9 @@ static bool ParseTypeDeclaration(TokenStream& stream, std::unique_ptr<Declaratio
         if (!RequireVariableDeclaration(stream, member))
             return false;
 
-        stream.ConsumeIf(IsSeparator, token);
+        if (!stream.ExpectSeparator(token))
+            return false;
+
         type.members.emplace_back(std::move(dynamic_cast<VariableDeclaration&>(*member)));
     }
 
