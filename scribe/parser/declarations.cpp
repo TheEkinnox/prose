@@ -194,8 +194,8 @@ static bool ParseFunctionDeclaration(TokenStream& stream, std::unique_ptr<Declar
         bool hasDefault = false;
         while (!stream.Is(TokenType::RPAREN))
         {
-            if (!isFirst) // Prevents silently accepting parameter lists starting with a comma
-                stream.ConsumeIf(TokenType::COMMA, token);
+            if (!isFirst && !stream.Expect(TokenType::COMMA, token))
+                return false;
 
             std::unique_ptr<Declaration> parameter;
             if (!RequireVariableDeclaration(stream, parameter))
