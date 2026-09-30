@@ -142,7 +142,7 @@ Program
 |  |  |  |  |  |  |  |  ControlStatement
 |  |  |  |  |  |  |  |  |  Type: (25:13) KW_CONTINUE(continue)
 |  |  |  |  |  |  Conditional branches:
-|  |  |  |  |  |  |  Start: (26:14) KW_IF(if)
+|  |  |  |  |  |  |  Start: (26:9) KW_ELSE(else)
 |  |  |  |  |  |  |  Condition:
 |  |  |  |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  |  |  |  Operator: OP_EQUAL

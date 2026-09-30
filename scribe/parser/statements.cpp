@@ -245,18 +245,17 @@ static bool ParseIfStatement(TokenStream& stream, std::unique_ptr<Statement>& ou
 
         if (stream.Is(TokenType::KW_IF))
         {
-            ConditionalBlock conditionalBranch{};
-            conditionalBranch.start = elseStartToken;
-
             if (statement.defaultBranch.has_value())
             {
                 LogError(stream.Peek(), "Conditional branch after default branch");
                 return false;
             }
 
+            ConditionalBlock conditionalBranch{};
             if (!ParseConditionalBlock(stream, conditionalBranch, TokenType::KW_IF, branchExitFunc))
                 return false;
 
+            conditionalBranch.start = elseStartToken;
             statement.conditionalBranches.emplace_back(std::move(conditionalBranch));
         }
         else

@@ -38,7 +38,7 @@ Program
 |  |  |  |  |  |  |  |  (9:13) LIT_INTEGER(1)
 |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  Conditional branches:
-|  |  |  |  |  Start: (10:10) KW_IF(if)
+|  |  |  |  |  Start: (10:5) KW_ELSE(else)
 |  |  |  |  |  Condition:
 |  |  |  |  |  |  (10:13) IDENTIFIER(second)
 |  |  |  |  |  |  |  Postfix: None
@@ -51,7 +51,7 @@ Program
 |  |  |  |  |  |  |  Initializer:
 |  |  |  |  |  |  |  |  (11:13) LIT_INTEGER(2)
 |  |  |  |  |  |  |  |  |  Postfix: None
-|  |  |  |  |  Start: (12:10) KW_IF(if)
+|  |  |  |  |  Start: (12:5) KW_ELSE(else)
 |  |  |  |  |  Condition:
 |  |  |  |  |  |  (12:13) IDENTIFIER(third)
 |  |  |  |  |  |  |  Postfix: None
