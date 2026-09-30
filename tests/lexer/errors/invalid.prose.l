@@ -1,2 +1,2 @@
 LINE:COL  | TYPE             | VALUE
-   3:2    | TOKEN_EOF        |
+   3:2    | TOKEN_EOF        | 

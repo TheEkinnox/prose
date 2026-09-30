@@ -67,5 +67,5 @@ LINE:COL  | TYPE             | VALUE
   36:11   | TERMINATOR       | \n
   37:1    | LIT_STRING       | "\u{48}\u{69}"
   37:15   | TERMINATOR       | \n
-  39:1    | LIT_STRING       | "multiline\r\nstring"
+  39:1    | LIT_STRING       | "multiline\nstring"
   40:8    | TOKEN_EOF        | 

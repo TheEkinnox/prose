@@ -345,7 +345,8 @@ Token::operator bool() const
 std::string Token::GetValueString() const
 {
     std::string sanitizedValue(value.begin(), value.end());
-    ReplaceAll(sanitizedValue, "\r", "\\r");
+    ReplaceAll(sanitizedValue, "\r\n", "\\n");
+    ReplaceAll(sanitizedValue, "\r", "\\n");
     ReplaceAll(sanitizedValue, "\n", "\\n");
     ReplaceAll(sanitizedValue, "\t", "\\t");
     return sanitizedValue;
