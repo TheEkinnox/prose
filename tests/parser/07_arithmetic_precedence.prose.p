@@ -7,10 +7,10 @@ Program
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_PLUS
 |  |  |  |  Left: 
-|  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  (1:5) LIT_INTEGER(1)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
-|  |  |  |  |  LIT_INTEGER(2)
+|  |  |  |  |  (1:9) LIT_INTEGER(2)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
@@ -21,10 +21,10 @@ Program
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_MINUS
 |  |  |  |  Left: 
-|  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  (2:5) LIT_INTEGER(1)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
-|  |  |  |  |  LIT_INTEGER(2)
+|  |  |  |  |  (2:9) LIT_INTEGER(2)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
@@ -35,10 +35,10 @@ Program
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_MUL
 |  |  |  |  Left: 
-|  |  |  |  |  LIT_INTEGER(2)
+|  |  |  |  |  (3:5) LIT_INTEGER(2)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
-|  |  |  |  |  LIT_INTEGER(3)
+|  |  |  |  |  (3:9) LIT_INTEGER(3)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
@@ -49,10 +49,10 @@ Program
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_DIV
 |  |  |  |  Left: 
-|  |  |  |  |  LIT_INTEGER(8)
+|  |  |  |  |  (4:5) LIT_INTEGER(8)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
-|  |  |  |  |  LIT_INTEGER(2)
+|  |  |  |  |  (4:9) LIT_INTEGER(2)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
@@ -63,10 +63,10 @@ Program
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_MOD
 |  |  |  |  Left: 
-|  |  |  |  |  LIT_INTEGER(9)
+|  |  |  |  |  (5:5) LIT_INTEGER(9)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
-|  |  |  |  |  LIT_INTEGER(4)
+|  |  |  |  |  (5:9) LIT_INTEGER(4)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
@@ -77,16 +77,16 @@ Program
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_PLUS
 |  |  |  |  Left: 
-|  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  (7:5) LIT_INTEGER(1)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
 |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  Operator: OP_MUL
 |  |  |  |  |  |  Left: 
-|  |  |  |  |  |  |  LIT_INTEGER(2)
+|  |  |  |  |  |  |  (7:9) LIT_INTEGER(2)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  LIT_INTEGER(3)
+|  |  |  |  |  |  |  (7:13) LIT_INTEGER(3)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
@@ -101,14 +101,14 @@ Program
 |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  Operator: OP_MUL
 |  |  |  |  |  |  Left: 
-|  |  |  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  |  |  (8:5) LIT_INTEGER(1)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  LIT_INTEGER(2)
+|  |  |  |  |  |  |  (8:9) LIT_INTEGER(2)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
-|  |  |  |  |  LIT_INTEGER(3)
+|  |  |  |  |  (8:13) LIT_INTEGER(3)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
@@ -119,16 +119,16 @@ Program
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_MINUS
 |  |  |  |  Left: 
-|  |  |  |  |  LIT_INTEGER(10)
+|  |  |  |  |  (9:5) LIT_INTEGER(10)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
 |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  Operator: OP_DIV
 |  |  |  |  |  |  Left: 
-|  |  |  |  |  |  |  LIT_INTEGER(4)
+|  |  |  |  |  |  |  (9:10) LIT_INTEGER(4)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  LIT_INTEGER(2)
+|  |  |  |  |  |  |  (9:14) LIT_INTEGER(2)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
@@ -143,13 +143,13 @@ Program
 |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  Operator: OP_PLUS
 |  |  |  |  |  |  Left: 
-|  |  |  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  |  |  (10:6) LIT_INTEGER(1)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  LIT_INTEGER(2)
+|  |  |  |  |  |  |  (10:10) LIT_INTEGER(2)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
-|  |  |  |  |  LIT_INTEGER(3)
+|  |  |  |  |  (10:15) LIT_INTEGER(3)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None

@@ -22,10 +22,10 @@ Program
 |  |  |  Base: i32
 |  |  |  Modifiers:
 |  |  |  |  FixedArray
-|  |  |  |  |  LIT_INTEGER(4)
+|  |  |  |  |  (4:20) LIT_INTEGER(4)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  FixedArray
-|  |  |  |  |  LIT_INTEGER(4)
+|  |  |  |  |  (4:23) LIT_INTEGER(4)
 |  |  |  |  |  |  Postfix: None
 |  AliasDeclaration
 |  |  Name: View

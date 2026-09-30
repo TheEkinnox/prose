@@ -9,10 +9,10 @@ Program
 |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  Operator: OP_RANGE
 |  |  |  |  |  |  Left: 
-|  |  |  |  |  |  |  LIT_INTEGER(0)
+|  |  |  |  |  |  |  (1:6) LIT_INTEGER(0)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  LIT_INTEGER(10)
+|  |  |  |  |  |  |  (1:9) LIT_INTEGER(10)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
@@ -26,10 +26,10 @@ Program
 |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  Operator: OP_RANGE
 |  |  |  |  |  |  Left: 
-|  |  |  |  |  |  |  LIT_INTEGER(10)
+|  |  |  |  |  |  |  (2:6) LIT_INTEGER(10)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  LIT_INTEGER(0)
+|  |  |  |  |  |  |  (2:10) LIT_INTEGER(0)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
@@ -40,17 +40,17 @@ Program
 |  |  Initializer:
 |  |  |  ArrayLiteralExpression
 |  |  |  |  Elements:
-|  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  (3:6) LIT_INTEGER(1)
 |  |  |  |  |  |  Postfix: None
-|  |  |  |  |  LIT_INTEGER(2)
+|  |  |  |  |  (3:9) LIT_INTEGER(2)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  Operator: OP_RANGE
 |  |  |  |  |  |  Left: 
-|  |  |  |  |  |  |  LIT_INTEGER(3)
+|  |  |  |  |  |  |  (3:12) LIT_INTEGER(3)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  LIT_INTEGER(8)
+|  |  |  |  |  |  |  (3:15) LIT_INTEGER(8)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
@@ -64,19 +64,19 @@ Program
 |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  Operator: OP_RANGE
 |  |  |  |  |  |  Left: 
-|  |  |  |  |  |  |  LIT_INTEGER(0)
+|  |  |  |  |  |  |  (4:6) LIT_INTEGER(0)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  LIT_INTEGER(10)
+|  |  |  |  |  |  |  (4:9) LIT_INTEGER(10)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  Operator: OP_RANGE
 |  |  |  |  |  |  Left: 
-|  |  |  |  |  |  |  LIT_INTEGER(20)
+|  |  |  |  |  |  |  (4:13) LIT_INTEGER(20)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  LIT_INTEGER(30)
+|  |  |  |  |  |  |  (4:17) LIT_INTEGER(30)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None

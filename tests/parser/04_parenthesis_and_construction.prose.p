@@ -4,14 +4,14 @@ Program
 |  |  Name: 'a'
 |  |  Type: None
 |  |  Initializer:
-|  |  |  LIT_INTEGER(42)
+|  |  |  (1:6) LIT_INTEGER(42)
 |  |  |  |  Postfix: None
 |  VariableDeclaration
 |  |  IsConst: false
 |  |  Name: 'b'
 |  |  Type: None
 |  |  Initializer:
-|  |  |  LIT_INTEGER(42)
+|  |  |  (2:7) LIT_INTEGER(42)
 |  |  |  |  Postfix: None
 |  VariableDeclaration
 |  |  IsConst: false
@@ -23,7 +23,7 @@ Program
 |  |  |  |  |  Base: i32
 |  |  |  |  |  Modifiers: None
 |  |  |  |  Arguments:
-|  |  |  |  |  LIT_INTEGER(42)
+|  |  |  |  |  (4:9) LIT_INTEGER(42)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
@@ -31,7 +31,7 @@ Program
 |  |  Name: 'd'
 |  |  Type: None
 |  |  Initializer:
-|  |  |  IDENTIFIER(MyType)
+|  |  |  (5:5) IDENTIFIER(MyType)
 |  |  |  |  Postfix:
 |  |  |  |  |  Call
 |  |  |  |  |  |  Arguments: None
@@ -55,7 +55,7 @@ Program
 |  |  |  |  |  Base: byte
 |  |  |  |  |  Modifiers:
 |  |  |  |  |  |  FixedArray
-|  |  |  |  |  |  |  LIT_INTEGER(16)
+|  |  |  |  |  |  |  (8:15) LIT_INTEGER(16)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  Arguments: None
 |  VariableDeclaration

@@ -44,7 +44,7 @@ Program
 |  |  |  Base: byte
 |  |  |  Modifiers:
 |  |  |  |  FixedArray
-|  |  |  |  |  LIT_INTEGER(16)
+|  |  |  |  |  (8:14) LIT_INTEGER(16)
 |  |  |  |  |  |  Postfix: None
 |  |  Initializer: None
 |  VariableDeclaration
@@ -72,7 +72,7 @@ Program
 |  |  |  Modifiers:
 |  |  |  |  Pointer
 |  |  |  |  FixedArray
-|  |  |  |  |  LIT_INTEGER(4)
+|  |  |  |  |  (12:17) LIT_INTEGER(4)
 |  |  |  |  |  |  Postfix: None
 |  |  Initializer: None
 |  VariableDeclaration

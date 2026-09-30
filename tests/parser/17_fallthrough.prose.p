@@ -6,40 +6,40 @@ Program
 |  |  Body:
 |  |  |  SwitchStatement
 |  |  |  |  Expression:
-|  |  |  |  |  IDENTIFIER(value)
+|  |  |  |  |  (2:12) IDENTIFIER(value)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Case 0
 |  |  |  |  |  Is Fallthrough: true
 |  |  |  |  |  Condition:
-|  |  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  |  (3:14) LIT_INTEGER(1)
 |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  Body:
-|  |  |  |  |  |  IDENTIFIER(prepare)
+|  |  |  |  |  |  (4:13) IDENTIFIER(prepare)
 |  |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  |  Call
 |  |  |  |  |  |  |  |  |  Arguments: None
 |  |  |  |  Case 1
 |  |  |  |  |  Is Fallthrough: false
 |  |  |  |  |  Condition:
-|  |  |  |  |  |  LIT_INTEGER(2)
+|  |  |  |  |  |  (6:14) LIT_INTEGER(2)
 |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  Body:
-|  |  |  |  |  |  IDENTIFIER(execute)
+|  |  |  |  |  |  (7:13) IDENTIFIER(execute)
 |  |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  |  Call
 |  |  |  |  |  |  |  |  |  Arguments: None
 |  |  |  |  Case 2
 |  |  |  |  |  Is Fallthrough: true
 |  |  |  |  |  Condition:
-|  |  |  |  |  |  LIT_INTEGER(3)
+|  |  |  |  |  |  (8:14) LIT_INTEGER(3)
 |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  Body:
-|  |  |  |  |  |  IDENTIFIER(cleanup)
+|  |  |  |  |  |  (9:13) IDENTIFIER(cleanup)
 |  |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  |  Call
 |  |  |  |  |  |  |  |  |  Arguments: None
 |  |  |  |  Default:
-|  |  |  |  |  IDENTIFIER(fallback)
+|  |  |  |  |  (12:13) IDENTIFIER(fallback)
 |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  Call
 |  |  |  |  |  |  |  |  Arguments: None

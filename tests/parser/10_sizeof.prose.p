@@ -18,7 +18,7 @@ Program
 |  |  |  |  |  Base: byte
 |  |  |  |  |  Modifiers:
 |  |  |  |  |  |  FixedArray
-|  |  |  |  |  |  |  LIT_INTEGER(4)
+|  |  |  |  |  |  |  (2:17) LIT_INTEGER(4)
 |  |  |  |  |  |  |  |  Postfix: None
 |  VariableDeclaration
 |  |  IsConst: false
@@ -27,7 +27,7 @@ Program
 |  |  Initializer:
 |  |  |  SizeOfExpression
 |  |  |  |  Value:
-|  |  |  |  |  IDENTIFIER(value)
+|  |  |  |  |  (3:12) IDENTIFIER(value)
 |  |  |  |  |  |  Postfix: None
 |  VariableDeclaration
 |  |  IsConst: false
@@ -36,10 +36,10 @@ Program
 |  |  Initializer:
 |  |  |  SizeOfExpression
 |  |  |  |  Value:
-|  |  |  |  |  IDENTIFIER(array)
+|  |  |  |  |  (4:12) IDENTIFIER(array)
 |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  Index
-|  |  |  |  |  |  |  |  LIT_INTEGER(0)
+|  |  |  |  |  |  |  |  (4:18) LIT_INTEGER(0)
 |  |  |  |  |  |  |  |  |  Postfix: None
 |  VariableDeclaration
 |  |  IsConst: false
@@ -48,10 +48,10 @@ Program
 |  |  Initializer:
 |  |  |  SizeOfExpression
 |  |  |  |  Value:
-|  |  |  |  |  IDENTIFIER(MyType)
+|  |  |  |  |  (5:12) IDENTIFIER(MyType)
 |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  Index
-|  |  |  |  |  |  |  |  LIT_INTEGER(6)
+|  |  |  |  |  |  |  |  (5:19) LIT_INTEGER(6)
 |  |  |  |  |  |  |  |  |  Postfix: None
 |  VariableDeclaration
 |  |  IsConst: false
@@ -60,7 +60,7 @@ Program
 |  |  Initializer:
 |  |  |  SizeOfExpression
 |  |  |  |  Value:
-|  |  |  |  |  IDENTIFIER(foo)
+|  |  |  |  |  (6:12) IDENTIFIER(foo)
 |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  Call
 |  |  |  |  |  |  |  |  Arguments: None

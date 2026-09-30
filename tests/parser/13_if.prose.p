@@ -7,7 +7,7 @@ Program
 |  |  |  IfStatement
 |  |  |  |  Main branch:
 |  |  |  |  |  Condition:
-|  |  |  |  |  |  IDENTIFIER(condition)
+|  |  |  |  |  |  (3:8) IDENTIFIER(condition)
 |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  Body:
 |  |  |  |  |  |  VariableDeclaration
@@ -15,14 +15,14 @@ Program
 |  |  |  |  |  |  |  Name: 'x'
 |  |  |  |  |  |  |  Type: None
 |  |  |  |  |  |  |  Initializer:
-|  |  |  |  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  |  |  |  (4:13) LIT_INTEGER(1)
 |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  Conditional branches: None
 |  |  |  |  Default branch: None
 |  |  |  IfStatement
 |  |  |  |  Main branch:
 |  |  |  |  |  Condition:
-|  |  |  |  |  |  IDENTIFIER(first)
+|  |  |  |  |  |  (8:8) IDENTIFIER(first)
 |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  Body:
 |  |  |  |  |  |  VariableDeclaration
@@ -30,11 +30,11 @@ Program
 |  |  |  |  |  |  |  Name: 'x'
 |  |  |  |  |  |  |  Type: None
 |  |  |  |  |  |  |  Initializer:
-|  |  |  |  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  |  |  |  (9:13) LIT_INTEGER(1)
 |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  Conditional branches:
 |  |  |  |  |  Condition:
-|  |  |  |  |  |  IDENTIFIER(second)
+|  |  |  |  |  |  (10:13) IDENTIFIER(second)
 |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  Body:
 |  |  |  |  |  |  VariableDeclaration
@@ -42,10 +42,10 @@ Program
 |  |  |  |  |  |  |  Name: 'x'
 |  |  |  |  |  |  |  Type: None
 |  |  |  |  |  |  |  Initializer:
-|  |  |  |  |  |  |  |  LIT_INTEGER(2)
+|  |  |  |  |  |  |  |  (11:13) LIT_INTEGER(2)
 |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  Condition:
-|  |  |  |  |  |  IDENTIFIER(third)
+|  |  |  |  |  |  (12:13) IDENTIFIER(third)
 |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  Body:
 |  |  |  |  |  |  VariableDeclaration
@@ -53,7 +53,7 @@ Program
 |  |  |  |  |  |  |  Name: 'x'
 |  |  |  |  |  |  |  Type: None
 |  |  |  |  |  |  |  Initializer:
-|  |  |  |  |  |  |  |  LIT_INTEGER(3)
+|  |  |  |  |  |  |  |  (13:13) LIT_INTEGER(3)
 |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  Default branch:
 |  |  |  |  |  VariableDeclaration
@@ -61,27 +61,27 @@ Program
 |  |  |  |  |  |  Name: 'x'
 |  |  |  |  |  |  Type: None
 |  |  |  |  |  |  Initializer:
-|  |  |  |  |  |  |  LIT_INTEGER(4)
+|  |  |  |  |  |  |  (15:13) LIT_INTEGER(4)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  IfStatement
 |  |  |  |  Main branch:
 |  |  |  |  |  Condition:
-|  |  |  |  |  |  IDENTIFIER(first)
+|  |  |  |  |  |  (19:8) IDENTIFIER(first)
 |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  Body:
 |  |  |  |  |  |  IfStatement
 |  |  |  |  |  |  |  Main branch:
 |  |  |  |  |  |  |  |  Condition:
-|  |  |  |  |  |  |  |  |  IDENTIFIER(second)
+|  |  |  |  |  |  |  |  |  (20:12) IDENTIFIER(second)
 |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  Body:
-|  |  |  |  |  |  |  |  |  IDENTIFIER(foo)
+|  |  |  |  |  |  |  |  |  (21:13) IDENTIFIER(foo)
 |  |  |  |  |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  |  |  |  |  Call
 |  |  |  |  |  |  |  |  |  |  |  |  Arguments: None
 |  |  |  |  |  |  |  Conditional branches: None
 |  |  |  |  |  |  |  Default branch:
-|  |  |  |  |  |  |  |  IDENTIFIER(bar)
+|  |  |  |  |  |  |  |  (23:13) IDENTIFIER(bar)
 |  |  |  |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  |  |  |  Call
 |  |  |  |  |  |  |  |  |  |  |  Arguments: None

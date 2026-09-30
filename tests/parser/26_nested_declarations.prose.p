@@ -9,7 +9,7 @@ Program
 |  |  |  |  Name: 'x'
 |  |  |  |  Type: None
 |  |  |  |  Initializer:
-|  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  (2:9) LIT_INTEGER(1)
 |  |  |  |  |  |  Postfix: None
 |  |  |  AliasDeclaration
 |  |  |  |  Name: LocalInt
@@ -45,5 +45,5 @@ Program
 |  |  |  |  |  |  Name: 'y'
 |  |  |  |  |  |  Type: None
 |  |  |  |  |  |  Initializer:
-|  |  |  |  |  |  |  LIT_INTEGER(2)
+|  |  |  |  |  |  |  (16:13) LIT_INTEGER(2)
 |  |  |  |  |  |  |  |  Postfix: None

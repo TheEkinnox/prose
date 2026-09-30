@@ -8,13 +8,13 @@ Program
 |  |  Body:
 |  |  |  WhileStatement
 |  |  |  |  Condition:
-|  |  |  |  |  IDENTIFIER(condition)
+|  |  |  |  |  (2:11) IDENTIFIER(condition)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Body:
 |  |  |  |  |  IfStatement
 |  |  |  |  |  |  Main branch:
 |  |  |  |  |  |  |  Condition:
-|  |  |  |  |  |  |  |  IDENTIFIER(should_skip)
+|  |  |  |  |  |  |  |  (3:12) IDENTIFIER(should_skip)
 |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  Body:
 |  |  |  |  |  |  |  |  Continue
@@ -23,14 +23,14 @@ Program
 |  |  |  |  |  IfStatement
 |  |  |  |  |  |  Main branch:
 |  |  |  |  |  |  |  Condition:
-|  |  |  |  |  |  |  |  IDENTIFIER(should_stop)
+|  |  |  |  |  |  |  |  (7:12) IDENTIFIER(should_stop)
 |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  Body:
 |  |  |  |  |  |  |  |  Break
 |  |  |  |  |  |  Conditional branches: None
 |  |  |  |  |  |  Default branch: None
 |  |  |  Return
-|  |  |  |  LIT_INTEGER(42)
+|  |  |  |  (12:12) LIT_INTEGER(42)
 |  |  |  |  |  Postfix: None
 |  FunctionDeclaration
 |  |  Name: 'voidReturn'

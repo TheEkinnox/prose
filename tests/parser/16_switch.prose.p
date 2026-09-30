@@ -6,83 +6,83 @@ Program
 |  |  Body:
 |  |  |  SwitchStatement
 |  |  |  |  Expression:
-|  |  |  |  |  IDENTIFIER(value)
+|  |  |  |  |  (3:12) IDENTIFIER(value)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Case 0
 |  |  |  |  |  Is Fallthrough: false
 |  |  |  |  |  Condition:
-|  |  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  |  (4:14) LIT_INTEGER(1)
 |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  Body:
-|  |  |  |  |  |  IDENTIFIER(func1)
+|  |  |  |  |  |  (5:13) IDENTIFIER(func1)
 |  |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  |  Call
 |  |  |  |  |  |  |  |  |  Arguments: None
 |  |  |  |  Case 1
 |  |  |  |  |  Is Fallthrough: false
 |  |  |  |  |  Condition:
-|  |  |  |  |  |  LIT_INTEGER(2)
+|  |  |  |  |  |  (6:14) LIT_INTEGER(2)
 |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  Body:
-|  |  |  |  |  |  IDENTIFIER(func2)
+|  |  |  |  |  |  (7:13) IDENTIFIER(func2)
 |  |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  |  Call
 |  |  |  |  |  |  |  |  |  Arguments: None
 |  |  |  |  Default:
-|  |  |  |  |  IDENTIFIER(funcDefault)
+|  |  |  |  |  (9:13) IDENTIFIER(funcDefault)
 |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  Call
 |  |  |  |  |  |  |  |  Arguments: None
 |  |  |  SwitchStatement
 |  |  |  |  Expression:
-|  |  |  |  |  IDENTIFIER(value)
+|  |  |  |  |  (13:12) IDENTIFIER(value)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Case 0
 |  |  |  |  |  Is Fallthrough: false
 |  |  |  |  |  Condition:
-|  |  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  |  (14:14) LIT_INTEGER(1)
 |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  Body:
-|  |  |  |  |  |  IDENTIFIER(func1)
+|  |  |  |  |  |  (15:13) IDENTIFIER(func1)
 |  |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  |  Call
 |  |  |  |  |  |  |  |  |  Arguments: None
 |  |  |  |  Case 1
 |  |  |  |  |  Is Fallthrough: false
 |  |  |  |  |  Condition:
-|  |  |  |  |  |  LIT_INTEGER(2)
+|  |  |  |  |  |  (16:14) LIT_INTEGER(2)
 |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  Body:
-|  |  |  |  |  |  IDENTIFIER(func2)
+|  |  |  |  |  |  (17:13) IDENTIFIER(func2)
 |  |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  |  Call
 |  |  |  |  |  |  |  |  |  Arguments: None
 |  |  |  |  Default: None
 |  |  |  SwitchStatement
 |  |  |  |  Expression:
-|  |  |  |  |  IDENTIFIER(value)
+|  |  |  |  |  (21:12) IDENTIFIER(value)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Cases: None
 |  |  |  |  Default:
-|  |  |  |  |  IDENTIFIER(funcDefault)
+|  |  |  |  |  (23:13) IDENTIFIER(funcDefault)
 |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  Call
 |  |  |  |  |  |  |  |  Arguments: None
 |  |  |  SwitchStatement
 |  |  |  |  Expression:
-|  |  |  |  |  IDENTIFIER(value)
+|  |  |  |  |  (27:12) IDENTIFIER(value)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Case 0
 |  |  |  |  |  Is Fallthrough: false
 |  |  |  |  |  Condition:
-|  |  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  |  (28:14) LIT_INTEGER(1)
 |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  Body:
 |  |  |  |  |  |  Empty Block
 |  |  |  |  Case 1
 |  |  |  |  |  Is Fallthrough: false
 |  |  |  |  |  Condition:
-|  |  |  |  |  |  LIT_INTEGER(2)
+|  |  |  |  |  |  (29:14) LIT_INTEGER(2)
 |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  Body:
 |  |  |  |  |  |  Empty Block

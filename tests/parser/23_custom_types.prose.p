@@ -28,7 +28,7 @@ Program
 |  |  |  |  Name: 'x'
 |  |  |  |  Type: None
 |  |  |  |  Initializer:
-|  |  |  |  |  LIT_INTEGER(0)
+|  |  |  |  |  (10:9) LIT_INTEGER(0)
 |  |  |  |  |  |  Postfix: None
 |  |  |  VariableDeclaration
 |  |  |  |  IsConst: false
@@ -37,11 +37,11 @@ Program
 |  |  |  |  Initializer:
 |  |  |  |  |  ArrayLiteralExpression
 |  |  |  |  |  |  Elements:
-|  |  |  |  |  |  |  LIT_INTEGER(0)
+|  |  |  |  |  |  |  (11:11) LIT_INTEGER(0)
 |  |  |  |  |  |  |  |  Postfix: None
-|  |  |  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  |  |  (11:14) LIT_INTEGER(1)
 |  |  |  |  |  |  |  |  Postfix: None
-|  |  |  |  |  |  |  LIT_INTEGER(2)
+|  |  |  |  |  |  |  (11:17) LIT_INTEGER(2)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None
 |  TypeDeclaration
@@ -52,7 +52,7 @@ Program
 |  |  |  |  Name: 'x'
 |  |  |  |  Type: None
 |  |  |  |  Initializer:
-|  |  |  |  |  LIT_INTEGER(0)
+|  |  |  |  |  (15:15) LIT_INTEGER(0)
 |  |  |  |  |  |  Postfix: None
 |  |  |  VariableDeclaration
 |  |  |  |  IsConst: true
@@ -61,5 +61,5 @@ Program
 |  |  |  |  |  Base: i32
 |  |  |  |  |  Modifiers: None
 |  |  |  |  Initializer:
-|  |  |  |  |  LIT_INTEGER(0)
+|  |  |  |  |  (16:21) LIT_INTEGER(0)
 |  |  |  |  |  |  Postfix: None

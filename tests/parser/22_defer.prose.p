@@ -5,19 +5,19 @@ Program
 |  |  Parameters: None
 |  |  Body:
 |  |  |  DeferStatement
-|  |  |  |  IDENTIFIER(cleanup)
+|  |  |  |  (2:11) IDENTIFIER(cleanup)
 |  |  |  |  |  Postfix:
 |  |  |  |  |  |  Call
 |  |  |  |  |  |  |  Arguments: None
 |  |  |  DeferStatement
-|  |  |  |  IDENTIFIER(log)
+|  |  |  |  (3:11) IDENTIFIER(log)
 |  |  |  |  |  Postfix:
 |  |  |  |  |  |  Call
 |  |  |  |  |  |  |  Arguments:
-|  |  |  |  |  |  |  |  LIT_STRING("finished")
+|  |  |  |  |  |  |  |  (3:15) LIT_STRING("finished")
 |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  DeferStatement
-|  |  |  |  IDENTIFIER(object)
+|  |  |  |  (4:11) IDENTIFIER(object)
 |  |  |  |  |  Postfix:
 |  |  |  |  |  |  MemberAccess
 |  |  |  |  |  |  |  Member: 'shutdown'

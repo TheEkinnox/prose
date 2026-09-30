@@ -12,42 +12,42 @@ Program
 |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  Operator: OP_RANGE
 |  |  |  |  |  |  Left: 
-|  |  |  |  |  |  |  LIT_INTEGER(0)
+|  |  |  |  |  |  |  (2:14) LIT_INTEGER(0)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  LIT_INTEGER(10)
+|  |  |  |  |  |  |  (2:17) LIT_INTEGER(10)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Body:
-|  |  |  |  |  IDENTIFIER(process)
+|  |  |  |  |  (3:9) IDENTIFIER(process)
 |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  Call
 |  |  |  |  |  |  |  |  Arguments:
-|  |  |  |  |  |  |  |  |  IDENTIFIER(i)
+|  |  |  |  |  |  |  |  |  (3:17) IDENTIFIER(i)
 |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  ForStatement
 |  |  |  |  Iterator:
 |  |  |  |  |  Name: value
 |  |  |  |  |  Is Ref: false
 |  |  |  |  Range:
-|  |  |  |  |  IDENTIFIER(array)
+|  |  |  |  |  (6:18) IDENTIFIER(array)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Body:
-|  |  |  |  |  IDENTIFIER(process)
+|  |  |  |  |  (7:9) IDENTIFIER(process)
 |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  Call
 |  |  |  |  |  |  |  |  Arguments:
-|  |  |  |  |  |  |  |  |  IDENTIFIER(value)
+|  |  |  |  |  |  |  |  |  (7:17) IDENTIFIER(value)
 |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  ForStatement
 |  |  |  |  Iterator:
 |  |  |  |  |  Name: value
 |  |  |  |  |  Is Ref: true
 |  |  |  |  Range:
-|  |  |  |  |  IDENTIFIER(array)
+|  |  |  |  |  (10:19) IDENTIFIER(array)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Body:
-|  |  |  |  |  IDENTIFIER(value)
+|  |  |  |  |  (11:9) IDENTIFIER(value)
 |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  Increment
 |  |  |  ForStatement
@@ -61,27 +61,27 @@ Program
 |  |  |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  |  |  Operator: OP_PLUS
 |  |  |  |  |  |  |  |  Left: 
-|  |  |  |  |  |  |  |  |  IDENTIFIER(first)
+|  |  |  |  |  |  |  |  |  (14:14) IDENTIFIER(first)
 |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  |  |  |  |  (14:22) LIT_INTEGER(1)
 |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Right: 
 |  |  |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  |  |  Operator: OP_MINUS
 |  |  |  |  |  |  |  |  Left: 
-|  |  |  |  |  |  |  |  |  IDENTIFIER(last)
+|  |  |  |  |  |  |  |  |  (14:25) IDENTIFIER(last)
 |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  |  |  |  |  (14:32) LIT_INTEGER(1)
 |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Body:
-|  |  |  |  |  IDENTIFIER(process)
+|  |  |  |  |  (15:9) IDENTIFIER(process)
 |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  Call
 |  |  |  |  |  |  |  |  Arguments:
-|  |  |  |  |  |  |  |  |  IDENTIFIER(i)
+|  |  |  |  |  |  |  |  |  (15:17) IDENTIFIER(i)
 |  |  |  |  |  |  |  |  |  |  Postfix: None

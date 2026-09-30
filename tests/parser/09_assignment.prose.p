@@ -9,107 +9,107 @@ Program
 |  |  |  |  Name: 'a'
 |  |  |  |  Type: None
 |  |  |  |  Initializer:
-|  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  (2:9) LIT_INTEGER(1)
 |  |  |  |  |  |  Postfix: None
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_ASSIGN
 |  |  |  |  Left: 
-|  |  |  |  |  IDENTIFIER(a)
+|  |  |  |  |  (3:5) IDENTIFIER(a)
 |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  MemberAccess
 |  |  |  |  |  |  |  |  Member: 'member'
 |  |  |  |  Right: 
-|  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  (3:16) LIT_INTEGER(1)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_ASSIGN_ADD
 |  |  |  |  Left: 
-|  |  |  |  |  IDENTIFIER(a)
+|  |  |  |  |  (5:5) IDENTIFIER(a)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
-|  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  (5:10) LIT_INTEGER(1)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_ASSIGN_SUB
 |  |  |  |  Left: 
-|  |  |  |  |  IDENTIFIER(a)
+|  |  |  |  |  (6:5) IDENTIFIER(a)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
-|  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  (6:10) LIT_INTEGER(1)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_ASSIGN_MUL
 |  |  |  |  Left: 
-|  |  |  |  |  IDENTIFIER(a)
+|  |  |  |  |  (7:5) IDENTIFIER(a)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
-|  |  |  |  |  LIT_INTEGER(2)
+|  |  |  |  |  (7:10) LIT_INTEGER(2)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_ASSIGN_DIV
 |  |  |  |  Left: 
-|  |  |  |  |  IDENTIFIER(a)
+|  |  |  |  |  (8:5) IDENTIFIER(a)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
-|  |  |  |  |  LIT_INTEGER(2)
+|  |  |  |  |  (8:10) LIT_INTEGER(2)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_ASSIGN_MOD
 |  |  |  |  Left: 
-|  |  |  |  |  IDENTIFIER(a)
+|  |  |  |  |  (9:5) IDENTIFIER(a)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
-|  |  |  |  |  LIT_INTEGER(2)
+|  |  |  |  |  (9:10) LIT_INTEGER(2)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_ASSIGN_AND
 |  |  |  |  Left: 
-|  |  |  |  |  IDENTIFIER(a)
+|  |  |  |  |  (11:5) IDENTIFIER(a)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
-|  |  |  |  |  IDENTIFIER(mask)
+|  |  |  |  |  (11:10) IDENTIFIER(mask)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_ASSIGN_OR
 |  |  |  |  Left: 
-|  |  |  |  |  IDENTIFIER(a)
+|  |  |  |  |  (12:5) IDENTIFIER(a)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
-|  |  |  |  |  IDENTIFIER(mask)
+|  |  |  |  |  (12:10) IDENTIFIER(mask)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_ASSIGN_XOR
 |  |  |  |  Left: 
-|  |  |  |  |  IDENTIFIER(a)
+|  |  |  |  |  (13:5) IDENTIFIER(a)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
-|  |  |  |  |  IDENTIFIER(mask)
+|  |  |  |  |  (13:10) IDENTIFIER(mask)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_ASSIGN_LSHIFT
 |  |  |  |  Left: 
-|  |  |  |  |  IDENTIFIER(a)
+|  |  |  |  |  (15:5) IDENTIFIER(a)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
-|  |  |  |  |  LIT_INTEGER(2)
+|  |  |  |  |  (15:11) LIT_INTEGER(2)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_ASSIGN_RSHIFT
 |  |  |  |  Left: 
-|  |  |  |  |  IDENTIFIER(a)
+|  |  |  |  |  (16:5) IDENTIFIER(a)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
-|  |  |  |  |  LIT_INTEGER(2)
+|  |  |  |  |  (16:11) LIT_INTEGER(2)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  |  |  VariableDeclaration
@@ -120,16 +120,16 @@ Program
 |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  Operator: OP_ASSIGN
 |  |  |  |  |  |  Left: 
-|  |  |  |  |  |  |  IDENTIFIER(b)
+|  |  |  |  |  |  |  (18:9) IDENTIFIER(b)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Right: 
 |  |  |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  |  |  Operator: OP_ASSIGN
 |  |  |  |  |  |  |  |  Left: 
-|  |  |  |  |  |  |  |  |  IDENTIFIER(c)
+|  |  |  |  |  |  |  |  |  (18:13) IDENTIFIER(c)
 |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  |  |  LIT_INTEGER(42)
+|  |  |  |  |  |  |  |  |  (18:17) LIT_INTEGER(42)
 |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None
@@ -143,9 +143,9 @@ Program
 |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  Operator: OP_ASSIGN_ADD
 |  |  |  |  |  |  Left: 
-|  |  |  |  |  |  |  IDENTIFIER(a)
+|  |  |  |  |  |  |  (19:15) IDENTIFIER(a)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  |  |  (19:20) LIT_INTEGER(1)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None

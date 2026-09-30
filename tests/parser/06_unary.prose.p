@@ -7,7 +7,7 @@ Program
 |  |  |  UnaryExpression
 |  |  |  |  Operator: OP_MINUS
 |  |  |  |  Operand: 
-|  |  |  |  |  IDENTIFIER(value)
+|  |  |  |  |  (1:6) IDENTIFIER(value)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
@@ -18,7 +18,7 @@ Program
 |  |  |  UnaryExpression
 |  |  |  |  Operator: OP_LOGICAL_NOT
 |  |  |  |  Operand: 
-|  |  |  |  |  IDENTIFIER(condition)
+|  |  |  |  |  (2:6) IDENTIFIER(condition)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
@@ -29,7 +29,7 @@ Program
 |  |  |  UnaryExpression
 |  |  |  |  Operator: OP_BITWISE_NOT
 |  |  |  |  Operand: 
-|  |  |  |  |  IDENTIFIER(flags)
+|  |  |  |  |  (3:6) IDENTIFIER(flags)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
@@ -40,7 +40,7 @@ Program
 |  |  |  UnaryExpression
 |  |  |  |  Operator: OP_ADDRESS_OF
 |  |  |  |  Operand: 
-|  |  |  |  |  IDENTIFIER(value)
+|  |  |  |  |  (4:6) IDENTIFIER(value)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
@@ -51,7 +51,7 @@ Program
 |  |  |  UnaryExpression
 |  |  |  |  Operator: KW_MOVE
 |  |  |  |  Operand: 
-|  |  |  |  |  IDENTIFIER(value)
+|  |  |  |  |  (5:10) IDENTIFIER(value)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
@@ -62,7 +62,7 @@ Program
 |  |  |  UnaryExpression
 |  |  |  |  Operator: OP_INC
 |  |  |  |  Operand: 
-|  |  |  |  |  IDENTIFIER(counter)
+|  |  |  |  |  (7:7) IDENTIFIER(counter)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
@@ -73,7 +73,7 @@ Program
 |  |  |  UnaryExpression
 |  |  |  |  Operator: OP_DEC
 |  |  |  |  Operand: 
-|  |  |  |  |  IDENTIFIER(counter)
+|  |  |  |  |  (8:7) IDENTIFIER(counter)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
@@ -81,7 +81,7 @@ Program
 |  |  Name: 'h'
 |  |  Type: None
 |  |  Initializer:
-|  |  |  IDENTIFIER(counter)
+|  |  |  (10:5) IDENTIFIER(counter)
 |  |  |  |  Postfix:
 |  |  |  |  |  Increment
 |  VariableDeclaration
@@ -89,7 +89,7 @@ Program
 |  |  Name: 'i'
 |  |  Type: None
 |  |  Initializer:
-|  |  |  IDENTIFIER(counter)
+|  |  |  (11:5) IDENTIFIER(counter)
 |  |  |  |  Postfix:
 |  |  |  |  |  Decrement
 |  VariableDeclaration
@@ -100,10 +100,10 @@ Program
 |  |  |  UnaryExpression
 |  |  |  |  Operator: OP_MINUS
 |  |  |  |  Operand: 
-|  |  |  |  |  IDENTIFIER(array)
+|  |  |  |  |  (13:6) IDENTIFIER(array)
 |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  Index
-|  |  |  |  |  |  |  |  LIT_INTEGER(0)
+|  |  |  |  |  |  |  |  (13:12) LIT_INTEGER(0)
 |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
@@ -114,7 +114,7 @@ Program
 |  |  |  UnaryExpression
 |  |  |  |  Operator: OP_LOGICAL_NOT
 |  |  |  |  Operand: 
-|  |  |  |  |  IDENTIFIER(foo)
+|  |  |  |  |  (14:6) IDENTIFIER(foo)
 |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  Call
 |  |  |  |  |  |  |  |  Arguments: None
@@ -129,10 +129,10 @@ Program
 |  |  |  UnaryExpression
 |  |  |  |  Operator: OP_ADDRESS_OF
 |  |  |  |  Operand: 
-|  |  |  |  |  IDENTIFIER(array)
+|  |  |  |  |  (15:6) IDENTIFIER(array)
 |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  Index
-|  |  |  |  |  |  |  |  IDENTIFIER(index)
+|  |  |  |  |  |  |  |  (15:12) IDENTIFIER(index)
 |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
@@ -143,10 +143,10 @@ Program
 |  |  |  UnaryExpression
 |  |  |  |  Operator: KW_MOVE
 |  |  |  |  Operand: 
-|  |  |  |  |  IDENTIFIER(objects)
+|  |  |  |  |  (16:10) IDENTIFIER(objects)
 |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  Index
-|  |  |  |  |  |  |  |  IDENTIFIER(index)
+|  |  |  |  |  |  |  |  (16:18) IDENTIFIER(index)
 |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
@@ -157,7 +157,7 @@ Program
 |  |  |  UnaryExpression
 |  |  |  |  Operator: OP_INC
 |  |  |  |  Operand: 
-|  |  |  |  |  IDENTIFIER(object)
+|  |  |  |  |  (17:7) IDENTIFIER(object)
 |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  MemberAccess
 |  |  |  |  |  |  |  |  Member: 'member'

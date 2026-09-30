@@ -28,7 +28,7 @@ Program
 |  |  |  |  |  Base: i32
 |  |  |  |  |  Modifiers: None
 |  |  |  |  Initializer:
-|  |  |  |  |  LIT_INTEGER(0)
+|  |  |  |  |  (10:19) LIT_INTEGER(0)
 |  |  |  |  |  |  Postfix: None
 |  |  |  VariableDeclaration
 |  |  |  |  IsConst: false
@@ -37,7 +37,7 @@ Program
 |  |  |  |  |  Base: State
 |  |  |  |  |  Modifiers: None
 |  |  |  |  Initializer:
-|  |  |  |  |  IDENTIFIER(State)
+|  |  |  |  |  (11:21) IDENTIFIER(State)
 |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  MemberAccess
 |  |  |  |  |  |  |  |  Member: 'Idle'
@@ -60,18 +60,18 @@ Program
 |  |  |  |  |  Base: i32
 |  |  |  |  |  Modifiers: None
 |  |  |  |  Initializer:
-|  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  (14:49) LIT_INTEGER(1)
 |  |  |  |  |  |  Postfix: None
 |  |  Body:
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_ASSIGN_ADD
 |  |  |  |  Left: 
-|  |  |  |  |  IDENTIFIER(counter)
+|  |  |  |  |  (15:5) IDENTIFIER(counter)
 |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  MemberAccess
 |  |  |  |  |  |  |  |  Member: 'value'
 |  |  |  |  Right: 
-|  |  |  |  |  IDENTIFIER(amount)
+|  |  |  |  |  (15:22) IDENTIFIER(amount)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  FunctionDeclaration
@@ -96,10 +96,10 @@ Program
 |  |  |  |  |  Base: i32
 |  |  |  |  |  Modifiers: None
 |  |  |  |  Initializer:
-|  |  |  |  |  LIT_INTEGER(0)
+|  |  |  |  |  (19:19) LIT_INTEGER(0)
 |  |  |  |  |  |  Postfix: None
 |  |  |  DeferStatement
-|  |  |  |  IDENTIFIER(cleanup)
+|  |  |  |  (21:11) IDENTIFIER(cleanup)
 |  |  |  |  |  Postfix:
 |  |  |  |  |  |  Call
 |  |  |  |  |  |  |  Arguments: None
@@ -108,7 +108,7 @@ Program
 |  |  |  |  |  Name: value
 |  |  |  |  |  Is Ref: true
 |  |  |  |  Range:
-|  |  |  |  |  IDENTIFIER(values)
+|  |  |  |  |  (23:19) IDENTIFIER(values)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Body:
 |  |  |  |  |  IfStatement
@@ -117,10 +117,10 @@ Program
 |  |  |  |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  |  |  |  Operator: OP_LESS
 |  |  |  |  |  |  |  |  |  Left: 
-|  |  |  |  |  |  |  |  |  |  IDENTIFIER(value)
+|  |  |  |  |  |  |  |  |  |  (24:12) IDENTIFIER(value)
 |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  |  |  |  LIT_INTEGER(0)
+|  |  |  |  |  |  |  |  |  |  (24:20) LIT_INTEGER(0)
 |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  Body:
@@ -130,10 +130,10 @@ Program
 |  |  |  |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  |  |  |  Operator: OP_EQUAL
 |  |  |  |  |  |  |  |  |  Left: 
-|  |  |  |  |  |  |  |  |  |  IDENTIFIER(value)
+|  |  |  |  |  |  |  |  |  |  (26:17) IDENTIFIER(value)
 |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  |  |  |  LIT_INTEGER(0)
+|  |  |  |  |  |  |  |  |  |  (26:26) LIT_INTEGER(0)
 |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  Body:
@@ -142,19 +142,19 @@ Program
 |  |  |  |  |  |  |  |  |  Name: 'value'
 |  |  |  |  |  |  |  |  |  Type: None
 |  |  |  |  |  |  |  |  |  Initializer:
-|  |  |  |  |  |  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  |  |  |  |  |  (27:21) LIT_INTEGER(1)
 |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Default branch:
-|  |  |  |  |  |  |  IDENTIFIER(value)
+|  |  |  |  |  |  |  (29:13) IDENTIFIER(value)
 |  |  |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  |  |  Increment
 |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  Operator: OP_ASSIGN_ADD
 |  |  |  |  |  |  Left: 
-|  |  |  |  |  |  |  IDENTIFIER(total)
+|  |  |  |  |  |  |  (32:9) IDENTIFIER(total)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  IDENTIFIER(value)
+|  |  |  |  |  |  |  (32:18) IDENTIFIER(value)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  IfStatement
@@ -163,10 +163,10 @@ Program
 |  |  |  |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  |  |  |  Operator: OP_GREATER_EQUAL
 |  |  |  |  |  |  |  |  |  Left: 
-|  |  |  |  |  |  |  |  |  |  IDENTIFIER(total)
+|  |  |  |  |  |  |  |  |  |  (34:12) IDENTIFIER(total)
 |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  |  |  |  LIT_INTEGER(100)
+|  |  |  |  |  |  |  |  |  |  (34:21) LIT_INTEGER(100)
 |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  Body:
@@ -175,41 +175,41 @@ Program
 |  |  |  |  |  |  Default branch: None
 |  |  |  SwitchStatement
 |  |  |  |  Expression:
-|  |  |  |  |  IDENTIFIER(total)
+|  |  |  |  |  (39:12) IDENTIFIER(total)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Case 0
 |  |  |  |  |  Is Fallthrough: true
 |  |  |  |  |  Condition:
-|  |  |  |  |  |  LIT_INTEGER(0)
+|  |  |  |  |  |  (40:14) LIT_INTEGER(0)
 |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  Body:
-|  |  |  |  |  |  IDENTIFIER(log)
+|  |  |  |  |  |  (41:13) IDENTIFIER(log)
 |  |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  |  Call
 |  |  |  |  |  |  |  |  |  Arguments:
-|  |  |  |  |  |  |  |  |  |  LIT_STRING("empty")
+|  |  |  |  |  |  |  |  |  |  (41:17) LIT_STRING("empty")
 |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  Case 1
 |  |  |  |  |  Is Fallthrough: false
 |  |  |  |  |  Condition:
-|  |  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  |  (44:14) LIT_INTEGER(1)
 |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  Body:
-|  |  |  |  |  |  IDENTIFIER(log)
+|  |  |  |  |  |  (45:13) IDENTIFIER(log)
 |  |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  |  Call
 |  |  |  |  |  |  |  |  |  Arguments:
-|  |  |  |  |  |  |  |  |  |  LIT_STRING("small")
+|  |  |  |  |  |  |  |  |  |  (45:17) LIT_STRING("small")
 |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  Default:
-|  |  |  |  |  IDENTIFIER(log)
+|  |  |  |  |  (48:13) IDENTIFIER(log)
 |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  Call
 |  |  |  |  |  |  |  |  Arguments:
-|  |  |  |  |  |  |  |  |  LIT_STRING("large")
+|  |  |  |  |  |  |  |  |  (48:17) LIT_STRING("large")
 |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  Return
-|  |  |  |  IDENTIFIER(total)
+|  |  |  |  (51:12) IDENTIFIER(total)
 |  |  |  |  |  Postfix: None
 |  FunctionDeclaration
 |  |  Name: 'main'
@@ -226,13 +226,13 @@ Program
 |  |  |  |  Initializer:
 |  |  |  |  |  ArrayLiteralExpression
 |  |  |  |  |  |  Elements:
-|  |  |  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  |  |  (55:23) LIT_INTEGER(1)
 |  |  |  |  |  |  |  |  Postfix: None
-|  |  |  |  |  |  |  LIT_INTEGER(2)
+|  |  |  |  |  |  |  (55:26) LIT_INTEGER(2)
 |  |  |  |  |  |  |  |  Postfix: None
-|  |  |  |  |  |  |  LIT_INTEGER(3)
+|  |  |  |  |  |  |  (55:29) LIT_INTEGER(3)
 |  |  |  |  |  |  |  |  Postfix: None
-|  |  |  |  |  |  |  LIT_INTEGER(4)
+|  |  |  |  |  |  |  (55:32) LIT_INTEGER(4)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None
 |  |  |  VariableDeclaration
@@ -240,11 +240,11 @@ Program
 |  |  |  |  Name: 'result'
 |  |  |  |  Type: None
 |  |  |  |  Initializer:
-|  |  |  |  |  IDENTIFIER(process)
+|  |  |  |  |  (57:14) IDENTIFIER(process)
 |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  Call
 |  |  |  |  |  |  |  |  Arguments:
-|  |  |  |  |  |  |  |  |  IDENTIFIER(values)
+|  |  |  |  |  |  |  |  |  (57:22) IDENTIFIER(values)
 |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  ScopeStatement
 |  |  |  |  VariableDeclaration
@@ -252,7 +252,7 @@ Program
 |  |  |  |  |  Name: 'copy'
 |  |  |  |  |  Type: None
 |  |  |  |  |  Initializer:
-|  |  |  |  |  |  IDENTIFIER(result)
+|  |  |  |  |  |  (60:16) IDENTIFIER(result)
 |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  VariableDeclaration
 |  |  |  |  |  IsConst: false
@@ -262,7 +262,7 @@ Program
 |  |  |  |  |  |  UnaryExpression
 |  |  |  |  |  |  |  Operator: OP_ADDRESS_OF
 |  |  |  |  |  |  |  Operand: 
-|  |  |  |  |  |  |  |  IDENTIFIER(copy)
+|  |  |  |  |  |  |  |  (61:16) IDENTIFIER(copy)
 |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  WhileStatement
@@ -270,13 +270,13 @@ Program
 |  |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  |  Operator: OP_GREATER
 |  |  |  |  |  |  |  Left: 
-|  |  |  |  |  |  |  |  IDENTIFIER(copy)
+|  |  |  |  |  |  |  |  (63:15) IDENTIFIER(copy)
 |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  |  LIT_INTEGER(0)
+|  |  |  |  |  |  |  |  (63:22) LIT_INTEGER(0)
 |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  Body:
-|  |  |  |  |  |  IDENTIFIER(copy)
+|  |  |  |  |  |  (64:13) IDENTIFIER(copy)
 |  |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  |  Decrement

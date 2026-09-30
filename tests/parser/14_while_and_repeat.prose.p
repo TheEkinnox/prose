@@ -6,46 +6,46 @@ Program
 |  |  Body:
 |  |  |  WhileStatement
 |  |  |  |  Condition:
-|  |  |  |  |  IDENTIFIER(condition)
+|  |  |  |  |  (3:11) IDENTIFIER(condition)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Body:
-|  |  |  |  |  IDENTIFIER(work)
+|  |  |  |  |  (4:9) IDENTIFIER(work)
 |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  Call
 |  |  |  |  |  |  |  |  Arguments: None
 |  |  |  RepeatStatement
 |  |  |  |  Condition:
-|  |  |  |  |  IDENTIFIER(finished)
+|  |  |  |  |  (9:11) IDENTIFIER(finished)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Body:
-|  |  |  |  |  IDENTIFIER(work)
+|  |  |  |  |  (8:9) IDENTIFIER(work)
 |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  Call
 |  |  |  |  |  |  |  |  Arguments: None
 |  |  |  RepeatStatement
 |  |  |  |  Condition:
-|  |  |  |  |  IDENTIFIER(finished)
+|  |  |  |  |  (13:11) IDENTIFIER(finished)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Body:
-|  |  |  |  |  IDENTIFIER(work)
+|  |  |  |  |  (12:9) IDENTIFIER(work)
 |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  Call
 |  |  |  |  |  |  |  |  Arguments: None
 |  |  |  WhileStatement
 |  |  |  |  Condition:
-|  |  |  |  |  IDENTIFIER(condition)
+|  |  |  |  |  (17:11) IDENTIFIER(condition)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Body:
 |  |  |  |  |  Empty Block
 |  |  |  RepeatStatement
 |  |  |  |  Condition:
-|  |  |  |  |  IDENTIFIER(finished)
+|  |  |  |  |  (21:11) IDENTIFIER(finished)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Body:
 |  |  |  |  |  Empty Block
 |  |  |  RepeatStatement
 |  |  |  |  Condition:
-|  |  |  |  |  IDENTIFIER(finished)
+|  |  |  |  |  (24:11) IDENTIFIER(finished)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Body:
 |  |  |  |  |  Empty Block

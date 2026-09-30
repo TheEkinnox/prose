@@ -4,7 +4,7 @@ Program
 |  |  Name: 'a'
 |  |  Type: None
 |  |  Initializer:
-|  |  |  IDENTIFIER(foo)
+|  |  |  (1:5) IDENTIFIER(foo)
 |  |  |  |  Postfix:
 |  |  |  |  |  Call
 |  |  |  |  |  |  Arguments: None
@@ -13,41 +13,41 @@ Program
 |  |  Name: 'b'
 |  |  Type: None
 |  |  Initializer:
-|  |  |  IDENTIFIER(foo)
+|  |  |  (2:5) IDENTIFIER(foo)
 |  |  |  |  Postfix:
 |  |  |  |  |  Call
 |  |  |  |  |  |  Arguments:
-|  |  |  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  |  |  (2:9) LIT_INTEGER(1)
 |  |  |  |  |  |  |  |  Postfix: None
-|  |  |  |  |  |  |  LIT_INTEGER(2)
+|  |  |  |  |  |  |  (2:12) LIT_INTEGER(2)
 |  |  |  |  |  |  |  |  Postfix: None
-|  |  |  |  |  |  |  LIT_INTEGER(3)
+|  |  |  |  |  |  |  (2:15) LIT_INTEGER(3)
 |  |  |  |  |  |  |  |  Postfix: None
 |  VariableDeclaration
 |  |  IsConst: false
 |  |  Name: 'c'
 |  |  Type: None
 |  |  Initializer:
-|  |  |  IDENTIFIER(array)
+|  |  |  (4:5) IDENTIFIER(array)
 |  |  |  |  Postfix:
 |  |  |  |  |  Index
-|  |  |  |  |  |  LIT_INTEGER(0)
+|  |  |  |  |  |  (4:11) LIT_INTEGER(0)
 |  |  |  |  |  |  |  Postfix: None
 |  VariableDeclaration
 |  |  IsConst: false
 |  |  Name: 'd'
 |  |  Type: None
 |  |  Initializer:
-|  |  |  IDENTIFIER(array)
+|  |  |  (5:5) IDENTIFIER(array)
 |  |  |  |  Postfix:
 |  |  |  |  |  Index
 |  |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  |  Operator: OP_PLUS
 |  |  |  |  |  |  |  Left: 
-|  |  |  |  |  |  |  |  IDENTIFIER(index)
+|  |  |  |  |  |  |  |  (5:11) IDENTIFIER(index)
 |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  |  |  |  (5:19) LIT_INTEGER(1)
 |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  Postfix: None
 |  VariableDeclaration
@@ -55,37 +55,37 @@ Program
 |  |  Name: 'e'
 |  |  Type: None
 |  |  Initializer:
-|  |  |  IDENTIFIER(array)
+|  |  |  (7:5) IDENTIFIER(array)
 |  |  |  |  Postfix:
 |  |  |  |  |  Slice
 |  |  |  |  |  |  Start:
-|  |  |  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  |  |  (7:11) LIT_INTEGER(1)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  End:
-|  |  |  |  |  |  |  LIT_INTEGER(3)
+|  |  |  |  |  |  |  (7:13) LIT_INTEGER(3)
 |  |  |  |  |  |  |  |  Postfix: None
 |  VariableDeclaration
 |  |  IsConst: false
 |  |  Name: 'f'
 |  |  Type: None
 |  |  Initializer:
-|  |  |  IDENTIFIER(array)
+|  |  |  (8:5) IDENTIFIER(array)
 |  |  |  |  Postfix:
 |  |  |  |  |  Slice
 |  |  |  |  |  |  Start: None
 |  |  |  |  |  |  End:
-|  |  |  |  |  |  |  LIT_INTEGER(3)
+|  |  |  |  |  |  |  (8:12) LIT_INTEGER(3)
 |  |  |  |  |  |  |  |  Postfix: None
 |  VariableDeclaration
 |  |  IsConst: false
 |  |  Name: 'g'
 |  |  Type: None
 |  |  Initializer:
-|  |  |  IDENTIFIER(array)
+|  |  |  (9:5) IDENTIFIER(array)
 |  |  |  |  Postfix:
 |  |  |  |  |  Slice
 |  |  |  |  |  |  Start:
-|  |  |  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  |  |  (9:11) LIT_INTEGER(1)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  End: None
 |  VariableDeclaration
@@ -93,7 +93,7 @@ Program
 |  |  Name: 'h'
 |  |  Type: None
 |  |  Initializer:
-|  |  |  IDENTIFIER(array)
+|  |  |  (10:5) IDENTIFIER(array)
 |  |  |  |  Postfix:
 |  |  |  |  |  Slice
 |  |  |  |  |  |  Start: None
@@ -103,7 +103,7 @@ Program
 |  |  Name: 'i'
 |  |  Type: None
 |  |  Initializer:
-|  |  |  IDENTIFIER(object)
+|  |  |  (12:5) IDENTIFIER(object)
 |  |  |  |  Postfix:
 |  |  |  |  |  MemberAccess
 |  |  |  |  |  |  Member: 'member'
@@ -112,7 +112,7 @@ Program
 |  |  Name: 'j'
 |  |  Type: None
 |  |  Initializer:
-|  |  |  IDENTIFIER(foo)
+|  |  |  (14:5) IDENTIFIER(foo)
 |  |  |  |  Postfix:
 |  |  |  |  |  Call
 |  |  |  |  |  |  Arguments: None
@@ -123,24 +123,24 @@ Program
 |  |  Name: 'k'
 |  |  Type: None
 |  |  Initializer:
-|  |  |  IDENTIFIER(foo)
+|  |  |  (15:5) IDENTIFIER(foo)
 |  |  |  |  Postfix:
 |  |  |  |  |  Call
 |  |  |  |  |  |  Arguments: None
 |  |  |  |  |  Index
-|  |  |  |  |  |  LIT_INTEGER(0)
+|  |  |  |  |  |  (15:11) LIT_INTEGER(0)
 |  |  |  |  |  |  |  Postfix: None
 |  VariableDeclaration
 |  |  IsConst: false
 |  |  Name: 'l'
 |  |  Type: None
 |  |  Initializer:
-|  |  |  IDENTIFIER(foo)
+|  |  |  (16:5) IDENTIFIER(foo)
 |  |  |  |  Postfix:
 |  |  |  |  |  Call
 |  |  |  |  |  |  Arguments: None
 |  |  |  |  |  Index
-|  |  |  |  |  |  LIT_INTEGER(0)
+|  |  |  |  |  |  (16:11) LIT_INTEGER(0)
 |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  MemberAccess
 |  |  |  |  |  |  Member: 'member'
@@ -149,10 +149,10 @@ Program
 |  |  Name: 'm'
 |  |  Type: None
 |  |  Initializer:
-|  |  |  IDENTIFIER(objects)
+|  |  |  (17:5) IDENTIFIER(objects)
 |  |  |  |  Postfix:
 |  |  |  |  |  Index
-|  |  |  |  |  |  IDENTIFIER(index)
+|  |  |  |  |  |  (17:13) IDENTIFIER(index)
 |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  MemberAccess
 |  |  |  |  |  |  Member: 'member'

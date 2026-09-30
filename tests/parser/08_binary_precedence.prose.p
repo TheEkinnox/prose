@@ -7,10 +7,10 @@ Program
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_BITWISE_LSHIFT
 |  |  |  |  Left: 
-|  |  |  |  |  IDENTIFIER(x)
+|  |  |  |  |  (1:5) IDENTIFIER(x)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
-|  |  |  |  |  LIT_INTEGER(2)
+|  |  |  |  |  (1:10) LIT_INTEGER(2)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
@@ -21,10 +21,10 @@ Program
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_BITWISE_RSHIFT
 |  |  |  |  Left: 
-|  |  |  |  |  IDENTIFIER(x)
+|  |  |  |  |  (2:5) IDENTIFIER(x)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
-|  |  |  |  |  LIT_INTEGER(2)
+|  |  |  |  |  (2:10) LIT_INTEGER(2)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
@@ -35,10 +35,10 @@ Program
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_LESS
 |  |  |  |  Left: 
-|  |  |  |  |  IDENTIFIER(x)
+|  |  |  |  |  (4:5) IDENTIFIER(x)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
-|  |  |  |  |  IDENTIFIER(y)
+|  |  |  |  |  (4:9) IDENTIFIER(y)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
@@ -49,10 +49,10 @@ Program
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_LESS_EQUAL
 |  |  |  |  Left: 
-|  |  |  |  |  IDENTIFIER(x)
+|  |  |  |  |  (5:5) IDENTIFIER(x)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
-|  |  |  |  |  IDENTIFIER(y)
+|  |  |  |  |  (5:10) IDENTIFIER(y)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
@@ -63,10 +63,10 @@ Program
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_GREATER
 |  |  |  |  Left: 
-|  |  |  |  |  IDENTIFIER(x)
+|  |  |  |  |  (6:5) IDENTIFIER(x)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
-|  |  |  |  |  IDENTIFIER(y)
+|  |  |  |  |  (6:9) IDENTIFIER(y)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
@@ -77,10 +77,10 @@ Program
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_GREATER_EQUAL
 |  |  |  |  Left: 
-|  |  |  |  |  IDENTIFIER(x)
+|  |  |  |  |  (7:5) IDENTIFIER(x)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
-|  |  |  |  |  IDENTIFIER(y)
+|  |  |  |  |  (7:10) IDENTIFIER(y)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
@@ -91,10 +91,10 @@ Program
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_EQUAL
 |  |  |  |  Left: 
-|  |  |  |  |  IDENTIFIER(x)
+|  |  |  |  |  (9:5) IDENTIFIER(x)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
-|  |  |  |  |  IDENTIFIER(y)
+|  |  |  |  |  (9:10) IDENTIFIER(y)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
@@ -105,10 +105,10 @@ Program
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_NOT_EQUAL
 |  |  |  |  Left: 
-|  |  |  |  |  IDENTIFIER(x)
+|  |  |  |  |  (10:5) IDENTIFIER(x)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
-|  |  |  |  |  IDENTIFIER(y)
+|  |  |  |  |  (10:10) IDENTIFIER(y)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
@@ -119,10 +119,10 @@ Program
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_BITWISE_AND
 |  |  |  |  Left: 
-|  |  |  |  |  IDENTIFIER(x)
+|  |  |  |  |  (12:5) IDENTIFIER(x)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
-|  |  |  |  |  IDENTIFIER(y)
+|  |  |  |  |  (12:9) IDENTIFIER(y)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
@@ -133,10 +133,10 @@ Program
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_BITWISE_XOR
 |  |  |  |  Left: 
-|  |  |  |  |  IDENTIFIER(x)
+|  |  |  |  |  (13:5) IDENTIFIER(x)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
-|  |  |  |  |  IDENTIFIER(y)
+|  |  |  |  |  (13:9) IDENTIFIER(y)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
@@ -147,10 +147,10 @@ Program
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_BITWISE_OR
 |  |  |  |  Left: 
-|  |  |  |  |  IDENTIFIER(x)
+|  |  |  |  |  (14:5) IDENTIFIER(x)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
-|  |  |  |  |  IDENTIFIER(y)
+|  |  |  |  |  (14:9) IDENTIFIER(y)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
@@ -161,10 +161,10 @@ Program
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_LOGICAL_AND
 |  |  |  |  Left: 
-|  |  |  |  |  IDENTIFIER(x)
+|  |  |  |  |  (16:5) IDENTIFIER(x)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
-|  |  |  |  |  IDENTIFIER(y)
+|  |  |  |  |  (16:10) IDENTIFIER(y)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
@@ -175,10 +175,10 @@ Program
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_LOGICAL_OR
 |  |  |  |  Left: 
-|  |  |  |  |  IDENTIFIER(x)
+|  |  |  |  |  (17:5) IDENTIFIER(x)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
-|  |  |  |  |  IDENTIFIER(y)
+|  |  |  |  |  (17:10) IDENTIFIER(y)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
@@ -213,48 +213,48 @@ Program
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  Operator: OP_PLUS
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  Left: 
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  IDENTIFIER(a)
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  (19:10) IDENTIFIER(a)
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  Right: 
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  Operator: OP_MUL
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  Left: 
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  IDENTIFIER(b)
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  (19:14) IDENTIFIER(b)
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  IDENTIFIER(c)
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  (19:18) IDENTIFIER(c)
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  IDENTIFIER(d)
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  (19:23) IDENTIFIER(d)
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  IDENTIFIER(e)
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  (19:27) IDENTIFIER(e)
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  IDENTIFIER(f)
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  (19:32) IDENTIFIER(f)
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  |  |  |  |  |  |  IDENTIFIER(g)
+|  |  |  |  |  |  |  |  |  |  |  |  |  (19:36) IDENTIFIER(g)
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  |  |  |  |  IDENTIFIER(h)
+|  |  |  |  |  |  |  |  |  |  |  (19:40) IDENTIFIER(h)
 |  |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  |  |  IDENTIFIER(i)
+|  |  |  |  |  |  |  |  |  (19:44) IDENTIFIER(i)
 |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  IDENTIFIER(j)
+|  |  |  |  |  |  |  (19:49) IDENTIFIER(j)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right: 
-|  |  |  |  |  IDENTIFIER(k)
+|  |  |  |  |  (19:54) IDENTIFIER(k)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None

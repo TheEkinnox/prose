@@ -31,17 +31,17 @@ Program
 |  |  Element 0
 |  |  |  Name: A
 |  |  |  Initializer:
-|  |  |  |  LIT_INTEGER(64)
+|  |  |  |  (14:9) LIT_INTEGER(64)
 |  |  |  |  |  Postfix: None
 |  |  Element 1
 |  |  |  Name: B
 |  |  |  Initializer:
-|  |  |  |  LIT_INTEGER(128)
+|  |  |  |  (15:9) LIT_INTEGER(128)
 |  |  |  |  |  Postfix: None
 |  |  Element 2
 |  |  |  Name: C
 |  |  |  Initializer:
-|  |  |  |  LIT_INTEGER(256)
+|  |  |  |  (16:9) LIT_INTEGER(256)
 |  |  |  |  |  Postfix: None
 |  EnumDeclaration
 |  |  Name: ExplicitTypeAndValues
@@ -51,17 +51,17 @@ Program
 |  |  Element 0
 |  |  |  Name: A
 |  |  |  Initializer:
-|  |  |  |  LIT_INTEGER(8)
+|  |  |  |  (20:9) LIT_INTEGER(8)
 |  |  |  |  |  Postfix: None
 |  |  Element 1
 |  |  |  Name: B
 |  |  |  Initializer:
-|  |  |  |  LIT_INTEGER(16)
+|  |  |  |  (21:9) LIT_INTEGER(16)
 |  |  |  |  |  Postfix: None
 |  |  Element 2
 |  |  |  Name: C
 |  |  |  Initializer:
-|  |  |  |  LIT_INTEGER(32)
+|  |  |  |  (22:9) LIT_INTEGER(32)
 |  |  |  |  |  Postfix: None
 |  EnumDeclaration
 |  |  Name: Mixed
@@ -69,7 +69,7 @@ Program
 |  |  Element 0
 |  |  |  Name: A
 |  |  |  Initializer:
-|  |  |  |  LIT_INTEGER(1)
+|  |  |  |  (26:9) LIT_INTEGER(1)
 |  |  |  |  |  Postfix: None
 |  |  Element 1
 |  |  |  Name: B
@@ -77,7 +77,7 @@ Program
 |  |  Element 2
 |  |  |  Name: C
 |  |  |  Initializer:
-|  |  |  |  LIT_INTEGER(10)
+|  |  |  |  (28:9) LIT_INTEGER(10)
 |  |  |  |  |  Postfix: None
 |  |  Element 3
 |  |  |  Name: D

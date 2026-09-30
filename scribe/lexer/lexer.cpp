@@ -353,7 +353,7 @@ std::string Token::GetValueString() const
 
 std::ostream& Token::Print(std::ostream& os) const
 {
-    return os << magic_enum::enum_name(type) << (value.empty() ? "" : "(" + GetValueString() + ")");
+    return os << '(' << line << ':' << column << ") " << magic_enum::enum_name(type) << (value.empty() ? "" : "(" + GetValueString() + ")");
 }
 
 static void PushTerminator(std::vector<Token>& tokensOut, const Cursor& cursor)

@@ -9,7 +9,7 @@ Program
 |  |  |  |  Name: 'x'
 |  |  |  |  Type: None
 |  |  |  |  Initializer:
-|  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  (2:9) LIT_INTEGER(1)
 |  |  |  |  |  |  Postfix: None
 |  |  |  ScopeStatement
 |  |  |  |  VariableDeclaration
@@ -17,7 +17,7 @@ Program
 |  |  |  |  |  Name: 'y'
 |  |  |  |  |  Type: None
 |  |  |  |  |  Initializer:
-|  |  |  |  |  |  LIT_INTEGER(2)
+|  |  |  |  |  |  (5:13) LIT_INTEGER(2)
 |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  ScopeStatement
 |  |  |  |  |  VariableDeclaration
@@ -28,9 +28,9 @@ Program
 |  |  |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  |  |  Operator: OP_PLUS
 |  |  |  |  |  |  |  |  Left: 
-|  |  |  |  |  |  |  |  |  IDENTIFIER(x)
+|  |  |  |  |  |  |  |  |  (8:17) IDENTIFIER(x)
 |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  |  |  IDENTIFIER(y)
+|  |  |  |  |  |  |  |  |  (8:21) IDENTIFIER(y)
 |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  Postfix: None

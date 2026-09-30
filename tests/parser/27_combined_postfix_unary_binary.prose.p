@@ -9,16 +9,16 @@ Program
 |  |  |  |  Name: 'a'
 |  |  |  |  Type: None
 |  |  |  |  Initializer:
-|  |  |  |  |  IDENTIFIER(objects)
+|  |  |  |  |  (2:9) IDENTIFIER(objects)
 |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  Index
 |  |  |  |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  |  |  |  Operator: OP_PLUS
 |  |  |  |  |  |  |  |  |  Left: 
-|  |  |  |  |  |  |  |  |  |  IDENTIFIER(index)
+|  |  |  |  |  |  |  |  |  |  (2:17) IDENTIFIER(index)
 |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  |  |  |  |  |  (2:25) LIT_INTEGER(1)
 |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  MemberAccess
@@ -38,19 +38,19 @@ Program
 |  |  |  |  |  |  |  UnaryExpression
 |  |  |  |  |  |  |  |  Operator: OP_MINUS
 |  |  |  |  |  |  |  |  Operand: 
-|  |  |  |  |  |  |  |  |  IDENTIFIER(objects)
+|  |  |  |  |  |  |  |  |  (3:10) IDENTIFIER(objects)
 |  |  |  |  |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  |  |  |  |  Index
-|  |  |  |  |  |  |  |  |  |  |  |  IDENTIFIER(i)
+|  |  |  |  |  |  |  |  |  |  |  |  (3:18) IDENTIFIER(i)
 |  |  |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  |  |  |  MemberAccess
 |  |  |  |  |  |  |  |  |  |  |  |  Member: 'values'
 |  |  |  |  |  |  |  |  |  |  |  Index
-|  |  |  |  |  |  |  |  |  |  |  |  IDENTIFIER(j)
+|  |  |  |  |  |  |  |  |  |  |  |  (3:28) IDENTIFIER(j)
 |  |  |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  LIT_INTEGER(2)
+|  |  |  |  |  |  |  (3:33) LIT_INTEGER(2)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None
 |  |  |  VariableDeclaration
@@ -61,7 +61,7 @@ Program
 |  |  |  |  |  UnaryExpression
 |  |  |  |  |  |  Operator: OP_LOGICAL_NOT
 |  |  |  |  |  |  Operand: 
-|  |  |  |  |  |  |  IDENTIFIER(foo)
+|  |  |  |  |  |  |  (4:10) IDENTIFIER(foo)
 |  |  |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  |  |  Call
 |  |  |  |  |  |  |  |  |  |  Arguments: None
@@ -78,10 +78,10 @@ Program
 |  |  |  |  |  UnaryExpression
 |  |  |  |  |  |  Operator: OP_ADDRESS_OF
 |  |  |  |  |  |  Operand: 
-|  |  |  |  |  |  |  IDENTIFIER(objects)
+|  |  |  |  |  |  |  (5:10) IDENTIFIER(objects)
 |  |  |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  |  |  Index
-|  |  |  |  |  |  |  |  |  |  IDENTIFIER(i)
+|  |  |  |  |  |  |  |  |  |  (5:18) IDENTIFIER(i)
 |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  |  MemberAccess
 |  |  |  |  |  |  |  |  |  |  Member: 'member'
@@ -94,10 +94,10 @@ Program
 |  |  |  |  |  UnaryExpression
 |  |  |  |  |  |  Operator: KW_MOVE
 |  |  |  |  |  |  Operand: 
-|  |  |  |  |  |  |  IDENTIFIER(objects)
+|  |  |  |  |  |  |  (6:14) IDENTIFIER(objects)
 |  |  |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  |  |  Index
-|  |  |  |  |  |  |  |  |  |  IDENTIFIER(index)
+|  |  |  |  |  |  |  |  |  |  (6:22) IDENTIFIER(index)
 |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None
 |  |  |  VariableDeclaration
@@ -105,26 +105,26 @@ Program
 |  |  |  |  Name: 'f'
 |  |  |  |  Type: None
 |  |  |  |  Initializer:
-|  |  |  |  |  IDENTIFIER(foo)
+|  |  |  |  |  (7:9) IDENTIFIER(foo)
 |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  Call
 |  |  |  |  |  |  |  |  Arguments:
-|  |  |  |  |  |  |  |  |  IDENTIFIER(bar)
+|  |  |  |  |  |  |  |  |  (7:13) IDENTIFIER(bar)
 |  |  |  |  |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  |  |  |  |  Call
 |  |  |  |  |  |  |  |  |  |  |  |  Arguments:
-|  |  |  |  |  |  |  |  |  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  |  |  |  |  |  |  |  |  (7:17) LIT_INTEGER(1)
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  Postfix: None
-|  |  |  |  |  |  |  |  |  IDENTIFIER(baz)
+|  |  |  |  |  |  |  |  |  (7:21) IDENTIFIER(baz)
 |  |  |  |  |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  |  |  |  |  Call
 |  |  |  |  |  |  |  |  |  |  |  |  Arguments:
-|  |  |  |  |  |  |  |  |  |  |  |  |  LIT_INTEGER(2)
+|  |  |  |  |  |  |  |  |  |  |  |  |  (7:25) LIT_INTEGER(2)
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  MemberAccess
 |  |  |  |  |  |  |  |  Member: 'items'
 |  |  |  |  |  |  |  Index
-|  |  |  |  |  |  |  |  LIT_INTEGER(3)
+|  |  |  |  |  |  |  |  (7:35) LIT_INTEGER(3)
 |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  MemberAccess
 |  |  |  |  |  |  |  |  Member: 'value'

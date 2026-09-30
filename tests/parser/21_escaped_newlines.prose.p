@@ -12,17 +12,17 @@ Program
 |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  Operator: OP_PLUS
 |  |  |  |  |  |  Left: 
-|  |  |  |  |  |  |  IDENTIFIER(first)
+|  |  |  |  |  |  |  (2:14) IDENTIFIER(first)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  IDENTIFIER(second)
+|  |  |  |  |  |  |  (3:9) IDENTIFIER(second)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None
-|  |  |  IDENTIFIER(foo)
+|  |  |  (5:5) IDENTIFIER(foo)
 |  |  |  |  Postfix:
 |  |  |  |  |  Call
 |  |  |  |  |  |  Arguments:
-|  |  |  |  |  |  |  IDENTIFIER(first)
+|  |  |  |  |  |  |  (6:9) IDENTIFIER(first)
 |  |  |  |  |  |  |  |  Postfix: None
-|  |  |  |  |  |  |  IDENTIFIER(second)
+|  |  |  |  |  |  |  (7:9) IDENTIFIER(second)
 |  |  |  |  |  |  |  |  Postfix: None

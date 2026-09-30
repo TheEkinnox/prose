@@ -84,10 +84,10 @@ Program
 |  |  |  |  BinaryExpression
 |  |  |  |  |  Operator: OP_PLUS
 |  |  |  |  |  Left: 
-|  |  |  |  |  |  IDENTIFIER(a)
+|  |  |  |  |  |  (18:12) IDENTIFIER(a)
 |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  Right: 
-|  |  |  |  |  |  IDENTIFIER(b)
+|  |  |  |  |  |  (18:16) IDENTIFIER(b)
 |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  Postfix: None
 |  FunctionDeclaration
@@ -108,7 +108,7 @@ Program
 |  |  |  |  |  Base: i32
 |  |  |  |  |  Modifiers: None
 |  |  |  |  Initializer:
-|  |  |  |  |  LIT_INTEGER(10)
+|  |  |  |  |  (21:32) LIT_INTEGER(10)
 |  |  |  |  |  |  Postfix: None
 |  |  Body:
 |  |  |  Empty Block
@@ -128,7 +128,7 @@ Program
 |  |  |  |  Name: 'enabled'
 |  |  |  |  Type: None
 |  |  |  |  Initializer:
-|  |  |  |  |  KW_TRUE(true)
+|  |  |  |  |  (24:40) KW_TRUE(true)
 |  |  |  |  |  |  Postfix: None
 |  |  Body:
 |  |  |  Empty Block
@@ -148,14 +148,14 @@ Program
 |  |  |  |  Name: 'b'
 |  |  |  |  Type: None
 |  |  |  |  Initializer:
-|  |  |  |  |  LIT_INTEGER(2)
+|  |  |  |  |  (27:34) LIT_INTEGER(2)
 |  |  |  |  |  |  Postfix: None
 |  |  |  VariableDeclaration
 |  |  |  |  IsConst: false
 |  |  |  |  Name: 'c'
 |  |  |  |  Type: None
 |  |  |  |  Initializer:
-|  |  |  |  |  LIT_INTEGER(3)
+|  |  |  |  |  (27:41) LIT_INTEGER(3)
 |  |  |  |  |  |  Postfix: None
 |  |  Body:
 |  |  |  Empty Block
@@ -178,10 +178,10 @@ Program
 |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  Operator: OP_PLUS
 |  |  |  |  |  |  Left: 
-|  |  |  |  |  |  |  IDENTIFIER(x)
+|  |  |  |  |  |  |  (30:26) IDENTIFIER(x)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Right: 
-|  |  |  |  |  |  |  LIT_INTEGER(1)
+|  |  |  |  |  |  |  (30:30) LIT_INTEGER(1)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None
 |  |  Body:
