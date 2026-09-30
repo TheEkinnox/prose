@@ -295,14 +295,14 @@ static bool ParseRepeatStatement(TokenStream& stream, std::unique_ptr<Statement>
     if (!stream.Expect(TokenType::KW_REPEAT, statement.start))
         return false;
 
-    Token token;
     const auto isUntil = [](const TokenType t) { return t == TokenType::KW_UNTIL; };
-    if (!ParseBlock(stream, statement.body, token, isUntil))
+    if (!ParseBlock(stream, statement.body, statement.start, isUntil))
         return false;
 
     if (!RequireExpression(stream, statement.condition))
         return false;
 
+    Token token;
     const bool consumedSeparator = stream.ConsumeIf(IsSeparator, token);
     if (((consumedSeparator && token.type != TokenType::KW_END) || !consumedSeparator) && !stream.ConsumeIf(TokenType::KW_END, token))
     {
