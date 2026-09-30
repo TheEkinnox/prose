@@ -8,10 +8,10 @@ Program
 |  |  |  |  Elements:
 |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  Operator: OP_RANGE
-|  |  |  |  |  |  Left: 
+|  |  |  |  |  |  Left:
 |  |  |  |  |  |  |  (1:6) LIT_INTEGER(0)
 |  |  |  |  |  |  |  |  Postfix: None
-|  |  |  |  |  |  Right: 
+|  |  |  |  |  |  Right:
 |  |  |  |  |  |  |  (1:9) LIT_INTEGER(10)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None
@@ -25,10 +25,10 @@ Program
 |  |  |  |  Elements:
 |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  Operator: OP_RANGE
-|  |  |  |  |  |  Left: 
+|  |  |  |  |  |  Left:
 |  |  |  |  |  |  |  (2:6) LIT_INTEGER(10)
 |  |  |  |  |  |  |  |  Postfix: None
-|  |  |  |  |  |  Right: 
+|  |  |  |  |  |  Right:
 |  |  |  |  |  |  |  (2:10) LIT_INTEGER(0)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None
@@ -46,10 +46,10 @@ Program
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  Operator: OP_RANGE
-|  |  |  |  |  |  Left: 
+|  |  |  |  |  |  Left:
 |  |  |  |  |  |  |  (3:12) LIT_INTEGER(3)
 |  |  |  |  |  |  |  |  Postfix: None
-|  |  |  |  |  |  Right: 
+|  |  |  |  |  |  Right:
 |  |  |  |  |  |  |  (3:15) LIT_INTEGER(8)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None
@@ -63,19 +63,19 @@ Program
 |  |  |  |  Elements:
 |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  Operator: OP_RANGE
-|  |  |  |  |  |  Left: 
+|  |  |  |  |  |  Left:
 |  |  |  |  |  |  |  (4:6) LIT_INTEGER(0)
 |  |  |  |  |  |  |  |  Postfix: None
-|  |  |  |  |  |  Right: 
+|  |  |  |  |  |  Right:
 |  |  |  |  |  |  |  (4:9) LIT_INTEGER(10)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  Operator: OP_RANGE
-|  |  |  |  |  |  Left: 
+|  |  |  |  |  |  Left:
 |  |  |  |  |  |  |  (4:13) LIT_INTEGER(20)
 |  |  |  |  |  |  |  |  Postfix: None
-|  |  |  |  |  |  Right: 
+|  |  |  |  |  |  Right:
 |  |  |  |  |  |  |  (4:17) LIT_INTEGER(30)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None

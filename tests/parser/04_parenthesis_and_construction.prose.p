@@ -19,7 +19,7 @@ Program
 |  |  Type: None
 |  |  Initializer:
 |  |  |  ConstructionExpression
-|  |  |  |  Type: 
+|  |  |  |  Type:
 |  |  |  |  |  Base: i32
 |  |  |  |  |  Modifiers: None
 |  |  |  |  Arguments:
@@ -41,7 +41,7 @@ Program
 |  |  Type: None
 |  |  Initializer:
 |  |  |  MakeExpression
-|  |  |  |  Type: 
+|  |  |  |  Type:
 |  |  |  |  |  Base: MyType
 |  |  |  |  |  Modifiers: None
 |  |  |  |  Arguments: None
@@ -51,7 +51,7 @@ Program
 |  |  Type: None
 |  |  Initializer:
 |  |  |  MakeExpression
-|  |  |  |  Type: 
+|  |  |  |  Type:
 |  |  |  |  |  Base: byte
 |  |  |  |  |  Modifiers:
 |  |  |  |  |  |  FixedArray
@@ -64,7 +64,7 @@ Program
 |  |  Type: None
 |  |  Initializer:
 |  |  |  MakeExpression
-|  |  |  |  Type: 
+|  |  |  |  Type:
 |  |  |  |  |  Base: byte
 |  |  |  |  |  Modifiers:
 |  |  |  |  |  |  DynamicArray

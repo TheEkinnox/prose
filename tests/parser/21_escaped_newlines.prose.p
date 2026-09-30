@@ -11,10 +11,10 @@ Program
 |  |  |  |  Initializer:
 |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  Operator: OP_PLUS
-|  |  |  |  |  |  Left: 
+|  |  |  |  |  |  Left:
 |  |  |  |  |  |  |  (2:14) IDENTIFIER(first)
 |  |  |  |  |  |  |  |  Postfix: None
-|  |  |  |  |  |  Right: 
+|  |  |  |  |  |  Right:
 |  |  |  |  |  |  |  (3:9) IDENTIFIER(second)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None

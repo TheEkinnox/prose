@@ -43,10 +43,10 @@ Program
 |  |  |  |  |  Index
 |  |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  |  Operator: OP_PLUS
-|  |  |  |  |  |  |  Left: 
+|  |  |  |  |  |  |  Left:
 |  |  |  |  |  |  |  |  (5:11) IDENTIFIER(index)
 |  |  |  |  |  |  |  |  |  Postfix: None
-|  |  |  |  |  |  |  Right: 
+|  |  |  |  |  |  |  Right:
 |  |  |  |  |  |  |  |  (5:19) LIT_INTEGER(1)
 |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  Postfix: None

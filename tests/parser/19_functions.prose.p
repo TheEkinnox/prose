@@ -83,10 +83,10 @@ Program
 |  |  |  Return
 |  |  |  |  BinaryExpression
 |  |  |  |  |  Operator: OP_PLUS
-|  |  |  |  |  Left: 
+|  |  |  |  |  Left:
 |  |  |  |  |  |  (18:12) IDENTIFIER(a)
 |  |  |  |  |  |  |  Postfix: None
-|  |  |  |  |  Right: 
+|  |  |  |  |  Right:
 |  |  |  |  |  |  (18:16) IDENTIFIER(b)
 |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  Postfix: None
@@ -177,10 +177,10 @@ Program
 |  |  |  |  Initializer:
 |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  Operator: OP_PLUS
-|  |  |  |  |  |  Left: 
+|  |  |  |  |  |  Left:
 |  |  |  |  |  |  |  (30:26) IDENTIFIER(x)
 |  |  |  |  |  |  |  |  Postfix: None
-|  |  |  |  |  |  Right: 
+|  |  |  |  |  |  Right:
 |  |  |  |  |  |  |  (30:30) LIT_INTEGER(1)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None

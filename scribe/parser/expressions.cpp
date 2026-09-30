@@ -50,7 +50,7 @@ std::ostream& ArrayLiteralExpression::Print(std::ostream& os, ParserDepthT depth
 
 static std::ostream& PrintConstructionExpression_Internal(const ConstructionExpression& expression, std::ostream& os, ParserDepthT depth)
 {
-    PrintAtDepth(os, depth, "Type: ") << '\n';
+    PrintAtDepth(os, depth, "Type:") << '\n';
     expression.type.Print(os, depth + 1) << '\n';
     PrintAtDepth(os, depth, "Arguments:");
 
@@ -78,7 +78,7 @@ std::ostream& UnaryExpression::Print(std::ostream& os, ParserDepthT depth) const
 {
     PrintAtDepth(os, depth++, "UnaryExpression") << '\n';
     PrintAtDepth(os, depth, "Operator: ") << magic_enum::enum_name(op.type) << '\n';
-    PrintAtDepth(os, depth, "Operand: ") << '\n';
+    PrintAtDepth(os, depth, "Operand:") << '\n';
     operand->Print(os, depth + 1) << '\n';
     return PostfixExpression::Print(os, depth);
 }
@@ -92,9 +92,9 @@ std::ostream& BinaryExpression::Print(std::ostream& os, ParserDepthT depth) cons
 {
     PrintAtDepth(os, depth++, "BinaryExpression") << '\n';
     PrintAtDepth(os, depth, "Operator: ") << magic_enum::enum_name(op.type) << '\n';
-    PrintAtDepth(os, depth, "Left: ") << '\n';
+    PrintAtDepth(os, depth, "Left:") << '\n';
     left->Print(os, depth + 1) << '\n';
-    PrintAtDepth(os, depth, "Right: ") << '\n';
+    PrintAtDepth(os, depth, "Right:") << '\n';
     right->Print(os, depth + 1) << '\n';
     return PostfixExpression::Print(os, depth);
 }

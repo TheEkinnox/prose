@@ -27,10 +27,10 @@ Program
 |  |  |  |  |  |  Initializer:
 |  |  |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  |  |  Operator: OP_PLUS
-|  |  |  |  |  |  |  |  Left: 
+|  |  |  |  |  |  |  |  Left:
 |  |  |  |  |  |  |  |  |  (8:17) IDENTIFIER(x)
 |  |  |  |  |  |  |  |  |  |  Postfix: None
-|  |  |  |  |  |  |  |  Right: 
+|  |  |  |  |  |  |  |  Right:
 |  |  |  |  |  |  |  |  |  (8:21) IDENTIFIER(y)
 |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  Postfix: None

@@ -14,10 +14,10 @@ Program
 |  |  |  |  |  |  |  Index
 |  |  |  |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  |  |  |  Operator: OP_PLUS
-|  |  |  |  |  |  |  |  |  Left: 
+|  |  |  |  |  |  |  |  |  Left:
 |  |  |  |  |  |  |  |  |  |  (2:17) IDENTIFIER(index)
 |  |  |  |  |  |  |  |  |  |  |  Postfix: None
-|  |  |  |  |  |  |  |  |  Right: 
+|  |  |  |  |  |  |  |  |  Right:
 |  |  |  |  |  |  |  |  |  |  (2:25) LIT_INTEGER(1)
 |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  |  Postfix: None
@@ -34,10 +34,10 @@ Program
 |  |  |  |  Initializer:
 |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  Operator: OP_MUL
-|  |  |  |  |  |  Left: 
+|  |  |  |  |  |  Left:
 |  |  |  |  |  |  |  UnaryExpression
 |  |  |  |  |  |  |  |  Operator: OP_MINUS
-|  |  |  |  |  |  |  |  Operand: 
+|  |  |  |  |  |  |  |  Operand:
 |  |  |  |  |  |  |  |  |  (3:10) IDENTIFIER(objects)
 |  |  |  |  |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  |  |  |  |  Index
@@ -49,7 +49,7 @@ Program
 |  |  |  |  |  |  |  |  |  |  |  |  (3:28) IDENTIFIER(j)
 |  |  |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  Postfix: None
-|  |  |  |  |  |  Right: 
+|  |  |  |  |  |  Right:
 |  |  |  |  |  |  |  (3:33) LIT_INTEGER(2)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None
@@ -60,7 +60,7 @@ Program
 |  |  |  |  Initializer:
 |  |  |  |  |  UnaryExpression
 |  |  |  |  |  |  Operator: OP_LOGICAL_NOT
-|  |  |  |  |  |  Operand: 
+|  |  |  |  |  |  Operand:
 |  |  |  |  |  |  |  (4:10) IDENTIFIER(foo)
 |  |  |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  |  |  Call
@@ -77,7 +77,7 @@ Program
 |  |  |  |  Initializer:
 |  |  |  |  |  UnaryExpression
 |  |  |  |  |  |  Operator: OP_ADDRESS_OF
-|  |  |  |  |  |  Operand: 
+|  |  |  |  |  |  Operand:
 |  |  |  |  |  |  |  (5:10) IDENTIFIER(objects)
 |  |  |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  |  |  Index
@@ -93,7 +93,7 @@ Program
 |  |  |  |  Initializer:
 |  |  |  |  |  UnaryExpression
 |  |  |  |  |  |  Operator: KW_MOVE
-|  |  |  |  |  |  Operand: 
+|  |  |  |  |  |  Operand:
 |  |  |  |  |  |  |  (6:14) IDENTIFIER(objects)
 |  |  |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  |  |  Index

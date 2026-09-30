@@ -6,7 +6,7 @@ Program
 |  |  Initializer:
 |  |  |  UnaryExpression
 |  |  |  |  Operator: OP_MINUS
-|  |  |  |  Operand: 
+|  |  |  |  Operand:
 |  |  |  |  |  (1:6) IDENTIFIER(value)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
@@ -17,7 +17,7 @@ Program
 |  |  Initializer:
 |  |  |  UnaryExpression
 |  |  |  |  Operator: OP_LOGICAL_NOT
-|  |  |  |  Operand: 
+|  |  |  |  Operand:
 |  |  |  |  |  (2:6) IDENTIFIER(condition)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
@@ -28,7 +28,7 @@ Program
 |  |  Initializer:
 |  |  |  UnaryExpression
 |  |  |  |  Operator: OP_BITWISE_NOT
-|  |  |  |  Operand: 
+|  |  |  |  Operand:
 |  |  |  |  |  (3:6) IDENTIFIER(flags)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
@@ -39,7 +39,7 @@ Program
 |  |  Initializer:
 |  |  |  UnaryExpression
 |  |  |  |  Operator: OP_ADDRESS_OF
-|  |  |  |  Operand: 
+|  |  |  |  Operand:
 |  |  |  |  |  (4:6) IDENTIFIER(value)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
@@ -50,7 +50,7 @@ Program
 |  |  Initializer:
 |  |  |  UnaryExpression
 |  |  |  |  Operator: KW_MOVE
-|  |  |  |  Operand: 
+|  |  |  |  Operand:
 |  |  |  |  |  (5:10) IDENTIFIER(value)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
@@ -61,7 +61,7 @@ Program
 |  |  Initializer:
 |  |  |  UnaryExpression
 |  |  |  |  Operator: OP_INC
-|  |  |  |  Operand: 
+|  |  |  |  Operand:
 |  |  |  |  |  (7:7) IDENTIFIER(counter)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
@@ -72,7 +72,7 @@ Program
 |  |  Initializer:
 |  |  |  UnaryExpression
 |  |  |  |  Operator: OP_DEC
-|  |  |  |  Operand: 
+|  |  |  |  Operand:
 |  |  |  |  |  (8:7) IDENTIFIER(counter)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
@@ -99,7 +99,7 @@ Program
 |  |  Initializer:
 |  |  |  UnaryExpression
 |  |  |  |  Operator: OP_MINUS
-|  |  |  |  Operand: 
+|  |  |  |  Operand:
 |  |  |  |  |  (13:6) IDENTIFIER(array)
 |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  Index
@@ -113,7 +113,7 @@ Program
 |  |  Initializer:
 |  |  |  UnaryExpression
 |  |  |  |  Operator: OP_LOGICAL_NOT
-|  |  |  |  Operand: 
+|  |  |  |  Operand:
 |  |  |  |  |  (14:6) IDENTIFIER(foo)
 |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  Call
@@ -128,7 +128,7 @@ Program
 |  |  Initializer:
 |  |  |  UnaryExpression
 |  |  |  |  Operator: OP_ADDRESS_OF
-|  |  |  |  Operand: 
+|  |  |  |  Operand:
 |  |  |  |  |  (15:6) IDENTIFIER(array)
 |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  Index
@@ -142,7 +142,7 @@ Program
 |  |  Initializer:
 |  |  |  UnaryExpression
 |  |  |  |  Operator: KW_MOVE
-|  |  |  |  Operand: 
+|  |  |  |  Operand:
 |  |  |  |  |  (16:10) IDENTIFIER(objects)
 |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  Index
@@ -156,7 +156,7 @@ Program
 |  |  Initializer:
 |  |  |  UnaryExpression
 |  |  |  |  Operator: OP_INC
-|  |  |  |  Operand: 
+|  |  |  |  Operand:
 |  |  |  |  |  (17:7) IDENTIFIER(object)
 |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  MemberAccess

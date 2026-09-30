@@ -11,10 +11,10 @@ Program
 |  |  |  |  Range:
 |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  Operator: OP_RANGE
-|  |  |  |  |  |  Left: 
+|  |  |  |  |  |  Left:
 |  |  |  |  |  |  |  (2:14) LIT_INTEGER(0)
 |  |  |  |  |  |  |  |  Postfix: None
-|  |  |  |  |  |  Right: 
+|  |  |  |  |  |  Right:
 |  |  |  |  |  |  |  (2:17) LIT_INTEGER(10)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None
@@ -57,23 +57,23 @@ Program
 |  |  |  |  Range:
 |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  Operator: OP_RANGE
-|  |  |  |  |  |  Left: 
+|  |  |  |  |  |  Left:
 |  |  |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  |  |  Operator: OP_PLUS
-|  |  |  |  |  |  |  |  Left: 
+|  |  |  |  |  |  |  |  Left:
 |  |  |  |  |  |  |  |  |  (14:14) IDENTIFIER(first)
 |  |  |  |  |  |  |  |  |  |  Postfix: None
-|  |  |  |  |  |  |  |  Right: 
+|  |  |  |  |  |  |  |  Right:
 |  |  |  |  |  |  |  |  |  (14:22) LIT_INTEGER(1)
 |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  Postfix: None
-|  |  |  |  |  |  Right: 
+|  |  |  |  |  |  Right:
 |  |  |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  |  |  Operator: OP_MINUS
-|  |  |  |  |  |  |  |  Left: 
+|  |  |  |  |  |  |  |  Left:
 |  |  |  |  |  |  |  |  |  (14:25) IDENTIFIER(last)
 |  |  |  |  |  |  |  |  |  |  Postfix: None
-|  |  |  |  |  |  |  |  Right: 
+|  |  |  |  |  |  |  |  Right:
 |  |  |  |  |  |  |  |  |  (14:32) LIT_INTEGER(1)
 |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  Postfix: None

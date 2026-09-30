@@ -65,12 +65,12 @@ Program
 |  |  Body:
 |  |  |  BinaryExpression
 |  |  |  |  Operator: OP_ASSIGN_ADD
-|  |  |  |  Left: 
+|  |  |  |  Left:
 |  |  |  |  |  (15:5) IDENTIFIER(counter)
 |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  MemberAccess
 |  |  |  |  |  |  |  |  Member: 'value'
-|  |  |  |  Right: 
+|  |  |  |  Right:
 |  |  |  |  |  (15:22) IDENTIFIER(amount)
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
@@ -116,10 +116,10 @@ Program
 |  |  |  |  |  |  |  Condition:
 |  |  |  |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  |  |  |  Operator: OP_LESS
-|  |  |  |  |  |  |  |  |  Left: 
+|  |  |  |  |  |  |  |  |  Left:
 |  |  |  |  |  |  |  |  |  |  (24:12) IDENTIFIER(value)
 |  |  |  |  |  |  |  |  |  |  |  Postfix: None
-|  |  |  |  |  |  |  |  |  Right: 
+|  |  |  |  |  |  |  |  |  Right:
 |  |  |  |  |  |  |  |  |  |  (24:20) LIT_INTEGER(0)
 |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  |  Postfix: None
@@ -129,10 +129,10 @@ Program
 |  |  |  |  |  |  |  Condition:
 |  |  |  |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  |  |  |  Operator: OP_EQUAL
-|  |  |  |  |  |  |  |  |  Left: 
+|  |  |  |  |  |  |  |  |  Left:
 |  |  |  |  |  |  |  |  |  |  (26:17) IDENTIFIER(value)
 |  |  |  |  |  |  |  |  |  |  |  Postfix: None
-|  |  |  |  |  |  |  |  |  Right: 
+|  |  |  |  |  |  |  |  |  Right:
 |  |  |  |  |  |  |  |  |  |  (26:26) LIT_INTEGER(0)
 |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  |  Postfix: None
@@ -150,10 +150,10 @@ Program
 |  |  |  |  |  |  |  |  |  Increment
 |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  Operator: OP_ASSIGN_ADD
-|  |  |  |  |  |  Left: 
+|  |  |  |  |  |  Left:
 |  |  |  |  |  |  |  (32:9) IDENTIFIER(total)
 |  |  |  |  |  |  |  |  Postfix: None
-|  |  |  |  |  |  Right: 
+|  |  |  |  |  |  Right:
 |  |  |  |  |  |  |  (32:18) IDENTIFIER(value)
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None
@@ -162,10 +162,10 @@ Program
 |  |  |  |  |  |  |  Condition:
 |  |  |  |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  |  |  |  Operator: OP_GREATER_EQUAL
-|  |  |  |  |  |  |  |  |  Left: 
+|  |  |  |  |  |  |  |  |  Left:
 |  |  |  |  |  |  |  |  |  |  (34:12) IDENTIFIER(total)
 |  |  |  |  |  |  |  |  |  |  |  Postfix: None
-|  |  |  |  |  |  |  |  |  Right: 
+|  |  |  |  |  |  |  |  |  Right:
 |  |  |  |  |  |  |  |  |  |  (34:21) LIT_INTEGER(100)
 |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  |  Postfix: None
@@ -261,7 +261,7 @@ Program
 |  |  |  |  |  Initializer:
 |  |  |  |  |  |  UnaryExpression
 |  |  |  |  |  |  |  Operator: OP_ADDRESS_OF
-|  |  |  |  |  |  |  Operand: 
+|  |  |  |  |  |  |  Operand:
 |  |  |  |  |  |  |  |  (61:16) IDENTIFIER(copy)
 |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  Postfix: None
@@ -269,10 +269,10 @@ Program
 |  |  |  |  |  Condition:
 |  |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  |  Operator: OP_GREATER
-|  |  |  |  |  |  |  Left: 
+|  |  |  |  |  |  |  Left:
 |  |  |  |  |  |  |  |  (63:15) IDENTIFIER(copy)
 |  |  |  |  |  |  |  |  |  Postfix: None
-|  |  |  |  |  |  |  Right: 
+|  |  |  |  |  |  |  Right:
 |  |  |  |  |  |  |  |  (63:22) LIT_INTEGER(0)
 |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  Postfix: None
