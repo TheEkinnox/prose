@@ -130,10 +130,12 @@ std::ostream& SwitchStatement::Print(std::ostream& os, ParserDepthT depth) const
     return os << " None";
 }
 
+#ifndef NDEBUG
 static bool IsControlStatement(const TokenType t)
 {
     return t == TokenType::KW_RETURN || t == TokenType::KW_BREAK || t == TokenType::KW_CONTINUE;
 }
+#endif
 
 ControlStatement::ControlStatement(Token p_start)
 {
