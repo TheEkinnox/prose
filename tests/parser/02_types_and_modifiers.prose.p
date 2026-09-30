@@ -1,5 +1,6 @@
 Program
 |  VariableDeclaration
+|  |  Start: (1:1) IDENTIFIER(a)
 |  |  IsConst: false
 |  |  Name: 'a'
 |  |  Type:
@@ -7,6 +8,7 @@ Program
 |  |  |  Modifiers: None
 |  |  Initializer: None
 |  VariableDeclaration
+|  |  Start: (2:1) IDENTIFIER(b)
 |  |  IsConst: false
 |  |  Name: 'b'
 |  |  Type:
@@ -14,6 +16,7 @@ Program
 |  |  |  Modifiers: None
 |  |  Initializer: None
 |  VariableDeclaration
+|  |  Start: (4:1) IDENTIFIER(ptr)
 |  |  IsConst: false
 |  |  Name: 'ptr'
 |  |  Type:
@@ -22,6 +25,7 @@ Program
 |  |  |  |  Pointer
 |  |  Initializer: None
 |  VariableDeclaration
+|  |  Start: (5:1) IDENTIFIER(ref)
 |  |  IsConst: false
 |  |  Name: 'ref'
 |  |  Type:
@@ -30,6 +34,7 @@ Program
 |  |  |  |  Reference
 |  |  Initializer: None
 |  VariableDeclaration
+|  |  Start: (7:1) IDENTIFIER(dynamic)
 |  |  IsConst: false
 |  |  Name: 'dynamic'
 |  |  Type:
@@ -38,6 +43,7 @@ Program
 |  |  |  |  DynamicArray
 |  |  Initializer: None
 |  VariableDeclaration
+|  |  Start: (8:1) IDENTIFIER(fixed)
 |  |  IsConst: false
 |  |  Name: 'fixed'
 |  |  Type:
@@ -48,6 +54,7 @@ Program
 |  |  |  |  |  |  Postfix: None
 |  |  Initializer: None
 |  VariableDeclaration
+|  |  Start: (9:1) IDENTIFIER(slice)
 |  |  IsConst: false
 |  |  Name: 'slice'
 |  |  Type:
@@ -56,6 +63,7 @@ Program
 |  |  |  |  Slice
 |  |  Initializer: None
 |  VariableDeclaration
+|  |  Start: (11:1) IDENTIFIER(complex)
 |  |  IsConst: false
 |  |  Name: 'complex'
 |  |  Type:
@@ -65,6 +73,7 @@ Program
 |  |  |  |  Pointer
 |  |  Initializer: None
 |  VariableDeclaration
+|  |  Start: (12:1) IDENTIFIER(other)
 |  |  IsConst: false
 |  |  Name: 'other'
 |  |  Type:
@@ -76,6 +85,7 @@ Program
 |  |  |  |  |  |  Postfix: None
 |  |  Initializer: None
 |  VariableDeclaration
+|  |  Start: (13:1) IDENTIFIER(view)
 |  |  IsConst: false
 |  |  Name: 'view'
 |  |  Type:

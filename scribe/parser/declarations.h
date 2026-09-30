@@ -12,6 +12,8 @@
 struct Declaration : Statement
 {
     Token name;
+
+    std::ostream& PrintName(std::ostream& os, ParserDepthT depth) const;
 };
 
 struct VariableDeclaration : Declaration

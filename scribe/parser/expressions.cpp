@@ -12,7 +12,7 @@ NO_WARNINGS_POP
 
 #include <optional>
 
-std::ostream& PostfixExpression::Print(std::ostream& os, ParserDepthT depth) const
+std::ostream& PostfixExpression::PrintPostfix(std::ostream& os, ParserDepthT depth) const
 {
     PrintAtDepth(os, depth, "Postfix:");
     if (postfix.empty())
@@ -24,15 +24,22 @@ std::ostream& PostfixExpression::Print(std::ostream& os, ParserDepthT depth) con
     return os;
 }
 
+LiteralExpression::LiteralExpression(Token p_token)
+{
+    assert(IsLiteral(p_token.type) || p_token.type == TokenType::IDENTIFIER);
+    start = std::move(p_token);
+}
+
 std::ostream& LiteralExpression::Print(std::ostream& os, ParserDepthT depth) const
 {
-    PrintAtDepth(os, depth++, token) << '\n';
-    return PostfixExpression::Print(os, depth);
+    PrintAtDepth(os, depth++, start) << '\n';
+    return PrintPostfix(os, depth);
 }
 
 std::ostream& ArrayLiteralExpression::Print(std::ostream& os, ParserDepthT depth) const
 {
     PrintAtDepth(os, depth++, "ArrayLiteralExpression") << '\n';
+    PrintStart(os, depth) << '\n';
     PrintAtDepth(os, depth, "Elements:");
 
     if (elements.empty())
@@ -45,7 +52,7 @@ std::ostream& ArrayLiteralExpression::Print(std::ostream& os, ParserDepthT depth
             element->Print(os << '\n', depth + 1);
     }
 
-    return PostfixExpression::Print(os << '\n', depth);
+    return PrintPostfix(os << '\n', depth);
 }
 
 static std::ostream& PrintConstructionExpression_Internal(const ConstructionExpression& expression, std::ostream& os, ParserDepthT depth)
@@ -66,26 +73,31 @@ static std::ostream& PrintConstructionExpression_Internal(const ConstructionExpr
 std::ostream& ConstructionExpression::Print(std::ostream& os, ParserDepthT depth) const
 {
     PrintAtDepth(os, depth++, "ConstructionExpression") << '\n';
+    PrintStart(os, depth) << '\n';
     PrintConstructionExpression_Internal(*this, os, depth) << '\n';
-    return PostfixExpression::Print(os, depth);
+    return PrintPostfix(os, depth);
 }
 
-UnaryExpression::UnaryExpression(const Token p_op, std::unique_ptr<Expression>&& p_operand) : op(p_op), operand(std::move(p_operand))
+UnaryExpression::UnaryExpression(Token p_op, std::unique_ptr<Expression>&& p_operand) : operand(std::move(p_operand))
 {
+    assert(IsUnaryOperator(p_op.type));
+    start = std::move(p_op);
 }
 
 std::ostream& UnaryExpression::Print(std::ostream& os, ParserDepthT depth) const
 {
     PrintAtDepth(os, depth++, "UnaryExpression") << '\n';
-    PrintAtDepth(os, depth, "Operator: ") << magic_enum::enum_name(op.type) << '\n';
+    PrintAtDepth(os, depth, "Operator: ") << start << '\n';
     PrintAtDepth(os, depth, "Operand:") << '\n';
     operand->Print(os, depth + 1) << '\n';
-    return PostfixExpression::Print(os, depth);
+    return PrintPostfix(os, depth);
 }
 
 BinaryExpression::BinaryExpression(Token p_op, std::unique_ptr<Expression>&& p_left, std::unique_ptr<Expression>&& p_right)
-    : op(p_op), left(std::move(p_left)), right(std::move(p_right))
+    : op(std::move(p_op)), left(std::move(p_left)), right(std::move(p_right))
 {
+    start = left->start;
+    assert(IsOperator(op.type));
 }
 
 std::ostream& BinaryExpression::Print(std::ostream& os, ParserDepthT depth) const
@@ -96,22 +108,20 @@ std::ostream& BinaryExpression::Print(std::ostream& os, ParserDepthT depth) cons
     left->Print(os, depth + 1) << '\n';
     PrintAtDepth(os, depth, "Right:") << '\n';
     right->Print(os, depth + 1) << '\n';
-    return PostfixExpression::Print(os, depth);
-}
-
-MakeExpression::MakeExpression(ConstructionExpression&& p_construction) : construction(std::move(p_construction))
-{
+    return PrintPostfix(os, depth);
 }
 
 std::ostream& MakeExpression::Print(std::ostream& os, ParserDepthT depth) const
 {
     PrintAtDepth(os, depth++, "MakeExpression") << '\n';
+    PrintStart(os, depth) << '\n';
     return PrintConstructionExpression_Internal(construction, os, depth);
 }
 
 std::ostream& SizeOfExpression::Print(std::ostream& os, ParserDepthT depth) const
 {
     PrintAtDepth(os, depth++, "SizeOfExpression") << '\n';
+    PrintStart(os, depth) << '\n';
 
     if (const Type* typePtr = std::get_if<Type>(&type))
     {
@@ -190,17 +200,17 @@ static bool ParseArrayLiteralExpression(TokenStream& stream, std::unique_ptr<Exp
 {
     out = nullptr;
 
-    Token token;
-    if (!stream.Expect(TokenType::LBRACKET, token))
+    ArrayLiteralExpression arrLit{};
+    if (!stream.Expect(TokenType::LBRACKET, arrLit.start))
         return false;
 
+    Token token;
     if (stream.ConsumeIf(TokenType::RBRACKET, token))
     {
-        out = std::make_unique<ArrayLiteralExpression>();
+        out = std::make_unique<ArrayLiteralExpression>(std::move(arrLit));
         return true;
     }
 
-    ArrayLiteralExpression arrLit{};
     while (!stream.Is(TokenType::RBRACKET))
     {
         if (stream.Is(TokenType::TOKEN_EOF))
@@ -230,8 +240,8 @@ static bool ParseArrayLiteralExpression(TokenStream& stream, std::unique_ptr<Exp
 static bool ParseUnaryExpression(TokenStream& stream, std::unique_ptr<Expression>& out)
 {
     out = nullptr;
-    Token token = stream.Peek();
 
+    Token token;
     if (!stream.Expect(IsUnaryOperator, token, "Expected unary operator"))
         return false;
 
@@ -246,6 +256,7 @@ static bool ParseUnaryExpression(TokenStream& stream, std::unique_ptr<Expression
 static bool ParseParenthesizedExpression(TokenStream& stream, std::unique_ptr<Expression>& out)
 {
     Token token;
+    out = nullptr;
     return stream.Expect(TokenType::LPAREN, token) && RequireExpression(stream, out) && stream.Expect(TokenType::RPAREN, token);
 }
 
@@ -257,19 +268,19 @@ static bool ParseConstructionExpression(TokenStream& stream, std::unique_ptr<Exp
     if (!ParseType(stream, construct.type))
         return false;
 
+    construct.start = construct.type.base;
     const auto& modifiers = construct.type.modifiers;
 
     std::unique_ptr<Postfix> call;
     if ((modifiers.empty() || !IsArrayModifier(modifiers.back()->type)) && !ParseCallPostfix(stream, call))
         return false;
 
-    Call* callPtr = dynamic_cast<Call*>(call.get());
-    if (callPtr)
+    if (const auto callPtr = dynamic_cast<Call*>(call.get()))
     {
         construct.arguments = std::move(callPtr->arguments);
     }
 
-    Token token = stream.Peek();
+    const Token token = stream.Peek();
     if (ParsePostfix(stream, call))
     {
         LogError(token, "Unexpected postfix");
@@ -284,16 +295,16 @@ static bool ParseMakeExpression(TokenStream& stream, std::unique_ptr<Expression>
 {
     out = nullptr;
 
-    Token token;
-    if (!stream.Expect(TokenType::KW_MAKE, token))
+    MakeExpression makeExpr{};
+    if (!stream.Expect(TokenType::KW_MAKE, makeExpr.start))
         return false;
 
     std::unique_ptr<Expression> construction;
     if (!ParseConstructionExpression(stream, construction))
         return false;
 
-    auto& constructionExpression = dynamic_cast<ConstructionExpression&>(*construction);
-    out = std::make_unique<MakeExpression>(std::move(constructionExpression));
+    makeExpr.construction = std::move(dynamic_cast<ConstructionExpression&>(*construction));
+    out = std::make_unique<MakeExpression>(std::move(makeExpr));
     return true;
 }
 
@@ -301,14 +312,11 @@ static bool ParseSizeofExpression(TokenStream& stream, std::unique_ptr<Expressio
 {
     out = nullptr;
 
-    Token token;
-    if (!stream.Expect(TokenType::KW_SIZEOF, token))
+    SizeOfExpression sizeOfExpr{};
+    if (!stream.Expect(TokenType::KW_SIZEOF, sizeOfExpr.start))
         return false;
 
-
-    token = stream.Peek();
-
-    SizeOfExpression sizeOfExpr{};
+    Token token = stream.Peek();
     if (token.type == TokenType::LPAREN && IsBuiltInType(stream.PeekNext().type))
     {
         stream.Consume(); // LParen
@@ -345,9 +353,7 @@ static ParseResult ParseExpression(TokenStream& stream, std::unique_ptr<Expressi
     std::unique_ptr<Expression> lhs;
     if (stream.ConsumeIf(IsLiteral, token) || stream.ConsumeIf(TokenType::IDENTIFIER, token))
     {
-        LiteralExpression lit;
-        lit.token = token;
-        lhs = std::make_unique<LiteralExpression>(std::move(lit));
+        lhs = std::make_unique<LiteralExpression>(token);
     }
     else if (token.type == TokenType::LBRACKET)
     {
@@ -359,7 +365,7 @@ static ParseResult ParseExpression(TokenStream& stream, std::unique_ptr<Expressi
         if (!ParseParenthesizedExpression(stream, lhs))
             return ParseResult::Failure;
     }
-    else if (IsOperator(token.type))
+    else if (IsUnaryOperator(token.type))
     {
         if (!ParseUnaryExpression(stream, lhs))
             return ParseResult::Failure;
@@ -384,8 +390,7 @@ static ParseResult ParseExpression(TokenStream& stream, std::unique_ptr<Expressi
         return ParseResult::None;
     }
 
-    auto postfixLhs = dynamic_cast<PostfixExpression*>(lhs.get());
-    if (postfixLhs)
+    if (const auto postfixLhs = dynamic_cast<PostfixExpression*>(lhs.get()))
     {
         std::unique_ptr<Postfix> postfix;
         while (ParsePostfix(stream, postfix))

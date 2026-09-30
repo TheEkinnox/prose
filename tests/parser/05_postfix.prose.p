@@ -1,5 +1,6 @@
 Program
 |  VariableDeclaration
+|  |  Start: (1:1) IDENTIFIER(a)
 |  |  IsConst: false
 |  |  Name: 'a'
 |  |  Type: None
@@ -9,6 +10,7 @@ Program
 |  |  |  |  |  Call
 |  |  |  |  |  |  Arguments: None
 |  VariableDeclaration
+|  |  Start: (2:1) IDENTIFIER(b)
 |  |  IsConst: false
 |  |  Name: 'b'
 |  |  Type: None
@@ -24,6 +26,7 @@ Program
 |  |  |  |  |  |  |  (2:15) LIT_INTEGER(3)
 |  |  |  |  |  |  |  |  Postfix: None
 |  VariableDeclaration
+|  |  Start: (4:1) IDENTIFIER(c)
 |  |  IsConst: false
 |  |  Name: 'c'
 |  |  Type: None
@@ -34,6 +37,7 @@ Program
 |  |  |  |  |  |  (4:11) LIT_INTEGER(0)
 |  |  |  |  |  |  |  Postfix: None
 |  VariableDeclaration
+|  |  Start: (5:1) IDENTIFIER(d)
 |  |  IsConst: false
 |  |  Name: 'd'
 |  |  Type: None
@@ -51,6 +55,7 @@ Program
 |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  Postfix: None
 |  VariableDeclaration
+|  |  Start: (7:1) IDENTIFIER(e)
 |  |  IsConst: false
 |  |  Name: 'e'
 |  |  Type: None
@@ -65,6 +70,7 @@ Program
 |  |  |  |  |  |  |  (7:13) LIT_INTEGER(3)
 |  |  |  |  |  |  |  |  Postfix: None
 |  VariableDeclaration
+|  |  Start: (8:1) IDENTIFIER(f)
 |  |  IsConst: false
 |  |  Name: 'f'
 |  |  Type: None
@@ -77,6 +83,7 @@ Program
 |  |  |  |  |  |  |  (8:12) LIT_INTEGER(3)
 |  |  |  |  |  |  |  |  Postfix: None
 |  VariableDeclaration
+|  |  Start: (9:1) IDENTIFIER(g)
 |  |  IsConst: false
 |  |  Name: 'g'
 |  |  Type: None
@@ -89,6 +96,7 @@ Program
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  End: None
 |  VariableDeclaration
+|  |  Start: (10:1) IDENTIFIER(h)
 |  |  IsConst: false
 |  |  Name: 'h'
 |  |  Type: None
@@ -99,6 +107,7 @@ Program
 |  |  |  |  |  |  Start: None
 |  |  |  |  |  |  End: None
 |  VariableDeclaration
+|  |  Start: (12:1) IDENTIFIER(i)
 |  |  IsConst: false
 |  |  Name: 'i'
 |  |  Type: None
@@ -108,6 +117,7 @@ Program
 |  |  |  |  |  MemberAccess
 |  |  |  |  |  |  Member: 'member'
 |  VariableDeclaration
+|  |  Start: (14:1) IDENTIFIER(j)
 |  |  IsConst: false
 |  |  Name: 'j'
 |  |  Type: None
@@ -119,6 +129,7 @@ Program
 |  |  |  |  |  MemberAccess
 |  |  |  |  |  |  Member: 'member'
 |  VariableDeclaration
+|  |  Start: (15:1) IDENTIFIER(k)
 |  |  IsConst: false
 |  |  Name: 'k'
 |  |  Type: None
@@ -131,6 +142,7 @@ Program
 |  |  |  |  |  |  (15:11) LIT_INTEGER(0)
 |  |  |  |  |  |  |  Postfix: None
 |  VariableDeclaration
+|  |  Start: (16:1) IDENTIFIER(l)
 |  |  IsConst: false
 |  |  Name: 'l'
 |  |  Type: None
@@ -145,6 +157,7 @@ Program
 |  |  |  |  |  MemberAccess
 |  |  |  |  |  |  Member: 'member'
 |  VariableDeclaration
+|  |  Start: (17:1) IDENTIFIER(m)
 |  |  IsConst: false
 |  |  Name: 'm'
 |  |  Type: None

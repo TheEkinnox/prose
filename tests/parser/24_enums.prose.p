@@ -1,6 +1,7 @@
 Program
 |  EnumDeclaration
-|  |  Name: ImplicitTypeAndValues
+|  |  Start: (1:1) KW_ENUM(enum)
+|  |  Name: 'ImplicitTypeAndValues'
 |  |  Type: None
 |  |  Element 0
 |  |  |  Name: A
@@ -12,7 +13,8 @@ Program
 |  |  |  Name: C
 |  |  |  Initializer: None
 |  EnumDeclaration
-|  |  Name: ExplicitType
+|  |  Start: (7:1) KW_ENUM(enum)
+|  |  Name: 'ExplicitType'
 |  |  Type:
 |  |  |  Base: u8
 |  |  |  Modifiers: None
@@ -26,7 +28,8 @@ Program
 |  |  |  Name: C
 |  |  |  Initializer: None
 |  EnumDeclaration
-|  |  Name: ExplicitValues
+|  |  Start: (13:1) KW_ENUM(enum)
+|  |  Name: 'ExplicitValues'
 |  |  Type: None
 |  |  Element 0
 |  |  |  Name: A
@@ -44,7 +47,8 @@ Program
 |  |  |  |  (16:9) LIT_INTEGER(256)
 |  |  |  |  |  Postfix: None
 |  EnumDeclaration
-|  |  Name: ExplicitTypeAndValues
+|  |  Start: (19:1) KW_ENUM(enum)
+|  |  Name: 'ExplicitTypeAndValues'
 |  |  Type:
 |  |  |  Base: u64
 |  |  |  Modifiers: None
@@ -64,7 +68,8 @@ Program
 |  |  |  |  (22:9) LIT_INTEGER(32)
 |  |  |  |  |  Postfix: None
 |  EnumDeclaration
-|  |  Name: Mixed
+|  |  Start: (25:1) KW_ENUM(enum)
+|  |  Name: 'Mixed'
 |  |  Type: None
 |  |  Element 0
 |  |  |  Name: A

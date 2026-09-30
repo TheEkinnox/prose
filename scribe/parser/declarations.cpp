@@ -7,13 +7,17 @@
 
 #include "utility/strings.h"
 
+std::ostream& Declaration::PrintName(std::ostream& os, const ParserDepthT depth) const
+{
+    return PrintAtDepth(os, depth, "Name: '") << name.value << '\'';
+}
+
 std::ostream& VariableDeclaration::Print(std::ostream& os, ParserDepthT depth) const
 {
     PrintAtDepth(os, depth++, "VariableDeclaration") << '\n';
-
+    PrintStart(os, depth) << '\n';
     PrintAtDepth(os, depth, "IsConst: ") << (isConst ? "true" : "false") << '\n';
-
-    PrintAtDepth(os, depth, "Name: '") << name.value << "'\n";
+    PrintName(os, depth) << '\n';
 
     PrintAtDepth(os, depth, "Type:");
     if (type.has_value())
@@ -33,7 +37,8 @@ std::ostream& VariableDeclaration::Print(std::ostream& os, ParserDepthT depth) c
 std::ostream& FunctionDeclaration::Print(std::ostream& os, ParserDepthT depth) const
 {
     PrintAtDepth(os, depth++, "FunctionDeclaration") << '\n';
-    PrintAtDepth(os, depth, "Name: '") << name.value << "'\n";
+    PrintStart(os, depth) << '\n';
+    PrintName(os, depth) << '\n';
 
     PrintAtDepth(os, depth, "Type:");
     if (type.has_value())
@@ -59,7 +64,8 @@ std::ostream& FunctionDeclaration::Print(std::ostream& os, ParserDepthT depth) c
 std::ostream& TypeDeclaration::Print(std::ostream& os, ParserDepthT depth) const
 {
     PrintAtDepth(os, depth++, "TypeDeclaration") << '\n';
-    PrintAtDepth(os, depth, "Name: '") << name.value << "'\n";
+    PrintStart(os, depth) << '\n';
+    PrintName(os, depth) << '\n';
     PrintAtDepth(os, depth, "Members:");
     if (!members.empty())
     {
@@ -87,7 +93,8 @@ std::ostream& EnumElement::Print(std::ostream& os, const ParserDepthT depth) con
 std::ostream& EnumDeclaration::Print(std::ostream& os, ParserDepthT depth) const
 {
     PrintAtDepth(os, depth++, "EnumDeclaration") << '\n';
-    PrintAtDepth(os, depth, "Name: ") << name.value << '\n';
+    PrintStart(os, depth) << '\n';
+    PrintName(os, depth) << '\n';
     PrintAtDepth(os, depth, "Type:");
     if (type)
         type->Print(os << '\n', depth + 1);
@@ -106,7 +113,8 @@ std::ostream& EnumDeclaration::Print(std::ostream& os, ParserDepthT depth) const
 std::ostream& AliasDeclaration::Print(std::ostream& os, ParserDepthT depth) const
 {
     PrintAtDepth(os, depth++, "AliasDeclaration") << '\n';
-    PrintAtDepth(os, depth, "Name: ") << name.value << '\n';
+    PrintStart(os, depth) << '\n';
+    PrintName(os, depth) << '\n';
     PrintAtDepth(os, depth, "Type:\n");
     return type.Print(os, depth + 1);
 }
@@ -114,12 +122,8 @@ std::ostream& AliasDeclaration::Print(std::ostream& os, ParserDepthT depth) cons
 static ParseResult ParseVariableDeclaration(TokenStream& stream, std::unique_ptr<Declaration>& out)
 {
     VariableDeclaration variable{};
-
-    Token token;
-    if (stream.ConsumeIf(TokenType::KW_CONST, token))
-    {
+    if (stream.ConsumeIf(TokenType::KW_CONST, variable.start))
         variable.isConst = true;
-    }
 
     if (!variable.isConst && stream.Is(TokenType::IDENTIFIER))
     {
@@ -130,15 +134,18 @@ static ParseResult ParseVariableDeclaration(TokenStream& stream, std::unique_ptr
             return ParseResult::None;
     }
 
+    Token token;
     if (!stream.Expect(TokenType::IDENTIFIER, token))
         return ParseResult::Failure;
+
+    if (!variable.isConst)
+        variable.start = token;
 
     variable.name = token;
 
     if (stream.ConsumeIf(TokenType::COLON, token))
     {
         Type type;
-
         if (!ParseType(stream, type))
             return ParseResult::Failure;
 
@@ -179,15 +186,14 @@ static bool ParseFunctionDeclaration(TokenStream& stream, std::unique_ptr<Declar
 {
     out = nullptr;
 
-    Token token;
-    if (!stream.Expect(TokenType::KW_FN, token))
+    FunctionDeclaration function{};
+    if (!stream.Expect(TokenType::KW_FN, function.start))
         return false;
 
-    const Token fnToken = token;
-    FunctionDeclaration function{};
     if (!stream.Expect(TokenType::IDENTIFIER, function.name))
         return false;
 
+    Token token;
     if (stream.ConsumeIf(TokenType::LPAREN, token))
     {
         bool isFirst = true;
@@ -238,7 +244,7 @@ static bool ParseFunctionDeclaration(TokenStream& stream, std::unique_ptr<Declar
 
     if (token.type != TokenType::KW_END)
     {
-        if (!ParseBlock(stream, function.body, fnToken))
+        if (!ParseBlock(stream, function.body, function.start))
             return false;
     }
 
@@ -250,11 +256,11 @@ static bool ParseTypeDeclaration(TokenStream& stream, std::unique_ptr<Declaratio
 {
     out = nullptr;
 
-    Token token;
-    if (!stream.Expect(TokenType::KW_TYPE, token))
+    TypeDeclaration type{};
+    if (!stream.Expect(TokenType::KW_TYPE, type.start))
         return false;
 
-    TypeDeclaration type{};
+    Token token;
     if (!stream.Expect(TokenType::IDENTIFIER, type.name) || !stream.ExpectSeparator(token))
         return false;
 
@@ -284,14 +290,14 @@ static bool ParseEnumDeclaration(TokenStream& stream, std::unique_ptr<Declaratio
 {
     out = nullptr;
 
-    Token token;
-    if (!stream.Expect(TokenType::KW_ENUM, token))
+    EnumDeclaration declaration{};
+    if (!stream.Expect(TokenType::KW_ENUM, declaration.start))
         return false;
 
-    EnumDeclaration declaration{};
     if (!stream.Expect(TokenType::IDENTIFIER, declaration.name))
         return false;
 
+    Token token;
     if (stream.ConsumeIf(TokenType::COLON, token))
     {
         Type type{};
@@ -341,14 +347,14 @@ static bool ParseAliasDeclaration(TokenStream& stream, std::unique_ptr<Declarati
 {
     out = nullptr;
 
-    Token token;
-    if (!stream.Expect(TokenType::KW_ALIAS, token))
+    AliasDeclaration alias{};
+    if (!stream.Expect(TokenType::KW_ALIAS, alias.start))
         return false;
 
-    AliasDeclaration alias{};
     if (!stream.Expect(TokenType::IDENTIFIER, alias.name))
         return false;
 
+    Token token;
     if (!stream.Expect(TokenType::OP_ASSIGN, token))
         return false;
 

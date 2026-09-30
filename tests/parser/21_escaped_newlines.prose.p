@@ -1,10 +1,12 @@
 Program
 |  FunctionDeclaration
+|  |  Start: (1:1) KW_FN(fn)
 |  |  Name: 'main'
 |  |  Type: None
 |  |  Parameters: None
 |  |  Body:
 |  |  |  VariableDeclaration
+|  |  |  |  Start: (2:5) IDENTIFIER(result)
 |  |  |  |  IsConst: false
 |  |  |  |  Name: 'result'
 |  |  |  |  Type: None

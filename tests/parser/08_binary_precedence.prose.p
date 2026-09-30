@@ -1,5 +1,6 @@
 Program
 |  VariableDeclaration
+|  |  Start: (1:1) IDENTIFIER(a)
 |  |  IsConst: false
 |  |  Name: 'a'
 |  |  Type: None
@@ -14,6 +15,7 @@ Program
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
+|  |  Start: (2:1) IDENTIFIER(b)
 |  |  IsConst: false
 |  |  Name: 'b'
 |  |  Type: None
@@ -28,6 +30,7 @@ Program
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
+|  |  Start: (4:1) IDENTIFIER(c)
 |  |  IsConst: false
 |  |  Name: 'c'
 |  |  Type: None
@@ -42,6 +45,7 @@ Program
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
+|  |  Start: (5:1) IDENTIFIER(d)
 |  |  IsConst: false
 |  |  Name: 'd'
 |  |  Type: None
@@ -56,6 +60,7 @@ Program
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
+|  |  Start: (6:1) IDENTIFIER(e)
 |  |  IsConst: false
 |  |  Name: 'e'
 |  |  Type: None
@@ -70,6 +75,7 @@ Program
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
+|  |  Start: (7:1) IDENTIFIER(f)
 |  |  IsConst: false
 |  |  Name: 'f'
 |  |  Type: None
@@ -84,6 +90,7 @@ Program
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
+|  |  Start: (9:1) IDENTIFIER(g)
 |  |  IsConst: false
 |  |  Name: 'g'
 |  |  Type: None
@@ -98,6 +105,7 @@ Program
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
+|  |  Start: (10:1) IDENTIFIER(h)
 |  |  IsConst: false
 |  |  Name: 'h'
 |  |  Type: None
@@ -112,6 +120,7 @@ Program
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
+|  |  Start: (12:1) IDENTIFIER(i)
 |  |  IsConst: false
 |  |  Name: 'i'
 |  |  Type: None
@@ -126,6 +135,7 @@ Program
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
+|  |  Start: (13:1) IDENTIFIER(j)
 |  |  IsConst: false
 |  |  Name: 'j'
 |  |  Type: None
@@ -140,6 +150,7 @@ Program
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
+|  |  Start: (14:1) IDENTIFIER(k)
 |  |  IsConst: false
 |  |  Name: 'k'
 |  |  Type: None
@@ -154,6 +165,7 @@ Program
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
+|  |  Start: (16:1) IDENTIFIER(l)
 |  |  IsConst: false
 |  |  Name: 'l'
 |  |  Type: None
@@ -168,6 +180,7 @@ Program
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
+|  |  Start: (17:1) IDENTIFIER(m)
 |  |  IsConst: false
 |  |  Name: 'm'
 |  |  Type: None
@@ -182,6 +195,7 @@ Program
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
+|  |  Start: (19:1) IDENTIFIER(result)
 |  |  IsConst: false
 |  |  Name: 'result'
 |  |  Type: None

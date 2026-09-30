@@ -17,6 +17,11 @@ NO_WARNINGS_PUSH
 #include <magic_enum/magic_enum.hpp>
 NO_WARNINGS_POP
 
+std::ostream& Statement::PrintStart(std::ostream& os, ParserDepthT depth) const
+{
+    return PrintAtDepth(os, depth, "Start: ") << start;
+}
+
 std::ostream& Block::Print(std::ostream& os, const ParserDepthT depth) const
 {
     if (statements.empty())
@@ -28,8 +33,16 @@ std::ostream& Block::Print(std::ostream& os, const ParserDepthT depth) const
     return os;
 }
 
-std::ostream& ConditionalBlock::Print(std::ostream& os, ParserDepthT depth) const
+std::ostream& NamedBlock::Print(std::ostream& os, const ParserDepthT depth) const
 {
+    PrintStart(os, depth) << '\n';
+    PrintAtDepth(os, depth, "Body:") << '\n';
+    return body.Print(os, depth + 1);
+}
+
+std::ostream& ConditionalBlock::Print(std::ostream& os, const ParserDepthT depth) const
+{
+    PrintStart(os, depth) << '\n';
     PrintAtDepth(os, depth, "Condition:") << '\n';
     condition->Print(os, depth + 1) << '\n';
     PrintAtDepth(os, depth, "Body:") << '\n';
@@ -75,6 +88,7 @@ std::ostream& RepeatStatement::Print(std::ostream& os, ParserDepthT depth) const
 std::ostream& ForStatement::Print(std::ostream& os, ParserDepthT depth) const
 {
     PrintAtDepth(os, depth++, "ForStatement") << '\n';
+    PrintStart(os, depth) << '\n';
     PrintAtDepth(os, depth, "Iterator:") << '\n';
     PrintAtDepth(os, depth + 1, "Name: ") << iterator.value << '\n';
     PrintAtDepth(os, depth + 1, "Is Ref: ") << (isRef ? "true" : "false") << '\n';
@@ -93,6 +107,7 @@ std::ostream& SwitchCase::Print(std::ostream& os, ParserDepthT depth) const
 std::ostream& SwitchStatement::Print(std::ostream& os, ParserDepthT depth) const
 {
     PrintAtDepth(os, depth++, "SwitchStatement") << '\n';
+    PrintStart(os, depth) << '\n';
     PrintAtDepth(os, depth, "Expression:") << '\n';
     expression->Print(os, depth + 1) << '\n';
     if (!cases.empty())
@@ -115,34 +130,50 @@ std::ostream& SwitchStatement::Print(std::ostream& os, ParserDepthT depth) const
     return os << " None";
 }
 
-std::ostream& ControlStatement::Print(std::ostream& os, const ParserDepthT depth) const
+static bool IsControlStatement(const TokenType t)
 {
-    return PrintAtDepth(os, depth, magic_enum::enum_name(type));
+    return t == TokenType::KW_RETURN || t == TokenType::KW_BREAK || t == TokenType::KW_CONTINUE;
 }
 
-ReturnStatement::ReturnStatement(std::unique_ptr<Expression>&& p_value) : ControlStatement(ControlStatementType::Return), value(std::move(p_value))
+ControlStatement::ControlStatement(Token p_start)
 {
+    assert(IsControlStatement(p_start.type));
+    start = std::move(p_start);
+}
+
+std::ostream& ControlStatement::Print(std::ostream& os, ParserDepthT depth) const
+{
+    PrintAtDepth(os, depth++, "ControlStatement") << '\n';
+    return PrintAtDepth(os, depth, "Type: ") << start;
+}
+
+ReturnStatement::ReturnStatement(Token p_start) : ControlStatement(std::move(p_start))
+{
+    assert(start.type == TokenType::KW_RETURN);
 }
 
 std::ostream& ReturnStatement::Print(std::ostream& os, ParserDepthT depth) const
 {
-    ControlStatement::Print(os, depth++);
+    ControlStatement::Print(os, depth++) << '\n';
+    PrintAtDepth(os, depth, "Value:");
     if (value)
-        return value->Print(os << '\n', depth);
+        return value->Print(os << '\n', depth + 1);
 
-    return os << ": None";
+    return os << " None";
 }
 
 std::ostream& DeferStatement::Print(std::ostream& os, ParserDepthT depth) const
 {
     PrintAtDepth(os, depth++, "DeferStatement") << '\n';
-    return call->Print(os, depth);
+    PrintStart(os, depth) << '\n';
+    PrintAtDepth(os, depth, "Call:") << '\n';
+    return call->Print(os, depth + 1);
 }
 
 std::ostream& ScopeStatement::Print(std::ostream& os, ParserDepthT depth) const
 {
     PrintAtDepth(os, depth++, "ScopeStatement") << '\n';
-    return body.Print(os, depth);
+    return NamedBlock::Print(os, depth);
 }
 
 static bool IsEnd(const TokenType t)
@@ -150,9 +181,9 @@ static bool IsEnd(const TokenType t)
     return t == TokenType::KW_END;
 }
 
-static bool ParseConditionalBlock(TokenStream& stream, ConditionalBlock& out, const Token& startToken, const TokenStream::ConditionFunc& exitCondition)
+static bool ParseConditionalBlock(TokenStream& stream, ConditionalBlock& out, const TokenStream::ConditionFunc& exitCondition)
 {
-    assert(startToken);
+    assert(out.start);
     if (!RequireExpression(stream, out.condition))
         return false;
 
@@ -160,7 +191,16 @@ static bool ParseConditionalBlock(TokenStream& stream, ConditionalBlock& out, co
     if (!stream.ExpectSeparator(token))
         return false;
 
-    if (!ParseBlock(stream, out.body, startToken, exitCondition))
+    if (!ParseBlock(stream, out.body, out.start, exitCondition))
+        return false;
+
+    return true;
+}
+
+static bool ParseNamedBlock(TokenStream& stream, NamedBlock& out, const TokenStream::ConditionFunc& exitCondition)
+{
+    assert(out.start);
+    if (!ParseBlock(stream, out.body, out.start, exitCondition))
         return false;
 
     return true;
@@ -168,14 +208,11 @@ static bool ParseConditionalBlock(TokenStream& stream, ConditionalBlock& out, co
 
 static bool ParseConditionalBlock(TokenStream& stream, ConditionalBlock& out, const TokenType type, const TokenStream::ConditionFunc& exitCondition)
 {
-    out.condition = nullptr;
-    out.body = Block{};
-
-    Token token;
-    if (!stream.Expect(type, token))
+    out = {};
+    if (!stream.Expect(type, out.start))
         return false;
 
-    return ParseConditionalBlock(stream, out, token, exitCondition);
+    return ParseConditionalBlock(stream, out, exitCondition);
 }
 
 static bool ParseIfStatement(TokenStream& stream, std::unique_ptr<Statement>& out)
@@ -198,6 +235,7 @@ static bool ParseIfStatement(TokenStream& stream, std::unique_ptr<Statement>& ou
     if (!ParseConditionalBlock(stream, statement.mainBranch, TokenType::KW_IF, branchExitFunc))
         return false;
 
+    statement.start = statement.mainBranch.start;
     while (elseToken)
     {
         const Token elseStartToken = elseToken;
@@ -205,13 +243,15 @@ static bool ParseIfStatement(TokenStream& stream, std::unique_ptr<Statement>& ou
 
         if (stream.Is(TokenType::KW_IF))
         {
+            ConditionalBlock conditionalBranch{};
+            conditionalBranch.start = elseStartToken;
+
             if (statement.defaultBranch.has_value())
             {
                 LogError(stream.Peek(), "Conditional branch after default branch");
                 return false;
             }
 
-            ConditionalBlock conditionalBranch{};
             if (!ParseConditionalBlock(stream, conditionalBranch, TokenType::KW_IF, branchExitFunc))
                 return false;
 
@@ -219,11 +259,13 @@ static bool ParseIfStatement(TokenStream& stream, std::unique_ptr<Statement>& ou
         }
         else
         {
-            Block block{};
-            if (!ParseBlock(stream, block, elseStartToken, branchExitFunc))
+            NamedBlock defaultBranch{};
+            defaultBranch.start = elseStartToken;
+
+            if (!ParseNamedBlock(stream, defaultBranch, branchExitFunc))
                 return false;
 
-            statement.defaultBranch = std::move(block);
+            statement.defaultBranch = std::move(defaultBranch);
         }
     }
 
@@ -247,12 +289,11 @@ static bool ParseRepeatStatement(TokenStream& stream, std::unique_ptr<Statement>
 {
     out = nullptr;
 
-    Token token;
-    if (!stream.Expect(TokenType::KW_REPEAT, token))
+    RepeatStatement statement{};
+    if (!stream.Expect(TokenType::KW_REPEAT, statement.start))
         return false;
 
-    const Token repeatToken = token;
-    RepeatStatement statement{};
+    Token token;
     const auto isUntil = [](const TokenType t) { return t == TokenType::KW_UNTIL; };
     if (!ParseBlock(stream, statement.body, token, isUntil))
         return false;
@@ -263,7 +304,7 @@ static bool ParseRepeatStatement(TokenStream& stream, std::unique_ptr<Statement>
     const bool consumedSeparator = stream.ConsumeIf(IsSeparator, token);
     if (((consumedSeparator && token.type != TokenType::KW_END) || !consumedSeparator) && !stream.ConsumeIf(TokenType::KW_END, token))
     {
-        LogError(stream.Peek(), "Unclosed 'repeat' block at " + std::to_string(repeatToken.line) + ":" + std::to_string(repeatToken.column));
+        LogError(stream.Peek(), "Unclosed 'repeat' block at " + std::to_string(statement.start.line) + ":" + std::to_string(statement.start.column));
         return false;
     }
 
@@ -275,15 +316,14 @@ static bool ParseForStatement(TokenStream& stream, std::unique_ptr<Statement>& o
 {
     out = nullptr;
 
-    Token token;
-    if (!stream.Expect(TokenType::KW_FOR, token))
+    ForStatement statement{};
+    if (!stream.Expect(TokenType::KW_FOR, statement.start))
         return false;
 
-    const Token forToken = token;
-    ForStatement statement{};
     if (!stream.Expect(TokenType::IDENTIFIER, statement.iterator))
         return false;
 
+    Token token;
     if (stream.ConsumeIf(TokenType::OP_BITWISE_AND, token))
         statement.isRef = true;
 
@@ -293,7 +333,7 @@ static bool ParseForStatement(TokenStream& stream, std::unique_ptr<Statement>& o
     if (!RequireExpression(stream, statement.range, true))
         return false;
 
-    if (!ParseBlock(stream, statement.body, forToken))
+    if (!ParseBlock(stream, statement.body, statement.start))
         return false;
 
     out = std::make_unique<ForStatement>(std::move(statement));
@@ -304,11 +344,11 @@ static bool ParseSwitchStatement(TokenStream& stream, std::unique_ptr<Statement>
 {
     out = nullptr;
 
-    Token token;
-    if (!stream.Expect(TokenType::KW_SWITCH, token))
+    SwitchStatement statement{};
+    if (!stream.Expect(TokenType::KW_SWITCH, statement.start))
         return false;
 
-    SwitchStatement statement{};
+    Token token;
     if (!RequireExpression(stream, statement.expression) || !stream.Expect(TokenType::TERMINATOR, token))
         return false;
 
@@ -327,7 +367,8 @@ static bool ParseSwitchStatement(TokenStream& stream, std::unique_ptr<Statement>
     while (token.type == TokenType::KW_CASE)
     {
         SwitchCase switchCase{};
-        if (!ParseConditionalBlock(stream, switchCase, token, caseExitFunc))
+        switchCase.start = token;
+        if (!ParseConditionalBlock(stream, switchCase, caseExitFunc))
             return false;
 
         switchCase.isFallthrough = token.type == TokenType::KW_FALLTHROUGH;
@@ -360,8 +401,10 @@ static bool ParseSwitchStatement(TokenStream& stream, std::unique_ptr<Statement>
 
     if (token.type == TokenType::KW_DEFAULT)
     {
-        Block block{};
-        if (!ParseBlock(stream, block, token, caseExitFunc))
+        NamedBlock fallback{};
+        fallback.start = token;
+
+        if (!ParseNamedBlock(stream, fallback, caseExitFunc))
             return false;
 
         if (token.type != TokenType::KW_END)
@@ -370,7 +413,7 @@ static bool ParseSwitchStatement(TokenStream& stream, std::unique_ptr<Statement>
             return false;
         }
 
-        statement.fallback = std::move(block);
+        statement.fallback = std::move(fallback);
     }
 
     out = std::make_unique<SwitchStatement>(std::move(statement));
@@ -385,11 +428,11 @@ static bool ParseReturnStatement(TokenStream& stream, std::unique_ptr<Statement>
     if (!stream.Expect(TokenType::KW_RETURN, token))
         return false;
 
-    std::unique_ptr<Expression> value;
-    if (ParseExpression(stream, value) == ParseResult::Failure)
+    ReturnStatement statement{std::move(token)};
+    if (ParseExpression(stream, statement.value) == ParseResult::Failure)
         return false;
 
-    out = std::make_unique<ReturnStatement>(std::move(value));
+    out = std::make_unique<ReturnStatement>(std::move(statement));
     return true;
 }
 
@@ -397,15 +440,14 @@ static bool ParseDeferStatement(TokenStream& stream, std::unique_ptr<Statement>&
 {
     out = nullptr;
 
-    Token token;
-    if (!stream.Expect(TokenType::KW_DEFER, token))
+    DeferStatement statement{};
+    if (!stream.Expect(TokenType::KW_DEFER, statement.start))
         return false;
 
     std::unique_ptr<Expression> call;
     if (!RequireExpression(stream, call))
         return false;
 
-    DeferStatement statement{};
     statement.call = dynamic_pointer_cast<PostfixExpression>(std::move(call));
     if (!statement.call || statement.call->postfix.empty() || statement.call->postfix.back()->type != PostfixType::Call)
     {
@@ -421,12 +463,11 @@ static bool ParseScopeStatement(TokenStream& stream, std::unique_ptr<Statement>&
 {
     out = nullptr;
 
-    Token token;
-    if (!stream.Expect(TokenType::KW_SCOPE, token))
+    ScopeStatement statement{};
+    if (!stream.Expect(TokenType::KW_SCOPE, statement.start))
         return false;
 
-    ScopeStatement statement{};
-    if (!ParseBlock(stream, statement.body, token))
+    if (!ParseNamedBlock(stream, statement, IsEnd))
         return false;
 
     out = std::make_unique<ScopeStatement>(std::move(statement));
@@ -503,12 +544,10 @@ ParseResult ParseStatement(TokenStream& stream, std::unique_ptr<Statement>& out)
     case TokenType::KW_RETURN:
         return ParseReturnStatement(stream, out) ? ParseResult::Success : ParseResult::Failure;
     case TokenType::KW_BREAK:
-        stream.Consume();
-        out = std::make_unique<ControlStatement>(ControlStatementType::Break);
+        out = std::make_unique<ControlStatement>(stream.Consume());
         return ParseResult::Success;
     case TokenType::KW_CONTINUE:
-        stream.Consume();
-        out = std::make_unique<ControlStatement>(ControlStatementType::Continue);
+        out = std::make_unique<ControlStatement>(stream.Consume());
         return ParseResult::Success;
     case TokenType::KW_DEFER:
         return ParseDeferStatement(stream, out) ? ParseResult::Success : ParseResult::Failure;

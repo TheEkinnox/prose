@@ -1,10 +1,12 @@
 Program
 |  VariableDeclaration
+|  |  Start: (1:1) IDENTIFIER(a)
 |  |  IsConst: false
 |  |  Name: 'a'
 |  |  Type: None
 |  |  Initializer:
 |  |  |  ArrayLiteralExpression
+|  |  |  |  Start: (1:5) LBRACKET([)
 |  |  |  |  Elements:
 |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  Operator: OP_RANGE
@@ -17,11 +19,13 @@ Program
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
+|  |  Start: (2:1) IDENTIFIER(b)
 |  |  IsConst: false
 |  |  Name: 'b'
 |  |  Type: None
 |  |  Initializer:
 |  |  |  ArrayLiteralExpression
+|  |  |  |  Start: (2:5) LBRACKET([)
 |  |  |  |  Elements:
 |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  Operator: OP_RANGE
@@ -34,11 +38,13 @@ Program
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
+|  |  Start: (3:1) IDENTIFIER(c)
 |  |  IsConst: false
 |  |  Name: 'c'
 |  |  Type: None
 |  |  Initializer:
 |  |  |  ArrayLiteralExpression
+|  |  |  |  Start: (3:5) LBRACKET([)
 |  |  |  |  Elements:
 |  |  |  |  |  (3:6) LIT_INTEGER(1)
 |  |  |  |  |  |  Postfix: None
@@ -55,11 +61,13 @@ Program
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Postfix: None
 |  VariableDeclaration
+|  |  Start: (4:1) IDENTIFIER(d)
 |  |  IsConst: false
 |  |  Name: 'd'
 |  |  Type: None
 |  |  Initializer:
 |  |  |  ArrayLiteralExpression
+|  |  |  |  Start: (4:5) LBRACKET([)
 |  |  |  |  Elements:
 |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  Operator: OP_RANGE

@@ -1,10 +1,12 @@
 Program
 |  FunctionDeclaration
+|  |  Start: (1:1) KW_FN(fn)
 |  |  Name: 'main'
 |  |  Type: None
 |  |  Parameters: None
 |  |  Body:
 |  |  |  ForStatement
+|  |  |  |  Start: (2:5) KW_FOR(for)
 |  |  |  |  Iterator:
 |  |  |  |  |  Name: i
 |  |  |  |  |  Is Ref: false
@@ -26,6 +28,7 @@ Program
 |  |  |  |  |  |  |  |  |  (3:17) IDENTIFIER(i)
 |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  ForStatement
+|  |  |  |  Start: (6:5) KW_FOR(for)
 |  |  |  |  Iterator:
 |  |  |  |  |  Name: value
 |  |  |  |  |  Is Ref: false
@@ -40,6 +43,7 @@ Program
 |  |  |  |  |  |  |  |  |  (7:17) IDENTIFIER(value)
 |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  ForStatement
+|  |  |  |  Start: (10:5) KW_FOR(for)
 |  |  |  |  Iterator:
 |  |  |  |  |  Name: value
 |  |  |  |  |  Is Ref: true
@@ -51,6 +55,7 @@ Program
 |  |  |  |  |  |  Postfix:
 |  |  |  |  |  |  |  Increment
 |  |  |  ForStatement
+|  |  |  |  Start: (14:5) KW_FOR(for)
 |  |  |  |  Iterator:
 |  |  |  |  |  Name: i
 |  |  |  |  |  Is Ref: false

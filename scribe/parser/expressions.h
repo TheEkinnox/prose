@@ -16,12 +16,12 @@ struct PostfixExpression : Expression
 {
     std::vector<std::unique_ptr<Postfix>> postfix;
 
-    std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
+    std::ostream& PrintPostfix(std::ostream& os, ParserDepthT depth) const;
 };
 
 struct LiteralExpression : PostfixExpression
 {
-    Token token;
+    explicit LiteralExpression(Token p_token);
 
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };
@@ -43,7 +43,6 @@ struct ConstructionExpression : PostfixExpression
 
 struct UnaryExpression : PostfixExpression
 {
-    Token op;
     std::unique_ptr<Expression> operand;
 
     explicit UnaryExpression(Token p_op, std::unique_ptr<Expression>&& p_operand);
@@ -64,8 +63,6 @@ struct BinaryExpression : PostfixExpression
 struct MakeExpression : Expression
 {
     ConstructionExpression construction;
-
-    explicit MakeExpression(ConstructionExpression&& p_construction);
 
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };

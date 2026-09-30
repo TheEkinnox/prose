@@ -11,12 +11,15 @@
 
 struct Statement
 {
+    Token start;
+
     Statement() = default;
     Statement(const Statement&) = default;
     Statement& operator=(const Statement&) = default;
     virtual ~Statement() = default;
 
     virtual std::ostream& Print(std::ostream& os, ParserDepthT depth) const = 0;
+    std::ostream& PrintStart(std::ostream& os, ParserDepthT depth) const;
 };
 
 struct Block
@@ -26,10 +29,16 @@ struct Block
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const;
 };
 
-struct ConditionalBlock : Statement
+struct NamedBlock : Statement
+{
+    Block body;
+
+    std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
+};
+
+struct ConditionalBlock : NamedBlock
 {
     std::unique_ptr<Expression> condition;
-    Block body;
 
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };
@@ -38,7 +47,7 @@ struct IfStatement : Statement
 {
     ConditionalBlock mainBranch;
     std::vector<ConditionalBlock> conditionalBranches;
-    std::optional<Block> defaultBranch;
+    std::optional<NamedBlock> defaultBranch;
 
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };
@@ -74,23 +83,14 @@ struct SwitchStatement : Statement
 {
     std::unique_ptr<Expression> expression;
     std::vector<SwitchCase> cases;
-    std::optional<Block> fallback;
+    std::optional<NamedBlock> fallback;
 
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };
 
-enum class ControlStatementType : uint8_t
-{
-    Return,
-    Break,
-    Continue
-};
-
 struct ControlStatement : Statement
 {
-    ControlStatementType type;
-
-    explicit ControlStatement(const ControlStatementType p_type) : type(p_type) {}
+    explicit ControlStatement(Token p_start);
 
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };
@@ -99,7 +99,7 @@ struct ReturnStatement : ControlStatement
 {
     std::unique_ptr<Expression> value;
 
-    explicit ReturnStatement(std::unique_ptr<Expression>&& p_value);
+    explicit ReturnStatement(Token p_start);
 
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };
@@ -111,10 +111,8 @@ struct DeferStatement : Statement
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };
 
-struct ScopeStatement : Statement
+struct ScopeStatement : NamedBlock
 {
-    Block body;
-
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };
 

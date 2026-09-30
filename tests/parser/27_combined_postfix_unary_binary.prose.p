@@ -1,10 +1,12 @@
 Program
 |  FunctionDeclaration
+|  |  Start: (1:1) KW_FN(fn)
 |  |  Name: 'main'
 |  |  Type: None
 |  |  Parameters: None
 |  |  Body:
 |  |  |  VariableDeclaration
+|  |  |  |  Start: (2:5) IDENTIFIER(a)
 |  |  |  |  IsConst: false
 |  |  |  |  Name: 'a'
 |  |  |  |  Type: None
@@ -28,6 +30,7 @@ Program
 |  |  |  |  |  |  |  Call
 |  |  |  |  |  |  |  |  Arguments: None
 |  |  |  VariableDeclaration
+|  |  |  |  Start: (3:5) IDENTIFIER(b)
 |  |  |  |  IsConst: false
 |  |  |  |  Name: 'b'
 |  |  |  |  Type: None
@@ -36,7 +39,7 @@ Program
 |  |  |  |  |  |  Operator: OP_MUL
 |  |  |  |  |  |  Left:
 |  |  |  |  |  |  |  UnaryExpression
-|  |  |  |  |  |  |  |  Operator: OP_MINUS
+|  |  |  |  |  |  |  |  Operator: (3:9) OP_MINUS(-)
 |  |  |  |  |  |  |  |  Operand:
 |  |  |  |  |  |  |  |  |  (3:10) IDENTIFIER(objects)
 |  |  |  |  |  |  |  |  |  |  Postfix:
@@ -54,12 +57,13 @@ Program
 |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None
 |  |  |  VariableDeclaration
+|  |  |  |  Start: (4:5) IDENTIFIER(c)
 |  |  |  |  IsConst: false
 |  |  |  |  Name: 'c'
 |  |  |  |  Type: None
 |  |  |  |  Initializer:
 |  |  |  |  |  UnaryExpression
-|  |  |  |  |  |  Operator: OP_LOGICAL_NOT
+|  |  |  |  |  |  Operator: (4:9) OP_LOGICAL_NOT(!)
 |  |  |  |  |  |  Operand:
 |  |  |  |  |  |  |  (4:10) IDENTIFIER(foo)
 |  |  |  |  |  |  |  |  Postfix:
@@ -71,12 +75,13 @@ Program
 |  |  |  |  |  |  |  |  |  |  Member: 'enabled'
 |  |  |  |  |  |  Postfix: None
 |  |  |  VariableDeclaration
+|  |  |  |  Start: (5:5) IDENTIFIER(d)
 |  |  |  |  IsConst: false
 |  |  |  |  Name: 'd'
 |  |  |  |  Type: None
 |  |  |  |  Initializer:
 |  |  |  |  |  UnaryExpression
-|  |  |  |  |  |  Operator: OP_ADDRESS_OF
+|  |  |  |  |  |  Operator: (5:9) OP_ADDRESS_OF(@)
 |  |  |  |  |  |  Operand:
 |  |  |  |  |  |  |  (5:10) IDENTIFIER(objects)
 |  |  |  |  |  |  |  |  Postfix:
@@ -87,12 +92,13 @@ Program
 |  |  |  |  |  |  |  |  |  |  Member: 'member'
 |  |  |  |  |  |  Postfix: None
 |  |  |  VariableDeclaration
+|  |  |  |  Start: (6:5) IDENTIFIER(e)
 |  |  |  |  IsConst: false
 |  |  |  |  Name: 'e'
 |  |  |  |  Type: None
 |  |  |  |  Initializer:
 |  |  |  |  |  UnaryExpression
-|  |  |  |  |  |  Operator: KW_MOVE
+|  |  |  |  |  |  Operator: (6:9) KW_MOVE(move)
 |  |  |  |  |  |  Operand:
 |  |  |  |  |  |  |  (6:14) IDENTIFIER(objects)
 |  |  |  |  |  |  |  |  Postfix:
@@ -101,6 +107,7 @@ Program
 |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  Postfix: None
 |  |  |  VariableDeclaration
+|  |  |  |  Start: (7:5) IDENTIFIER(f)
 |  |  |  |  IsConst: false
 |  |  |  |  Name: 'f'
 |  |  |  |  Type: None
