@@ -823,7 +823,7 @@ bar(8, 12)  // `x + 1` is NOT evaluated in this case
 
 #### Shortcuts
 
-The return type and `return` keyword of void functions, the parentheses of functions with no parameters can be omitted from the declaration.
+The return type and `return` keyword of void functions, as well as the parentheses of functions with no parameters can be omitted from the declaration.
 
 Line breaks may be omitted when doing so does not change the statement boundaries.
 
@@ -838,6 +838,23 @@ is equivalent to
 
 ```
 fn noop end
+```
+
+A function's return type may also be omitted if it can be inferred from its return value.
+
+Ex:
+```
+fn auto() : string
+    return "A string"
+end
+```
+
+is equivalent to
+
+```
+fn auto
+    return "A string"
+end
 ```
 
 A semicolon (`;`) can optionally be added at the end of an expression to collapse multiple statements in the same line.
