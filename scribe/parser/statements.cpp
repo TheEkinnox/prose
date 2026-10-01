@@ -545,8 +545,6 @@ ParseResult ParseStatement(TokenStream& stream, std::unique_ptr<Statement>& out)
     case TokenType::KW_RETURN:
         return ParseReturnStatement(stream, out) ? ParseResult::Success : ParseResult::Failure;
     case TokenType::KW_BREAK:
-        out = std::make_unique<ControlStatement>(stream.Consume());
-        return ParseResult::Success;
     case TokenType::KW_CONTINUE:
         out = std::make_unique<ControlStatement>(stream.Consume());
         return ParseResult::Success;
