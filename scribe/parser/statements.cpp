@@ -137,10 +137,10 @@ static bool IsControlStatement(const TokenType t)
 }
 #endif
 
-ControlStatement::ControlStatement(Token p_start)
+ControlStatement::ControlStatement(const Token& p_start)
 {
     assert(IsControlStatement(p_start.type));
-    start = std::move(p_start);
+    start = p_start;
 }
 
 std::ostream& ControlStatement::Print(std::ostream& os, ParserDepthT depth) const
@@ -149,7 +149,7 @@ std::ostream& ControlStatement::Print(std::ostream& os, ParserDepthT depth) cons
     return PrintAtDepth(os, depth, "Type: ") << start;
 }
 
-ReturnStatement::ReturnStatement(Token p_start) : ControlStatement(std::move(p_start))
+ReturnStatement::ReturnStatement(const Token& p_start) : ControlStatement(p_start)
 {
     assert(start.type == TokenType::KW_RETURN);
 }
@@ -429,7 +429,7 @@ static bool ParseReturnStatement(TokenStream& stream, std::unique_ptr<Statement>
     if (!stream.Expect(TokenType::KW_RETURN, token))
         return false;
 
-    ReturnStatement statement{std::move(token)};
+    ReturnStatement statement{token};
     if (ParseExpression(stream, statement.value) == ParseResult::Failure)
         return false;
 

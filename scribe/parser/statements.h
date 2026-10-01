@@ -90,7 +90,7 @@ struct SwitchStatement : Statement
 
 struct ControlStatement : Statement
 {
-    explicit ControlStatement(Token p_start);
+    explicit ControlStatement(const Token& p_start);
 
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };
@@ -99,7 +99,7 @@ struct ReturnStatement : ControlStatement
 {
     std::unique_ptr<Expression> value;
 
-    explicit ReturnStatement(Token p_start);
+    explicit ReturnStatement(const Token& p_start);
 
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };
