@@ -48,7 +48,7 @@ static bool ParseModifier(TokenStream& stream, std::unique_ptr<TypeModifier>& ou
     out = nullptr;
 
     Token token;
-    if (stream.ConsumeIf(TokenType::OP_MUL, token))
+    if (stream.ConsumeIf(TokenType::OP_STAR, token))
     {
         out = std::make_unique<TypeModifier>(ModifierType::Pointer);
     }

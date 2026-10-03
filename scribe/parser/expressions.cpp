@@ -185,7 +185,7 @@ static std::optional<BindingPower> GetInfixBindingPower(const TokenType type)
     case TokenType::OP_PLUS:
     case TokenType::OP_MINUS:
         return { 10.f };
-    case TokenType::OP_MUL:
+    case TokenType::OP_STAR:
     case TokenType::OP_DIV:
     case TokenType::OP_MOD:
         return { 11.f };

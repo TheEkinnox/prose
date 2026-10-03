@@ -107,6 +107,7 @@ TERMINATOR = NEWLINE | ";" ;
 
 constant_expression = expression ;
 assignable_expression = expression ;
+pointer_expression = expression ;
 callable_expression = expression ;
 
 (* - Top_Level grammar - *)
@@ -310,6 +311,7 @@ unary_expression = prefix_increment
     | logical_not
     | bitwise_not
     | address_of
+    | dereference
     | move
     ;
 
@@ -324,6 +326,8 @@ logical_not = "!", expression ;
 bitwise_not = "~", expression ;
 
 address_of = "@", assignable_expression ;
+
+dereference = "*", pointer_expression ;
 
 move = "move", expression ;
 

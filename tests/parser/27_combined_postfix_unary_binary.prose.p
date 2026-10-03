@@ -36,7 +36,7 @@ Program
 |  |  |  |  Type: None
 |  |  |  |  Initializer:
 |  |  |  |  |  BinaryExpression
-|  |  |  |  |  |  Operator: OP_MUL
+|  |  |  |  |  |  Operator: OP_STAR
 |  |  |  |  |  |  Left:
 |  |  |  |  |  |  |  UnaryExpression
 |  |  |  |  |  |  |  |  Operator: (3:9) OP_MINUS(-)

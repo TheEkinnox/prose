@@ -22,6 +22,7 @@ fn process(input : byte[], const enabled = true) : i32
 
     result = input[0]
     ptr = @result
+    ref = *ptr
 
     return total
 end

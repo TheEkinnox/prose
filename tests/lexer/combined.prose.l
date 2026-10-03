@@ -58,7 +58,7 @@ LINE:COL  | TYPE             | VALUE
   14:9    | IDENTIFIER       | total
   14:15   | OP_ASSIGN_ADD    | +=
   14:18   | IDENTIFIER       | i
-  14:20   | OP_MUL           | *
+  14:20   | OP_STAR          | *
   14:22   | LIT_INTEGER      | 2
   14:23   | TERMINATOR       | \n
   16:9    | KW_IF            | if
@@ -89,8 +89,13 @@ LINE:COL  | TYPE             | VALUE
   24:11   | OP_ADDRESS_OF    | @
   24:12   | IDENTIFIER       | result
   24:18   | TERMINATOR       | \n
-  26:5    | KW_RETURN        | return
-  26:12   | IDENTIFIER       | total
-  26:17   | TERMINATOR       | \n
-  27:1    | KW_END           | end
-  27:4    | TOKEN_EOF        | 
+  25:5    | IDENTIFIER       | ref
+  25:9    | OP_ASSIGN        | =
+  25:11   | OP_STAR          | *
+  25:12   | IDENTIFIER       | ptr
+  25:15   | TERMINATOR       | \n
+  27:5    | KW_RETURN        | return
+  27:12   | IDENTIFIER       | total
+  27:17   | TERMINATOR       | \n
+  28:1    | KW_END           | end
+  28:4    | TOKEN_EOF        | 

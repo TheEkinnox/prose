@@ -8,7 +8,7 @@ LINE:COL  | TYPE             | VALUE
    2:5    | IDENTIFIER       | b
    2:6    | TERMINATOR       | \n
    3:1    | IDENTIFIER       | a
-   3:3    | OP_MUL           | *
+   3:3    | OP_STAR          | *
    3:5    | IDENTIFIER       | b
    3:6    | TERMINATOR       | \n
    4:1    | IDENTIFIER       | a
@@ -140,36 +140,39 @@ LINE:COL  | TYPE             | VALUE
   44:1    | OP_ADDRESS_OF    | @
   44:2    | IDENTIFIER       | a
   44:3    | TERMINATOR       | \n
-  46:1    | IDENTIFIER       | foo
-  46:4    | LPAREN           | (
-  46:5    | RPAREN           | )
-  46:6    | TERMINATOR       | \n
+  45:1    | OP_STAR          | *
+  45:2    | IDENTIFIER       | a
+  45:3    | TERMINATOR       | \n
   47:1    | IDENTIFIER       | foo
   47:4    | LPAREN           | (
-  47:5    | IDENTIFIER       | a
-  47:6    | COMMA            | ,
-  47:8    | IDENTIFIER       | b
-  47:9    | RPAREN           | )
-  47:10   | TERMINATOR       | \n
+  47:5    | RPAREN           | )
+  47:6    | TERMINATOR       | \n
   48:1    | IDENTIFIER       | foo
-  48:4    | DOT              | .
-  48:5    | IDENTIFIER       | bar
-  48:8    | TERMINATOR       | \n
-  50:1    | IDENTIFIER       | a
-  50:2    | COLON            | :
-  50:3    | IDENTIFIER       | b
-  50:4    | TERMINATOR       | \n
+  48:4    | LPAREN           | (
+  48:5    | IDENTIFIER       | a
+  48:6    | COMMA            | ,
+  48:8    | IDENTIFIER       | b
+  48:9    | RPAREN           | )
+  48:10   | TERMINATOR       | \n
+  49:1    | IDENTIFIER       | foo
+  49:4    | DOT              | .
+  49:5    | IDENTIFIER       | bar
+  49:8    | TERMINATOR       | \n
   51:1    | IDENTIFIER       | a
-  51:2    | TERMINATOR       | ;
+  51:2    | COLON            | :
   51:3    | IDENTIFIER       | b
   51:4    | TERMINATOR       | \n
-  52:1    | LBRACKET         | [
-  52:2    | IDENTIFIER       | a
-  52:3    | RBRACKET         | ]
+  52:1    | IDENTIFIER       | a
+  52:2    | TERMINATOR       | ;
+  52:3    | IDENTIFIER       | b
   52:4    | TERMINATOR       | \n
   53:1    | LBRACKET         | [
   53:2    | IDENTIFIER       | a
-  53:3    | COLON            | :
-  53:4    | IDENTIFIER       | b
-  53:5    | RBRACKET         | ]
-  53:6    | TOKEN_EOF        | 
+  53:3    | RBRACKET         | ]
+  53:4    | TERMINATOR       | \n
+  54:1    | LBRACKET         | [
+  54:2    | IDENTIFIER       | a
+  54:3    | COLON            | :
+  54:4    | IDENTIFIER       | b
+  54:5    | RBRACKET         | ]
+  54:6    | TOKEN_EOF        | 

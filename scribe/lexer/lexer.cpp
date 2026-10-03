@@ -244,7 +244,7 @@ static bool MakeToken(Token& out, const std::string_view value, const size_t lin
     else if (value == "-")
         type = TokenType::OP_MINUS;
     else if (value == "*")
-        type = TokenType::OP_MUL;
+        type = TokenType::OP_STAR;
     else if (value == "/")
         type = TokenType::OP_DIV;
     else if (value == "%")

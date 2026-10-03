@@ -60,7 +60,7 @@ enum class TokenType : uint8_t
 
     OP_PLUS,
     OP_MINUS,
-    OP_MUL,
+    OP_STAR,
     OP_DIV,
     OP_MOD,
     OP_INC,
@@ -131,6 +131,7 @@ inline bool IsUnaryOperator(const TokenType type)
     return type == TokenType::OP_INC
         || type == TokenType::OP_DEC
         || type == TokenType::OP_MINUS
+        || type == TokenType::OP_STAR
         || type == TokenType::OP_LOGICAL_NOT
         || type == TokenType::OP_BITWISE_NOT
         || type == TokenType::OP_ADDRESS_OF
