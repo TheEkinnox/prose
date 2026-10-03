@@ -36,7 +36,7 @@ Program
 |  |  Type: None
 |  |  Initializer:
 |  |  |  BinaryExpression
-|  |  |  |  Operator: OP_MUL
+|  |  |  |  Operator: OP_STAR
 |  |  |  |  Left:
 |  |  |  |  |  (3:5) LIT_INTEGER(2)
 |  |  |  |  |  |  Postfix: None
@@ -87,7 +87,7 @@ Program
 |  |  |  |  |  |  Postfix: None
 |  |  |  |  Right:
 |  |  |  |  |  BinaryExpression
-|  |  |  |  |  |  Operator: OP_MUL
+|  |  |  |  |  |  Operator: OP_STAR
 |  |  |  |  |  |  Left:
 |  |  |  |  |  |  |  (7:9) LIT_INTEGER(2)
 |  |  |  |  |  |  |  |  Postfix: None
@@ -106,7 +106,7 @@ Program
 |  |  |  |  Operator: OP_PLUS
 |  |  |  |  Left:
 |  |  |  |  |  BinaryExpression
-|  |  |  |  |  |  Operator: OP_MUL
+|  |  |  |  |  |  Operator: OP_STAR
 |  |  |  |  |  |  Left:
 |  |  |  |  |  |  |  (8:5) LIT_INTEGER(1)
 |  |  |  |  |  |  |  |  Postfix: None
@@ -147,7 +147,7 @@ Program
 |  |  Type: None
 |  |  Initializer:
 |  |  |  BinaryExpression
-|  |  |  |  Operator: OP_MUL
+|  |  |  |  Operator: OP_STAR
 |  |  |  |  Left:
 |  |  |  |  |  BinaryExpression
 |  |  |  |  |  |  Operator: OP_PLUS

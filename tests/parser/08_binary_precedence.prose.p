@@ -231,7 +231,7 @@ Program
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  Postfix: None
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  Right:
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  BinaryExpression
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  Operator: OP_MUL
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  Operator: OP_STAR
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  Left:
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  (19:14) IDENTIFIER(b)
 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  Postfix: None

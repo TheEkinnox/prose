@@ -32,7 +32,9 @@ Notes:
 
 ### More about pointers
 
-A pointer is a non-owning, nullable representation of the raw memory address of an object. It can be obtained using the `@` address-of operator (e.g. `x : u8* = @y`)
+A pointer is a non-owning, nullable representation of an object's raw memory address. It can be obtained using the `@` address-of operator (e.g. `x : u8* = @y`)
+
+A reference to the object pointed to by a pointer may be obtained using the `*` dereference operator (e.g. `z : u8& = *x`)
 
 Two pointers are considered equal if they are pointing to the same memory address
 
@@ -455,6 +457,7 @@ my_variable
 - `!x`: Logical not
 - `~x`: Bitwise not
 - `@x`: Address-of
+- `*x`: Dereference
 - `move x`: Move
 
 ### Binary operators

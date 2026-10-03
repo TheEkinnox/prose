@@ -42,6 +42,7 @@ a <<= b
 a >>= b
 
 @a
+*a
 
 foo()
 foo(a, b)
