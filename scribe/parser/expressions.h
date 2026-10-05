@@ -21,7 +21,7 @@ struct PostfixExpression : Expression
 
 struct LiteralExpression : PostfixExpression
 {
-    explicit LiteralExpression(Token p_token);
+    explicit LiteralExpression(const Token& p_token);
 
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };
@@ -29,6 +29,13 @@ struct LiteralExpression : PostfixExpression
 struct ArrayLiteralExpression : PostfixExpression
 {
     std::vector<std::unique_ptr<Expression>> elements;
+
+    std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
+};
+
+struct IdentifierExpression : PostfixExpression
+{
+    explicit IdentifierExpression(const Token& p_token);
 
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };

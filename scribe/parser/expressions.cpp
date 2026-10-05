@@ -24,10 +24,10 @@ std::ostream& PostfixExpression::PrintPostfix(std::ostream& os, ParserDepthT dep
     return os;
 }
 
-LiteralExpression::LiteralExpression(Token p_token)
+LiteralExpression::LiteralExpression(const Token& p_token)
 {
-    assert(IsLiteral(p_token.type) || p_token.type == TokenType::IDENTIFIER);
-    start = std::move(p_token);
+    assert(IsLiteral(p_token.type));
+    start = p_token;
 }
 
 std::ostream& LiteralExpression::Print(std::ostream& os, ParserDepthT depth) const
@@ -53,6 +53,18 @@ std::ostream& ArrayLiteralExpression::Print(std::ostream& os, ParserDepthT depth
     }
 
     return PrintPostfix(os << '\n', depth);
+}
+
+IdentifierExpression::IdentifierExpression(const Token& p_token)
+{
+    assert(p_token.type == TokenType::IDENTIFIER);
+    start = p_token;
+}
+
+std::ostream& IdentifierExpression::Print(std::ostream& os, ParserDepthT depth) const
+{
+    PrintAtDepth(os, depth++, start) << '\n';
+    return PrintPostfix(os, depth);
 }
 
 static std::ostream& PrintConstructionExpression_Internal(const ConstructionExpression& expression, std::ostream& os, ParserDepthT depth)
@@ -343,17 +355,19 @@ static bool ParseSizeofExpression(TokenStream& stream, std::unique_ptr<Expressio
     return true;
 }
 
-static bool RequireExpression(TokenStream& stream, std::unique_ptr<Expression>& out, BindingPower::ValueT minBindingPower);
-
 static ParseResult ParseExpression(TokenStream& stream, std::unique_ptr<Expression>& out, const BindingPower::ValueT minBindingPower)
 {
     out = nullptr;
     Token token = stream.Peek();
 
     std::unique_ptr<Expression> lhs;
-    if (stream.ConsumeIf(IsLiteral, token) || stream.ConsumeIf(TokenType::IDENTIFIER, token))
+    if (stream.ConsumeIf(IsLiteral, token))
     {
         lhs = std::make_unique<LiteralExpression>(token);
+    }
+    else if (stream.ConsumeIf(TokenType::IDENTIFIER, token))
+    {
+        lhs = std::make_unique<IdentifierExpression>(token);
     }
     else if (token.type == TokenType::LBRACKET)
     {
