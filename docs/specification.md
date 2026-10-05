@@ -2,8 +2,8 @@
 
 ## Built-In Types
 
-- `i8`/`i16`/`i32`/`i64`: 8, 16, 32 and 64 bit signed integer types respectively
-- `u8`/`u16`/`u32`/`u64`: 8, 16, 32 and 64 bit unsigned integer types respectively
+- `i8`/`i16`/`i32`/`i64`: 8, 16, 32, and 64 bit signed integer types respectively
+- `u8`/`u16`/`u32`/`u64`: 8, 16, 32, and 64 bit unsigned integer types respectively
 - `iptr`/`uptr`: Signed and unsigned integer types large enough to hold a pointer.
 - `byte`: single-byte unsigned integer type (alias for `u8`)
 - `f32`/`f64`: 32 and 64 bit floating-point types respectively
@@ -194,7 +194,7 @@ A type is movable if and only if all its members are movable
 
 A type composed of both copy-only and move-only members is ill-formed
 
-A copyable type may be copied using normal assignment or argument passing
+A copyable type may be copied via normal assignment or argument passing
 
 A movable type may be transferred using `move`
 
@@ -221,7 +221,7 @@ d : i32     // Default initialized to 0
 
 ### Mutability
 
-By default, a variable is mutable. To make it constant (i.e. prevent future assignments), add the `const` keyword before it's declaration.
+By default, a variable is mutable. To make it constant (i.e. prevent future assignments), add the `const` keyword before its declaration.
 
 ```
 const x = 16
@@ -599,7 +599,7 @@ Expressions are parsed according to the following precedence rules, from highest
 
 Notes:
 - Expressions with equivalent precedence are left-associative, with the sole exception of assignment expressions, which are right-associative.
-- Function calls, indexing, member access and other postfix expressions have the highest precedence.
+- Function calls, indexing, member access, and other postfix expressions have the highest precedence.
 - Parenthesized expressions override the normal precedence rules by explicitly defining the grouping of an expression.
 
 ## Statements
@@ -967,7 +967,7 @@ end
 
 ### scope
 
-Functions, loops, conditionals and other block constructs create a scope.
+Functions, loops, conditionals, and other block constructs create a scope.
 
 A scope is a black box whose content is only visible from the scope itself and its nested scopes.
 
@@ -1104,7 +1104,7 @@ For arrays and slices, byte compatibility is determined using the target element
 
 For pointers, byte compatibility is determined using the target pointed-to type and the storage accessed through the pointer.
 
-Representation casts are only valid for pointers, arrays and slices. Performing a representation cast on a reference is ill-formed.
+Representation casts are only valid for pointers, arrays, and slices. Performing a representation cast on a reference is ill-formed.
 
 Casts between scalar numeric types follow the value-conversion rules described in the `Casting` section. They are not representation casts.
 
@@ -1157,7 +1157,7 @@ A type is fixed if it fits one of these categories:
 Dynamic arrays and non-literal strings are not fixed because they may own separately allocated storage whose size is determined at runtime.
 
 Notes:
-- The compiler is free to place fixed-size values in registers, stack storage or globals depending on the context
+- The compiler is free to place fixed-size values in registers, stack storage, or globals depending on the context
 - A fixed value normally has a scope-bound lifetime. Copying it creates a distinct value with its own lifetime, while moving it transfers the value according to the move semantics defined in the `Memory Model` section
 
 ### Dynamic allocation
