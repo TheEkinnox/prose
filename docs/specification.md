@@ -209,13 +209,14 @@ The full variable declaration syntax is `<var_name> [: <type>] [= <value>]`. How
 Notes:
 - A variable declaration must specify a type, an initializer, or both
 - If a typed variable is declared without an initializer, it is implicitly initialized with the type's default value
-- If the left-hand identifier of an assignment does not exist in the current scope, the assignment is treated as an inferred variable declaration
+- If the left-hand identifier of an assignment is not visible in the current scope, the assignment is treated as an inferred variable declaration
 
 Ex:
 ```
-x = 255 // Defaults to i32
-y : u8 = 255
-z = u8(255)
+a : u8 = 255
+b = u8(255) // Equivalent to a
+c = 255     // Defaults to i32
+d : i32     // Default initialized to 0
 ```
 
 ### Mutability
