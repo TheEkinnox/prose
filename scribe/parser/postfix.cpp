@@ -19,11 +19,11 @@ std::ostream& Postfix::Print(std::ostream& os, const ParserDepthT depth) const
     return PrintAtDepth(os, depth, magic_enum::enum_name(type));
 }
 
-Call::Call() : Postfix(PostfixType::Call)
+CallPostfix::CallPostfix() : Postfix(PostfixType::Call)
 {
 }
 
-std::ostream& Call::Print(std::ostream& os, ParserDepthT depth) const
+std::ostream& CallPostfix::Print(std::ostream& os, ParserDepthT depth) const
 {
     Postfix::Print(os, depth++) << '\n';
     PrintAtDepth(os, depth, "Arguments:");
@@ -37,22 +37,22 @@ std::ostream& Call::Print(std::ostream& os, ParserDepthT depth) const
     return os;
 }
 
-Index::Index(std::unique_ptr<Expression>&& p_index) : Postfix(PostfixType::Index), index(std::move(p_index))
+IndexPostfix::IndexPostfix(std::unique_ptr<Expression>&& p_index) : Postfix(PostfixType::Index), index(std::move(p_index))
 {
 }
 
-std::ostream& Index::Print(std::ostream& os, ParserDepthT depth) const
+std::ostream& IndexPostfix::Print(std::ostream& os, ParserDepthT depth) const
 {
     Postfix::Print(os, depth++) << '\n';
     return index->Print(os, depth);
 }
 
-Slice::Slice(std::unique_ptr<Expression>&& p_start, std::unique_ptr<Expression>&& p_end)
+SlicePostfix::SlicePostfix(std::unique_ptr<Expression>&& p_start, std::unique_ptr<Expression>&& p_end)
     : Postfix(PostfixType::Slice), start(std::move(p_start)), end(std::move(p_end))
 {
 }
 
-std::ostream& Slice::Print(std::ostream& os, ParserDepthT depth) const
+std::ostream& SlicePostfix::Print(std::ostream& os, ParserDepthT depth) const
 {
     Postfix::Print(os, depth++) << '\n';
     PrintAtDepth(os, depth, "Start:");
@@ -70,11 +70,11 @@ std::ostream& Slice::Print(std::ostream& os, ParserDepthT depth) const
     return os;
 }
 
-MemberAccess::MemberAccess(Token p_member) : Postfix(PostfixType::MemberAccess), member(std::move(p_member))
+MemberAccessPostfix::MemberAccessPostfix(Token p_member) : Postfix(PostfixType::MemberAccess), member(std::move(p_member))
 {
 }
 
-std::ostream& MemberAccess::Print(std::ostream& os, ParserDepthT depth) const
+std::ostream& MemberAccessPostfix::Print(std::ostream& os, ParserDepthT depth) const
 {
     Postfix::Print(os, depth++) << '\n';
     return PrintAtDepth(os, depth, "Member: '") << member.value << '\'';
@@ -88,7 +88,7 @@ bool ParseCallPostfix(TokenStream& stream, std::unique_ptr<Postfix>& out)
     if (!stream.Expect(TokenType::LPAREN, token))
         return false;
 
-    Call call;
+    CallPostfix call;
     token = stream.Peek();
 
     bool isFirst = true;
@@ -106,7 +106,7 @@ bool ParseCallPostfix(TokenStream& stream, std::unique_ptr<Postfix>& out)
         isFirst = false;
     }
 
-    out = std::make_unique<Call>(std::move(call));
+    out = std::make_unique<CallPostfix>(std::move(call));
     return stream.Expect(TokenType::RPAREN, token);
 }
 
@@ -131,11 +131,11 @@ static bool ParseIndexOrSlicePostfix(TokenStream& stream, std::unique_ptr<Postfi
         if (token.type != TokenType::RBRACKET && !RequireExpression(stream, last))
             return false;
 
-        out = std::make_unique<Slice>(std::move(indexOrFirst), std::move(last));
+        out = std::make_unique<SlicePostfix>(std::move(indexOrFirst), std::move(last));
     }
     else
     {
-        out = std::make_unique<Index>(std::move(indexOrFirst));
+        out = std::make_unique<IndexPostfix>(std::move(indexOrFirst));
     }
 
     return stream.Expect(TokenType::RBRACKET, token);
@@ -152,7 +152,7 @@ static bool ParseMemberAccessPostfix(TokenStream& stream, std::unique_ptr<Postfi
     if (!stream.Expect(TokenType::IDENTIFIER, token))
         return false;
 
-    out = std::make_unique<MemberAccess>(std::move(token));
+    out = std::make_unique<MemberAccessPostfix>(std::move(token));
     return true;
 }
 

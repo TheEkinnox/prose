@@ -27,38 +27,38 @@ struct Postfix
     virtual std::ostream& Print(std::ostream& os, ParserDepthT depth) const;
 };
 
-struct Call : Postfix
+struct CallPostfix : Postfix
 {
     std::vector<std::unique_ptr<Expression>> arguments;
 
-    Call();
+    CallPostfix();
 
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };
 
-struct Index : Postfix
+struct IndexPostfix : Postfix
 {
     std::unique_ptr<Expression> index;
 
-    explicit Index(std::unique_ptr<Expression>&& p_index);
+    explicit IndexPostfix(std::unique_ptr<Expression>&& p_index);
 
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };
 
-struct Slice : Postfix
+struct SlicePostfix : Postfix
 {
     std::unique_ptr<Expression> start, end;
 
-    explicit Slice(std::unique_ptr<Expression>&& p_start, std::unique_ptr<Expression>&& p_end);
+    explicit SlicePostfix(std::unique_ptr<Expression>&& p_start, std::unique_ptr<Expression>&& p_end);
 
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };
 
-struct MemberAccess : Postfix
+struct MemberAccessPostfix : Postfix
 {
     Token member;
 
-    explicit MemberAccess(Token p_member);
+    explicit MemberAccessPostfix(Token p_member);
 
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };

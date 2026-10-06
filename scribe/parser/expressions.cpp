@@ -287,7 +287,7 @@ static bool ParseConstructionExpression(TokenStream& stream, std::unique_ptr<Exp
     if ((modifiers.empty() || !IsArrayModifier(modifiers.back()->type)) && !ParseCallPostfix(stream, call))
         return false;
 
-    if (const auto callPtr = dynamic_cast<Call*>(call.get()))
+    if (const auto callPtr = dynamic_cast<CallPostfix*>(call.get()))
     {
         construct.arguments = std::move(callPtr->arguments);
     }
