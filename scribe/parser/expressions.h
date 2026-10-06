@@ -21,6 +21,8 @@ struct PostfixExpression : Expression
 
 struct LiteralExpression : PostfixExpression
 {
+    T_STATEMENT(LiteralExpression)
+
     explicit LiteralExpression(const Token& p_token);
 
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
@@ -28,6 +30,8 @@ struct LiteralExpression : PostfixExpression
 
 struct ArrayLiteralExpression : PostfixExpression
 {
+    T_STATEMENT(ArrayLiteralExpression)
+
     std::vector<std::unique_ptr<Expression>> elements;
 
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
@@ -35,6 +39,8 @@ struct ArrayLiteralExpression : PostfixExpression
 
 struct IdentifierExpression : PostfixExpression
 {
+    T_STATEMENT(IdentifierExpression)
+
     explicit IdentifierExpression(const Token& p_token);
 
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
@@ -42,6 +48,8 @@ struct IdentifierExpression : PostfixExpression
 
 struct ConstructionExpression : PostfixExpression
 {
+    T_STATEMENT(ConstructionExpression)
+
     Type type;
     std::vector<std::unique_ptr<Expression>> arguments;
 
@@ -50,6 +58,8 @@ struct ConstructionExpression : PostfixExpression
 
 struct UnaryExpression : PostfixExpression
 {
+    T_STATEMENT(UnaryExpression)
+
     std::unique_ptr<Expression> operand;
 
     explicit UnaryExpression(Token p_op, std::unique_ptr<Expression>&& p_operand);
@@ -59,6 +69,8 @@ struct UnaryExpression : PostfixExpression
 
 struct BinaryExpression : PostfixExpression
 {
+    T_STATEMENT(BinaryExpression)
+
     Token op;
     std::unique_ptr<Expression> left, right;
 
@@ -69,6 +81,8 @@ struct BinaryExpression : PostfixExpression
 
 struct MakeExpression : Expression
 {
+    T_STATEMENT(MakeExpression)
+
     ConstructionExpression construction;
 
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
@@ -76,6 +90,8 @@ struct MakeExpression : Expression
 
 struct SizeOfExpression : Expression
 {
+    T_STATEMENT(SizeOfExpression)
+
     std::variant<Type, std::unique_ptr<Expression>> type;
 
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;

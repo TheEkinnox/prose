@@ -38,7 +38,7 @@ std::ostream& LiteralExpression::Print(std::ostream& os, ParserDepthT depth) con
 
 std::ostream& ArrayLiteralExpression::Print(std::ostream& os, ParserDepthT depth) const
 {
-    PrintAtDepth(os, depth++, "ArrayLiteralExpression") << '\n';
+    PrintType(os, depth++) << '\n';
     PrintStart(os, depth) << '\n';
     PrintAtDepth(os, depth, "Elements:");
 
@@ -69,7 +69,7 @@ std::ostream& IdentifierExpression::Print(std::ostream& os, ParserDepthT depth) 
 
 static std::ostream& PrintConstructionExpression_Internal(const ConstructionExpression& expression, std::ostream& os, ParserDepthT depth)
 {
-    PrintAtDepth(os, depth, "Type:") << '\n';
+    PrintAtDepth(os, depth, "Type:\n");
     expression.type.Print(os, depth + 1) << '\n';
     PrintAtDepth(os, depth, "Arguments:");
 
@@ -84,7 +84,7 @@ static std::ostream& PrintConstructionExpression_Internal(const ConstructionExpr
 
 std::ostream& ConstructionExpression::Print(std::ostream& os, ParserDepthT depth) const
 {
-    PrintAtDepth(os, depth++, "ConstructionExpression") << '\n';
+    PrintType(os, depth++) << '\n';
     PrintStart(os, depth) << '\n';
     PrintConstructionExpression_Internal(*this, os, depth) << '\n';
     return PrintPostfix(os, depth);
@@ -98,7 +98,7 @@ UnaryExpression::UnaryExpression(Token p_op, std::unique_ptr<Expression>&& p_ope
 
 std::ostream& UnaryExpression::Print(std::ostream& os, ParserDepthT depth) const
 {
-    PrintAtDepth(os, depth++, "UnaryExpression") << '\n';
+    PrintType(os, depth++) << '\n';
     PrintAtDepth(os, depth, "Operator: ") << start << '\n';
     PrintAtDepth(os, depth, "Operand:") << '\n';
     operand->Print(os, depth + 1) << '\n';
@@ -114,7 +114,7 @@ BinaryExpression::BinaryExpression(Token p_op, std::unique_ptr<Expression>&& p_l
 
 std::ostream& BinaryExpression::Print(std::ostream& os, ParserDepthT depth) const
 {
-    PrintAtDepth(os, depth++, "BinaryExpression") << '\n';
+    PrintType(os, depth++) << '\n';
     PrintAtDepth(os, depth, "Operator: ") << magic_enum::enum_name(op.type) << '\n';
     PrintAtDepth(os, depth, "Left:") << '\n';
     left->Print(os, depth + 1) << '\n';
@@ -125,14 +125,14 @@ std::ostream& BinaryExpression::Print(std::ostream& os, ParserDepthT depth) cons
 
 std::ostream& MakeExpression::Print(std::ostream& os, ParserDepthT depth) const
 {
-    PrintAtDepth(os, depth++, "MakeExpression") << '\n';
+    PrintType(os, depth++) << '\n';
     PrintStart(os, depth) << '\n';
     return PrintConstructionExpression_Internal(construction, os, depth);
 }
 
 std::ostream& SizeOfExpression::Print(std::ostream& os, ParserDepthT depth) const
 {
-    PrintAtDepth(os, depth++, "SizeOfExpression") << '\n';
+    PrintType(os, depth++) << '\n';
     PrintStart(os, depth) << '\n';
 
     if (const Type* typePtr = std::get_if<Type>(&type))
@@ -258,7 +258,7 @@ static bool ParseUnaryExpression(TokenStream& stream, std::unique_ptr<Expression
         return false;
 
     std::unique_ptr<Expression> operand;
-    if (!RequireExpression(stream, operand, FLT_MAX) )
+    if (!RequireExpression(stream, operand, FLT_MAX))
         return false;
 
     out = std::make_unique<UnaryExpression>(token, std::move(operand));

@@ -14,7 +14,7 @@ std::ostream& Declaration::PrintName(std::ostream& os, const ParserDepthT depth)
 
 std::ostream& VariableDeclaration::Print(std::ostream& os, ParserDepthT depth) const
 {
-    PrintAtDepth(os, depth++, "VariableDeclaration") << '\n';
+    PrintType(os,  depth++) << '\n';
     PrintStart(os, depth) << '\n';
     PrintAtDepth(os, depth, "IsConst: ") << (isConst ? "true" : "false") << '\n';
     PrintName(os, depth) << '\n';
@@ -36,7 +36,7 @@ std::ostream& VariableDeclaration::Print(std::ostream& os, ParserDepthT depth) c
 
 std::ostream& FunctionDeclaration::Print(std::ostream& os, ParserDepthT depth) const
 {
-    PrintAtDepth(os, depth++, "FunctionDeclaration") << '\n';
+    PrintType(os, depth++) << '\n';
     PrintStart(os, depth) << '\n';
     PrintName(os, depth) << '\n';
 
@@ -63,7 +63,7 @@ std::ostream& FunctionDeclaration::Print(std::ostream& os, ParserDepthT depth) c
 
 std::ostream& TypeDeclaration::Print(std::ostream& os, ParserDepthT depth) const
 {
-    PrintAtDepth(os, depth++, "TypeDeclaration") << '\n';
+    PrintType(os,  depth++) << '\n';
     PrintStart(os, depth) << '\n';
     PrintName(os, depth) << '\n';
     PrintAtDepth(os, depth, "Members:");
@@ -92,7 +92,7 @@ std::ostream& EnumElement::Print(std::ostream& os, const ParserDepthT depth) con
 
 std::ostream& EnumDeclaration::Print(std::ostream& os, ParserDepthT depth) const
 {
-    PrintAtDepth(os, depth++, "EnumDeclaration") << '\n';
+    PrintType(os,  depth++) << '\n';
     PrintStart(os, depth) << '\n';
     PrintName(os, depth) << '\n';
     PrintAtDepth(os, depth, "Type:");
@@ -112,7 +112,7 @@ std::ostream& EnumDeclaration::Print(std::ostream& os, ParserDepthT depth) const
 
 std::ostream& AliasDeclaration::Print(std::ostream& os, ParserDepthT depth) const
 {
-    PrintAtDepth(os, depth++, "AliasDeclaration") << '\n';
+    PrintType(os,  depth++) << '\n';
     PrintStart(os, depth) << '\n';
     PrintName(os, depth) << '\n';
     PrintAtDepth(os, depth, "Type:\n");

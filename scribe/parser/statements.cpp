@@ -7,8 +7,8 @@
 #include "parser/parser.h"
 #include "parser/token_stream.h"
 
-#include "utility/strings.h"
 #include "utility/memory.h"
+#include "utility/strings.h"
 
 #include <cassert>
 #include <utility>
@@ -17,7 +17,12 @@ NO_WARNINGS_PUSH
 #include <magic_enum/magic_enum.hpp>
 NO_WARNINGS_POP
 
-std::ostream& Statement::PrintStart(std::ostream& os, ParserDepthT depth) const
+std::ostream& Statement::PrintType(std::ostream& os, const ParserDepthT depth) const
+{
+    return PrintAtDepth(os, depth, magic_enum::enum_name(GetType()));
+}
+
+std::ostream& Statement::PrintStart(std::ostream& os, const ParserDepthT depth) const
 {
     return PrintAtDepth(os, depth, "Start: ") << start;
 }
@@ -75,19 +80,19 @@ std::ostream& IfStatement::Print(std::ostream& os, ParserDepthT depth) const
 
 std::ostream& WhileStatement::Print(std::ostream& os, ParserDepthT depth) const
 {
-    PrintAtDepth(os, depth++, "WhileStatement") << '\n';
+    PrintType(os, depth++) << '\n';
     return ConditionalBlock::Print(os, depth);
 }
 
 std::ostream& RepeatStatement::Print(std::ostream& os, ParserDepthT depth) const
 {
-    PrintAtDepth(os, depth++, "RepeatStatement") << '\n';
+    PrintType(os, depth++) << '\n';
     return ConditionalBlock::Print(os, depth);
 }
 
 std::ostream& ForStatement::Print(std::ostream& os, ParserDepthT depth) const
 {
-    PrintAtDepth(os, depth++, "ForStatement") << '\n';
+    PrintType(os, depth++) << '\n';
     PrintStart(os, depth) << '\n';
     PrintAtDepth(os, depth, "Iterator:") << '\n';
     PrintAtDepth(os, depth + 1, "Name: ") << iterator.value << '\n';
@@ -106,7 +111,7 @@ std::ostream& SwitchCase::Print(std::ostream& os, ParserDepthT depth) const
 
 std::ostream& SwitchStatement::Print(std::ostream& os, ParserDepthT depth) const
 {
-    PrintAtDepth(os, depth++, "SwitchStatement") << '\n';
+    PrintType(os, depth++) << '\n';
     PrintStart(os, depth) << '\n';
     PrintAtDepth(os, depth, "Expression:") << '\n';
     expression->Print(os, depth + 1) << '\n';
@@ -137,6 +142,22 @@ static bool IsControlStatement(const TokenType t)
 }
 #endif
 
+StatementType ControlStatement::GetType() const
+{
+    switch (start.type)
+    {
+    case TokenType::KW_RETURN:
+        return StatementType::ReturnStatement;
+    case TokenType::KW_BREAK:
+        return StatementType::BreakStatement;
+    case TokenType::KW_CONTINUE:
+        return StatementType::ContinueStatement;
+    default:
+        assert(false);
+        return StatementType::INTERNAL;
+    }
+}
+
 ControlStatement::ControlStatement(const Token& p_start)
 {
     assert(IsControlStatement(p_start.type));
@@ -166,7 +187,7 @@ std::ostream& ReturnStatement::Print(std::ostream& os, ParserDepthT depth) const
 
 std::ostream& DeferStatement::Print(std::ostream& os, ParserDepthT depth) const
 {
-    PrintAtDepth(os, depth++, "DeferStatement") << '\n';
+    PrintType(os, depth++) << '\n';
     PrintStart(os, depth) << '\n';
     PrintAtDepth(os, depth, "Call:") << '\n';
     return call->Print(os, depth + 1);
@@ -174,7 +195,7 @@ std::ostream& DeferStatement::Print(std::ostream& os, ParserDepthT depth) const
 
 std::ostream& ScopeStatement::Print(std::ostream& os, ParserDepthT depth) const
 {
-    PrintAtDepth(os, depth++, "ScopeStatement") << '\n';
+    PrintType(os, depth++) << '\n';
     return NamedBlock::Print(os, depth);
 }
 
@@ -429,7 +450,7 @@ static bool ParseReturnStatement(TokenStream& stream, std::unique_ptr<Statement>
     if (!stream.Expect(TokenType::KW_RETURN, token))
         return false;
 
-    ReturnStatement statement{token};
+    ReturnStatement statement{ token };
     if (ParseExpression(stream, statement.value) == ParseResult::Failure)
         return false;
 

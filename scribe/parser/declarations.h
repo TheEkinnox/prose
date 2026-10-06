@@ -18,6 +18,8 @@ struct Declaration : Statement
 
 struct VariableDeclaration : Declaration
 {
+    T_STATEMENT(VariableDeclaration)
+
     std::optional<Type> type;
     std::unique_ptr<Expression> initializer;
     bool isConst;
@@ -27,6 +29,8 @@ struct VariableDeclaration : Declaration
 
 struct FunctionDeclaration : Declaration
 {
+    T_STATEMENT(FunctionDeclaration)
+
     std::optional<Type> type;
     std::vector<VariableDeclaration> parameters;
     Block body;
@@ -36,6 +40,8 @@ struct FunctionDeclaration : Declaration
 
 struct TypeDeclaration : Declaration
 {
+    T_STATEMENT(TypeDeclaration)
+
     std::vector<VariableDeclaration> members;
 
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
@@ -51,6 +57,8 @@ struct EnumElement
 
 struct EnumDeclaration : Declaration
 {
+    T_STATEMENT(EnumDeclaration)
+
     std::optional<Type> type;
     std::vector<EnumElement> elements;
 
@@ -59,6 +67,8 @@ struct EnumDeclaration : Declaration
 
 struct AliasDeclaration : Declaration
 {
+    T_STATEMENT(AliasDeclaration)
+
     Type type;
 
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
