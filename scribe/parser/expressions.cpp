@@ -100,7 +100,7 @@ std::ostream& UnaryExpression::Print(std::ostream& os, ParserDepthT depth) const
 {
     PrintType(os, depth++) << '\n';
     PrintAtDepth(os, depth, "Operator: ") << start << '\n';
-    PrintAtDepth(os, depth, "Operand:") << '\n';
+    PrintAtDepth(os, depth, "Operand:\n");
     operand->Print(os, depth + 1) << '\n';
     return PrintPostfix(os, depth);
 }
@@ -116,9 +116,9 @@ std::ostream& BinaryExpression::Print(std::ostream& os, ParserDepthT depth) cons
 {
     PrintType(os, depth++) << '\n';
     PrintAtDepth(os, depth, "Operator: ") << magic_enum::enum_name(op.type) << '\n';
-    PrintAtDepth(os, depth, "Left:") << '\n';
+    PrintAtDepth(os, depth, "Left:\n");
     left->Print(os, depth + 1) << '\n';
-    PrintAtDepth(os, depth, "Right:") << '\n';
+    PrintAtDepth(os, depth, "Right:\n");
     right->Print(os, depth + 1) << '\n';
     return PrintPostfix(os, depth);
 }
@@ -137,11 +137,11 @@ std::ostream& SizeOfExpression::Print(std::ostream& os, ParserDepthT depth) cons
 
     if (const Type* typePtr = std::get_if<Type>(&type))
     {
-        PrintAtDepth(os, depth, "Type:") << '\n';
+        PrintAtDepth(os, depth, "Type:\n");
         return typePtr->Print(os, depth + 1);
     }
 
-    PrintAtDepth(os, depth, "Value:") << '\n';
+    PrintAtDepth(os, depth, "Value:\n");
     return std::get<std::unique_ptr<Expression>>(type)->Print(os, depth + 1);
 }
 

@@ -41,23 +41,23 @@ std::ostream& Block::Print(std::ostream& os, const ParserDepthT depth) const
 std::ostream& NamedBlock::Print(std::ostream& os, const ParserDepthT depth) const
 {
     PrintStart(os, depth) << '\n';
-    PrintAtDepth(os, depth, "Body:") << '\n';
+    PrintAtDepth(os, depth, "Body:\n");
     return body.Print(os, depth + 1);
 }
 
 std::ostream& ConditionalBlock::Print(std::ostream& os, const ParserDepthT depth) const
 {
     PrintStart(os, depth) << '\n';
-    PrintAtDepth(os, depth, "Condition:") << '\n';
+    PrintAtDepth(os, depth, "Condition:\n");
     condition->Print(os, depth + 1) << '\n';
-    PrintAtDepth(os, depth, "Body:") << '\n';
+    PrintAtDepth(os, depth, "Body:\n");
     return body.Print(os, depth + 1);
 }
 
 std::ostream& IfStatement::Print(std::ostream& os, ParserDepthT depth) const
 {
-    PrintAtDepth(os, depth++, "IfStatement") << '\n';
-    PrintAtDepth(os, depth, "Main branch:") << '\n';
+    PrintAtDepth(os, depth++, "IfStatement\n");
+    PrintAtDepth(os, depth, "Main branch:\n");
     mainBranch.Print(os, depth + 1) << '\n';
 
     PrintAtDepth(os, depth, "Conditional branches:");
@@ -94,12 +94,12 @@ std::ostream& ForStatement::Print(std::ostream& os, ParserDepthT depth) const
 {
     PrintType(os, depth++) << '\n';
     PrintStart(os, depth) << '\n';
-    PrintAtDepth(os, depth, "Iterator:") << '\n';
+    PrintAtDepth(os, depth, "Iterator:\n");
     PrintAtDepth(os, depth + 1, "Name: ") << iterator.value << '\n';
     PrintAtDepth(os, depth + 1, "Is Ref: ") << (isRef ? "true" : "false") << '\n';
-    PrintAtDepth(os, depth, "Range:") << '\n';
+    PrintAtDepth(os, depth, "Range:\n");
     range->Print(os, depth + 1) << '\n';
-    PrintAtDepth(os, depth, "Body:") << '\n';
+    PrintAtDepth(os, depth, "Body:\n");
     return body.Print(os, depth + 1);
 }
 
@@ -113,7 +113,7 @@ std::ostream& SwitchStatement::Print(std::ostream& os, ParserDepthT depth) const
 {
     PrintType(os, depth++) << '\n';
     PrintStart(os, depth) << '\n';
-    PrintAtDepth(os, depth, "Expression:") << '\n';
+    PrintAtDepth(os, depth, "Expression:\n");
     expression->Print(os, depth + 1) << '\n';
     if (!cases.empty())
     {
@@ -125,7 +125,7 @@ std::ostream& SwitchStatement::Print(std::ostream& os, ParserDepthT depth) const
     }
     else
     {
-        PrintAtDepth(os, depth, "Cases: None") << '\n';
+        PrintAtDepth(os, depth, "Cases: None\n");
     }
 
     PrintAtDepth(os, depth, "Default:");
@@ -166,7 +166,7 @@ ControlStatement::ControlStatement(const Token& p_start)
 
 std::ostream& ControlStatement::Print(std::ostream& os, ParserDepthT depth) const
 {
-    PrintAtDepth(os, depth++, "ControlStatement") << '\n';
+    PrintAtDepth(os, depth++, "ControlStatement\n");
     return PrintAtDepth(os, depth, "Type: ") << start;
 }
 
@@ -189,7 +189,7 @@ std::ostream& DeferStatement::Print(std::ostream& os, ParserDepthT depth) const
 {
     PrintType(os, depth++) << '\n';
     PrintStart(os, depth) << '\n';
-    PrintAtDepth(os, depth, "Call:") << '\n';
+    PrintAtDepth(os, depth, "Call:\n");
     return call->Print(os, depth + 1);
 }
 

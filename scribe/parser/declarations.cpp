@@ -57,7 +57,7 @@ std::ostream& FunctionDeclaration::Print(std::ostream& os, ParserDepthT depth) c
         os << " None";
     }
 
-    PrintAtDepth(os << '\n', depth, "Body:") << '\n';
+    PrintAtDepth(os << '\n', depth, "Body:\n");
     return body.Print(os, depth + 1);
 }
 
