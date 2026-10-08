@@ -105,28 +105,28 @@ enum class TokenType : uint8_t
     TOKEN_EOF
 };
 
-inline bool IsBuiltInType(const TokenType type)
+constexpr bool IsBuiltInType(const TokenType type)
 {
     return magic_enum::enum_name(type).starts_with("T_");
 }
 
-inline bool IsLiteral(const TokenType type)
+constexpr bool IsLiteral(const TokenType type)
 {
     return magic_enum::enum_name(type).starts_with("LIT_")
         || type == TokenType::KW_NULL || type == TokenType::KW_TRUE || type == TokenType::KW_FALSE;
 }
 
-inline bool IsOperator(const TokenType type)
+constexpr bool IsOperator(const TokenType type)
 {
     return magic_enum::enum_name(type).starts_with("OP_") || type == TokenType::KW_MOVE;
 }
 
-inline bool IsAssignmentOperator(const TokenType type)
+constexpr bool IsAssignmentOperator(const TokenType type)
 {
     return magic_enum::enum_name(type).starts_with("OP_ASSIGN");
 }
 
-inline bool IsUnaryOperator(const TokenType type)
+constexpr bool IsUnaryOperator(const TokenType type)
 {
     return type == TokenType::OP_INC
         || type == TokenType::OP_DEC
@@ -138,12 +138,12 @@ inline bool IsUnaryOperator(const TokenType type)
         || type == TokenType::KW_MOVE;
 }
 
-inline bool IsTerminatorOrEOF(const TokenType type)
+constexpr bool IsTerminatorOrEOF(const TokenType type)
 {
     return type == TokenType::TERMINATOR || type == TokenType::TOKEN_EOF;
 }
 
-inline bool IsSeparator(const TokenType type)
+constexpr bool IsSeparator(const TokenType type)
 {
     return IsTerminatorOrEOF(type) || type == TokenType::KW_END;
 }
