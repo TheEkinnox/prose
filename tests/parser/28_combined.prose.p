@@ -8,9 +8,7 @@ Program
 |  EnumDeclaration
 |  |  Start: (3:1) KW_ENUM(enum)
 |  |  Name: 'State'
-|  |  Type:
-|  |  |  Base: u8
-|  |  |  Modifiers: None
+|  |  Type: u8
 |  |  Element 0
 |  |  |  Name: Idle
 |  |  |  Initializer: None

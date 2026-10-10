@@ -95,11 +95,11 @@ std::ostream& EnumDeclaration::Print(std::ostream& os, ParserDepthT depth) const
     PrintType(os,  depth++) << '\n';
     PrintStart(os, depth) << '\n';
     PrintName(os, depth) << '\n';
-    PrintAtDepth(os, depth, "Type:");
+    PrintAtDepth(os, depth, "Type: ");
     if (type)
-        type->Print(os << '\n', depth + 1);
+        os << type.GetValueString();
     else
-        os << " None";
+        os << "None";
 
     for (size_t i = 0; i < elements.size(); ++i)
     {
@@ -300,11 +300,12 @@ static bool ParseEnumDeclaration(TokenStream& stream, std::unique_ptr<Declaratio
     Token token;
     if (stream.ConsumeIf(TokenType::COLON, token))
     {
-        Type type{};
-        if (!ParseType(stream, type))
+        Token type;
+        const auto checkFunc = [](const TokenType t) { return t == TokenType::IDENTIFIER || IsNumericType(t); };
+        if (!stream.Expect(checkFunc, type, "Expected identifier or built-in numeric type"))
             return false;
 
-        declaration.type = std::move(type);
+        declaration.type = type;
     }
 
     if (!stream.Expect(TokenType::TERMINATOR, token))

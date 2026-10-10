@@ -110,6 +110,15 @@ constexpr bool IsBuiltInType(const TokenType type)
     return magic_enum::enum_name(type).starts_with("T_");
 }
 
+constexpr bool IsNumericType(const TokenType type)
+{
+    return type == TokenType::T_BYTE
+        || type == TokenType::T_BOOL
+        || magic_enum::enum_name(type).starts_with("T_I")
+        || magic_enum::enum_name(type).starts_with("T_U")
+        || magic_enum::enum_name(type).starts_with("T_F");
+}
+
 constexpr bool IsLiteral(const TokenType type)
 {
     return magic_enum::enum_name(type).starts_with("LIT_")

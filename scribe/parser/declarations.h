@@ -59,7 +59,7 @@ struct EnumDeclaration : Declaration
 {
     T_STATEMENT(EnumDeclaration)
 
-    std::optional<Type> type;
+    Token type;
     std::vector<EnumElement> elements;
 
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;

@@ -15,9 +15,7 @@ Program
 |  EnumDeclaration
 |  |  Start: (7:1) KW_ENUM(enum)
 |  |  Name: 'ExplicitType'
-|  |  Type:
-|  |  |  Base: u8
-|  |  |  Modifiers: None
+|  |  Type: u8
 |  |  Element 0
 |  |  |  Name: A
 |  |  |  Initializer: None
@@ -49,9 +47,7 @@ Program
 |  EnumDeclaration
 |  |  Start: (19:1) KW_ENUM(enum)
 |  |  Name: 'ExplicitTypeAndValues'
-|  |  Type:
-|  |  |  Base: u64
-|  |  |  Modifiers: None
+|  |  Type: u64
 |  |  Element 0
 |  |  |  Name: A
 |  |  |  Initializer:
