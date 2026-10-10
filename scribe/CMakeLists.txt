@@ -11,13 +11,14 @@ else()
             -Wno-reserved-macro-identifier
             -Wno-c++98-compat -Wno-c++98-compat-pedantic
             -Wno-switch-enum
+            -Wno-switch-default
             -Wno-gnu-zero-variadic-macro-arguments
             -Wno-unsafe-buffer-usage
             -Wno-unknown-pragmas
             -Wno-padded
     )
 
-    add_compile_options(-Wall -Wextra -Wpedantic -Werror ${IGNORED_WARNINGS})
+    add_compile_options(-Wall -Wextra -Wpedantic -Wswitch -Werror ${IGNORED_WARNINGS})
 endif()
 
 # Add source files
