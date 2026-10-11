@@ -47,12 +47,13 @@ struct TypeDeclaration : Declaration
     std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };
 
-struct EnumElement
+struct EnumElement : Declaration
 {
-    Token name;
+    T_STATEMENT(INTERNAL)
+
     std::unique_ptr<Expression> initializer;
 
-    std::ostream& Print(std::ostream& os, ParserDepthT depth) const;
+    std::ostream& Print(std::ostream& os, ParserDepthT depth) const override;
 };
 
 struct EnumDeclaration : Declaration
