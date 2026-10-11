@@ -21,7 +21,7 @@ std::ostream& VariableDeclaration::Print(std::ostream& os, ParserDepthT depth) c
 
     PrintAtDepth(os, depth, "Type:");
     if (type.has_value())
-        type.value().Print(os << '\n', depth + 1);
+        type->Print(os << '\n', depth + 1);
     else
         os << " None";
 
@@ -42,7 +42,7 @@ std::ostream& FunctionDeclaration::Print(std::ostream& os, ParserDepthT depth) c
 
     PrintAtDepth(os, depth, "Type:");
     if (type.has_value())
-        type.value().Print(os << '\n', depth + 1);
+        type->Print(os << '\n', depth + 1);
     else
         os << " None";
 

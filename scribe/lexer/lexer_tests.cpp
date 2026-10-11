@@ -89,7 +89,7 @@ namespace
             if (!type)
                 return false;
 
-            token.type = type.value();
+            token.type = *type;
 
             offset = separatorPos + 1;
 
