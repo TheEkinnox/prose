@@ -17,31 +17,6 @@ namespace
     {
     };
 
-    std::vector<std::filesystem::path> getTestFiles(const std::filesystem::path& testsRoot)
-    {
-        std::vector<std::filesystem::path> testFiles;
-
-        assert(std::filesystem::exists(testsRoot));
-        assert(std::filesystem::is_directory(testsRoot));
-
-        const ptrdiff_t fileCount = std::distance(std::filesystem::directory_iterator(testsRoot), std::filesystem::directory_iterator());
-        testFiles.reserve(static_cast<size_t>(fileCount));
-
-        for (const auto& file : std::filesystem::directory_iterator(testsRoot))
-        {
-            if (file.is_directory())
-                continue;
-
-            const std::filesystem::path& filePath = file.path();
-            if (filePath.extension() != ".prose")
-                continue;
-
-            testFiles.emplace_back(filePath);
-        }
-
-        return testFiles;
-    }
-
     bool LoadTokenStreamFromString(std::string_view tokensStr, std::vector<Token>& out)
     {
         out.clear();
@@ -108,8 +83,8 @@ namespace
 } // namespace
 
 CLANG_IGNORE_WARNING_PUSH("-Wglobal-constructors")
-INSTANTIATE_TEST_SUITE_P(, LexerTest, testing::ValuesIn(getTestFiles("tests/lexer")));
-INSTANTIATE_TEST_SUITE_P(Negative, LexerTest, testing::ValuesIn(getTestFiles("tests/lexer/errors")));
+INSTANTIATE_TEST_SUITE_P(, LexerTest, testing::ValuesIn(GetTestFiles("tests/lexer")));
+INSTANTIATE_TEST_SUITE_P(Negative, LexerTest, testing::ValuesIn(GetTestFiles("tests/lexer/errors")));
 
 TEST_P(LexerTest, Tokenization)
 {
