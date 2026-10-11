@@ -315,7 +315,7 @@ static bool ParseMakeExpression(TokenStream& stream, std::unique_ptr<Expression>
     if (!ParseConstructionExpression(stream, construction))
         return false;
 
-    makeExpr.construction = std::move(dynamic_cast<ConstructionExpression&>(*construction));
+    makeExpr.construction = std::move(static_cast<ConstructionExpression&>(*construction));
     out = std::make_unique<MakeExpression>(std::move(makeExpr));
     return true;
 }

@@ -207,7 +207,7 @@ static bool ParseFunctionDeclaration(TokenStream& stream, std::unique_ptr<Declar
             if (!RequireVariableDeclaration(stream, parameter))
                 return false;
 
-            auto& parameterDecl = dynamic_cast<VariableDeclaration&>(*parameter);
+            auto& parameterDecl = static_cast<VariableDeclaration&>(*parameter);
             if (parameterDecl.initializer)
             {
                 hasDefault = true;
@@ -279,7 +279,7 @@ static bool ParseTypeDeclaration(TokenStream& stream, std::unique_ptr<Declaratio
         if (!stream.ExpectSeparator(token))
             return false;
 
-        type.members.emplace_back(std::move(dynamic_cast<VariableDeclaration&>(*member)));
+        type.members.emplace_back(std::move(static_cast<VariableDeclaration&>(*member)));
     }
 
     out = std::make_unique<TypeDeclaration>(std::move(type));
