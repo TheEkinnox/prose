@@ -1,0 +1,7 @@
+fn main
+    switch 1
+        default
+            break
+            func()
+    end
+end

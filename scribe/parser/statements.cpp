@@ -11,6 +11,7 @@
 #include "utility/strings.h"
 
 #include <cassert>
+#include <format>
 #include <utility>
 
 NO_WARNINGS_PUSH
@@ -135,12 +136,10 @@ std::ostream& SwitchStatement::Print(std::ostream& os, ParserDepthT depth) const
     return os << " None";
 }
 
-#ifndef NDEBUG
 static bool IsControlStatement(const TokenType t)
 {
     return t == TokenType::KW_RETURN || t == TokenType::KW_BREAK || t == TokenType::KW_CONTINUE;
 }
-#endif
 
 StatementType ControlStatement::GetType() const
 {
@@ -519,7 +518,7 @@ bool ParseBlock(TokenStream& stream, Block& out, const Token& start, const Token
 
             if (token.type == TokenType::TOKEN_EOF)
             {
-                LogError(stream.Peek(), "Unclosed '" + std::string(start.value) + "' block at " + std::to_string(start.line) + ":" + std::to_string(start.column));
+                LogError(stream.Peek(), std::format("Unclosed '{}' block at {}:{}", start.value, start.line, start.column));
                 return false;
             }
 
@@ -533,7 +532,15 @@ bool ParseBlock(TokenStream& stream, Block& out, const Token& start, const Token
         if (!stream.ExpectSeparator(token))
             return false;
 
-        out.statements.emplace_back(std::move(statement));
+        const auto& lastStatement = out.statements.emplace_back(std::move(statement));
+        if (IsControlStatement(lastStatement->start.type))
+        {
+            if (!exitCondition(token.type) && !stream.Expect(exitCondition, token, std::format("Unreachable after {}", lastStatement->start.value)))
+                return false;
+
+            consumedExit = true;
+            break;
+        }
 
         if (exitCondition(token.type))
         {
