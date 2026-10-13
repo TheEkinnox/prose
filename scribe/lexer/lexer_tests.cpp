@@ -11,6 +11,33 @@ NO_WARNINGS_PUSH
 #include <magic_enum/magic_enum.hpp>
 NO_WARNINGS_POP
 
+consteval bool CheckBuiltInTypes()
+{
+    for (auto type = Underlying(TOKEN_FIRST_TYPE); type < Underlying(TOKEN_LAST_TYPE); ++type)
+    {
+        if (!magic_enum::enum_name(static_cast<TokenType>(type)).starts_with(TOKEN_TYPE_PREFIX))
+            return false;
+    }
+
+    return true;
+}
+
+static_assert(CheckBuiltInTypes());
+
+consteval bool CheckKeywords()
+{
+    for (auto type = Underlying(TOKEN_FIRST_KEYWORD); type < Underlying(TOKEN_LAST_KEYWORD); ++type)
+    {
+        const std::string_view typeName = magic_enum::enum_name(static_cast<TokenType>(type));
+        if (!typeName.starts_with(TOKEN_TYPE_PREFIX) && !typeName.starts_with(TOKEN_KEYWORD_PREFIX))
+            return false;
+    }
+
+    return true;
+}
+
+static_assert(CheckKeywords());
+
 namespace
 {
     class LexerTest : public ::testing::TestWithParam<std::filesystem::path>

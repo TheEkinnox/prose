@@ -1,5 +1,7 @@
 #pragma once
+#include "utility/common.h"
 #include "utility/macros.h"
+#include "utility/strings.h"
 
 NO_WARNINGS_PUSH
 #include "magic_enum/magic_enum.hpp"
@@ -105,9 +107,47 @@ enum class TokenType : uint8_t
     TOKEN_EOF
 };
 
+consteval TokenType FindFirstTokenType(const std::string_view prefix)
+{
+    constexpr auto values = magic_enum::enum_values<TokenType>();
+    if (prefix.empty())
+        return values[0];
+
+    return *std::ranges::find_if(values, [&](const auto type) { return magic_enum::enum_name(type).starts_with(prefix); });
+}
+
+consteval TokenType FindLastTokenType(const std::string_view prefix)
+{
+    constexpr auto values = magic_enum::enum_values<TokenType>();
+    if (prefix.empty())
+        return values[0];
+
+    return *std::find_if(values.rbegin(), values.rend(), [&](const auto type) { return magic_enum::enum_name(type).starts_with(prefix); });
+}
+
+constexpr std::string_view TOKEN_TYPE_PREFIX = "T_";
+constexpr auto TOKEN_FIRST_TYPE = FindFirstTokenType(TOKEN_TYPE_PREFIX);
+constexpr auto TOKEN_LAST_TYPE = FindLastTokenType(TOKEN_TYPE_PREFIX);
+
+constexpr std::string_view TOKEN_KEYWORD_PREFIX = "KW_";
+constexpr auto TOKEN_FIRST_KEYWORD = TOKEN_FIRST_TYPE;
+constexpr auto TOKEN_LAST_KEYWORD = FindLastTokenType(TOKEN_KEYWORD_PREFIX);
+
 constexpr bool IsBuiltInType(const TokenType type)
 {
-    return magic_enum::enum_name(type).starts_with("T_");
+    return Underlying(type) >= Underlying(TOKEN_FIRST_TYPE) && Underlying(type) <= Underlying(TOKEN_LAST_TYPE);
+}
+
+constexpr bool IsKeyword(const TokenType type)
+{
+    return (Underlying(type) >= Underlying(TOKEN_FIRST_KEYWORD) && Underlying(type) <= Underlying(TOKEN_LAST_KEYWORD));
+}
+
+inline std::string GetKeyword(const TokenType type)
+{
+    assert(IsKeyword(type));
+    const std::string_view name = magic_enum::enum_name(type);
+    return ToLower(name.substr(name.find('_') + 1));
 }
 
 constexpr bool IsNumericType(const TokenType type)

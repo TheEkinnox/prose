@@ -1,5 +1,7 @@
 #include "strings.h"
 
+#include <algorithm>
+
 void ReplaceAll(std::string& source, const std::string& from, const std::string& to)
 {
     if (from.empty())
@@ -36,4 +38,11 @@ std::string_view& TrimEnd(std::string_view& view)
 std::string_view& Trim(std::string_view& view)
 {
     return TrimEnd(TrimStart(view));
+}
+
+std::string ToLower(const std::string_view source)
+{
+    std::string out(source);
+    std::ranges::transform(out, out.begin(), [](const char c) { return static_cast<char>(std::tolower(c)); });
+    return out;
 }

@@ -72,110 +72,20 @@ bool Cursor::ConsumeIf(const char c)
     return false;
 }
 
-static bool GetBuiltInType(const std::string_view token, TokenType& out)
-{
-    out = TokenType::UNKNOWN;
-
-    if (token == "i8")
-        out = TokenType::T_I8;
-    else if (token == "u8")
-        out = TokenType::T_U8;
-    else if (token == "i16")
-        out = TokenType::T_I16;
-    else if (token == "u16")
-        out = TokenType::T_U16;
-    else if (token == "i32")
-        out = TokenType::T_I32;
-    else if (token == "u32")
-        out = TokenType::T_U32;
-    else if (token == "i64")
-        out = TokenType::T_I64;
-    else if (token == "u64")
-        out = TokenType::T_U64;
-    else if (token == "iptr")
-        out = TokenType::T_IPTR;
-    else if (token == "uptr")
-        out = TokenType::T_UPTR;
-    else if (token == "f32")
-        out = TokenType::T_F32;
-    else if (token == "f64")
-        out = TokenType::T_F64;
-    else if (token == "byte")
-        out = TokenType::T_BYTE;
-    else if (token == "bool")
-        out = TokenType::T_BOOL;
-    else if (token == "rune")
-        out = TokenType::T_RUNE;
-    else if (token == "string")
-        out = TokenType::T_STRING;
-    else if (token == "void")
-        out = TokenType::T_VOID;
-
-    return out != TokenType::UNKNOWN;
-}
-
 static bool GetKeyword(const std::string_view token, TokenType& out)
 {
-    if (token == "null")
-        out = TokenType::KW_NULL;
-    else if (token == "true")
-        out = TokenType::KW_TRUE;
-    else if (token == "false")
-        out = TokenType::KW_FALSE;
-    else if (token == "sizeof")
-        out = TokenType::KW_SIZEOF;
-    else if (token == "fn")
-        out = TokenType::KW_FN;
-    else if (token == "scope")
-        out = TokenType::KW_SCOPE;
-    else if (token == "defer")
-        out = TokenType::KW_DEFER;
-    else if (token == "make")
-        out = TokenType::KW_MAKE;
-    else if (token == "return")
-        out = TokenType::KW_RETURN;
-    else if (token == "end")
-        out = TokenType::KW_END;
-    else if (token == "if")
-        out = TokenType::KW_IF;
-    else if (token == "else")
-        out = TokenType::KW_ELSE;
-    else if (token == "switch")
-        out = TokenType::KW_SWITCH;
-    else if (token == "case")
-        out = TokenType::KW_CASE;
-    else if (token == "fallthrough")
-        out = TokenType::KW_FALLTHROUGH;
-    else if (token == "default")
-        out = TokenType::KW_DEFAULT;
-    else if (token == "for")
-        out = TokenType::KW_FOR;
-    else if (token == "in")
-        out = TokenType::KW_IN;
-    else if (token == "break")
-        out = TokenType::KW_BREAK;
-    else if (token == "continue")
-        out = TokenType::KW_CONTINUE;
-    else if (token == "while")
-        out = TokenType::KW_WHILE;
-    else if (token == "repeat")
-        out = TokenType::KW_REPEAT;
-    else if (token == "until")
-        out = TokenType::KW_UNTIL;
-    else if (token == "const")
-        out = TokenType::KW_CONST;
-    else if (token == "type")
-        out = TokenType::KW_TYPE;
-    else if (token == "enum")
-        out = TokenType::KW_ENUM;
-    else if (token == "alias")
-        out = TokenType::KW_ALIAS;
-    else if (token == "move")
-        out = TokenType::KW_MOVE;
-    else
-        out = TokenType::UNKNOWN;
+    for (std::underlying_type_t<TokenType> i = Underlying(TOKEN_FIRST_KEYWORD); i <= Underlying(TOKEN_LAST_KEYWORD); ++i)
+    {
+        const auto type = static_cast<TokenType>(i);
+        if (token == GetKeyword(type))
+        {
+            out = type;
+            return true;
+        }
+    }
 
-    return out != TokenType::UNKNOWN;
+    out = TokenType::UNKNOWN;
+    return false;
 }
 
 static bool IsIdentifier(const std::string_view token)
@@ -232,8 +142,8 @@ static bool MakeToken(Token& out, const std::string_view value, const size_t lin
     if (value.empty())
         return false;
 
-    TokenType type = TokenType::UNKNOWN;
-    if (!GetBuiltInType(value, type) && !GetKeyword(value, type) && IsIdentifier(value))
+    auto type = TokenType::UNKNOWN;
+    if (!GetKeyword(value, type) && IsIdentifier(value))
         type = TokenType::IDENTIFIER;
     else if (IsIntLiteral(value))
         type = TokenType::LIT_INTEGER;

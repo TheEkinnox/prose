@@ -8,6 +8,8 @@ std::string_view& TrimStart(std::string_view& view);
 std::string_view& TrimEnd(std::string_view& view);
 std::string_view& Trim(std::string_view& view);
 
+std::string ToLower(std::string_view source);
+
 template <typename T>
 std::from_chars_result from_chars(const std::string_view source, T& out, const int base = 10)
 {
